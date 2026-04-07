@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiBusinessCopilot — The ABC's of Running Your Business Autonomously</title>
+    <meta name="description" content="Done-for-you AI setup for small businesses. Claude Teams handles your docs, scheduling, and follow-ups. No IT department needed.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #e94560;
+            --accent-hover: #ff6b81;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --gray: #6b7280;
+            --dark-gray: #374151;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background: var(--white);
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid #eee;
+        }
+
+        nav .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        nav .logo span {
+            color: var(--accent);
+        }
+
+        nav a.cta-sm {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        nav a.cta-sm:hover {
+            background: var(--accent-hover);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 8rem 0 5rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            line-height: 1.15;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        /* TRUST BAR */
+        .trust-bar {
+            background: var(--light);
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        .trust-bar .container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .trust-item .icon {
+            font-size: 1.3rem;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-label {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        h2.centered {
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .subtitle.centered {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* PROBLEM */
+        .problem {
+            background: var(--light);
+        }
+
+        .pain-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .pain-point {
+            background: var(--white);
+            padding: 1.8rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .pain-point .icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .pain-point h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .pain-point p {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        /* SOLUTION */
+        .solution h2 {
+            text-align: center;
+        }
+
+        .solution .subtitle {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+            font-size: 1.8rem;
+        }
+
+        .feature h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .feature p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .how-it-works h2 {
+            color: var(--white);
+        }
+
+        .how-it-works .subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* PRICING */
+        .pricing {
+            background: var(--light);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--accent);
+        }
+
+        .pricing-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.3rem 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .pricing-card .price-note {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card ul li {
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .pricing-card ul li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+            color: var(--white);
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-section .btn {
+            font-size: 1.2rem;
+            padding: 1.2rem 3rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--white);
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.05rem;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 0.8rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .trust-bar .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">AiBusiness<span>Copilot</span></a>
+            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="cta-sm">Book a Call →</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>The <span>ABC</span>'s of running<br>your business autonomously</h1>
+            <p>Done-for-you AI setup for small businesses. We handle the tech so you can focus on what you do best — running your company.</p>
+            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free 15-Min Discovery Call</a>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+        <div class="container">
+            <div class="trust-item">
+                <span class="icon">🛡️</span>
+                No IT department needed
+            </div>
+            <div class="trust-item">
+                <span class="icon">🔌</span>
+                Works with your existing tools
+            </div>
+            <div class="trust-item">
+                <span class="icon">⚡</span>
+                Live in 1–2 weeks
+            </div>
+            <div class="trust-item">
+                <span class="icon">🤝</span>
+                Local & personal service
+            </div>
+        </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <section class="problem">
+        <div class="container">
+            <div class="section-label">The Problem</div>
+            <h2>You didn't start a business to drown in paperwork</h2>
+            <p class="subtitle">Small businesses with 1–20 employees are spending hours every week on tasks AI could handle in seconds. But figuring out where to start feels overwhelming.</p>
+            <div class="pain-points">
+                <div class="pain-point">
+                    <div class="icon">📧</div>
+                    <h3>Inbox Overload</h3>
+                    <p>Hundreds of emails a week. Sorting, responding, following up — it eats your entire morning.</p>
+                </div>
+                <div class="pain-point">
+                    <div class="icon">📅</div>
+                    <h3>Scheduling Chaos</h3>
+                    <p>Back-and-forth texts, double bookings, missed appointments. Your calendar is a mess.</p>
+                </div>
+                <div class="pain-point">
+                    <div class="icon">📝</div>
+                    <h3>Document Drudgery</h3>
+                    <p>Proposals, invoices, reports — you rewrite the same things over and over.</p>
+                </div>
+                <div class="pain-point">
+                    <div class="icon">🤷</div>
+                    <h3>Don't Know Where to Start</h3>
+                    <p>You know AI can help, but there's no IT department and every tool claims to be "the one."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="solution">
+        <div class="container">
+            <div class="section-label">The Solution</div>
+            <h2>Your AI copilot, fully set up and running</h2>
+            <p class="subtitle centered">We set up Claude Teams for your business — configured, trained, and ready to handle the busywork.</p>
+            <div class="features">
+                <div class="feature">
+                    <div class="icon-circle">📨</div>
+                    <h3>Email Triage</h3>
+                    <p>Claude drafts responses, categorizes incoming mail, and flags what needs your attention.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon-circle">🗓️</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Automated appointment booking, reminders, and follow-ups. No more back-and-forth.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon-circle">📄</div>
+                    <h3>Document Drafting</h3>
+                    <p>Proposals, invoices, reports — Claude generates them from your templates and past work.</p>
+                </div>
+                <div class="feature">
+                    <div class="icon-circle">💬</div>
+                    <h3>Customer Follow-ups</h3>
+                    <p>Automated check-ins and personalized outreach that keep your clients engaged.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-label">How It Works</div>
+            <h2 class="centered">Four steps to autonomous</h2>
+            <p class="subtitle centered">From first call to fully operational. We handle everything.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Discovery Survey</h3>
+                    <p>We learn your workflows, pain points, and current tools. Takes 20 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Setup & Configure</h3>
+                    <p>We build your Claude Teams environment and custom automations. 1–2 weeks.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Training Session</h3>
+                    <p>Hands-on training for you and your team. In-person or video. 2–4 hours.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Weekly Check-ins</h3>
+                    <p>Ongoing optimization, new features, and support. We make sure it keeps working.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing">
+        <div class="container">
+            <div class="section-label">Pricing</div>
+            <h2 class="centered">Simple, transparent pricing</h2>
+            <p class="subtitle centered">No hidden fees. No long-term contracts required for setup.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>🔧 AI Setup</h3>
+                    <div class="price">$2,500–$4,000</div>
+                    <div class="price-note">One-time</div>
+                    <ul>
+                        <li>Business AI readiness survey</li>
+                        <li>Claude Teams configuration</li>
+                        <li>Custom automation build</li>
+                        <li>2–4 hour training session</li>
+                        <li>Custom quick-start guide</li>
+                        <li>30-day email support included</li>
+                    </ul>
+                    <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>🤝 Managed AI</h3>
+                    <div class="price">$500–$750</div>
+                    <div class="price-note">/month · 3-month minimum</div>
+                    <ul>
+                        <li>Weekly 30–60 min check-ins</li>
+                        <li>Workflow optimization</li>
+                        <li>New AI feature rollouts</li>
+                        <li>Email & text support</li>
+                        <li>Monthly ROI report</li>
+                        <li>6 & 12-month prepay discounts</li>
+                    </ul>
+                    <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to stop drowning in busywork?</h2>
+            <p>Book a free 15-minute discovery call. We'll learn about your business and show you exactly how AI can help.</p>
+            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free Discovery Call</a>
+            <p style="margin-top:1.5rem;font-size:0.9rem;opacity:0.7;">ty@aibusinesscopilot.io · No obligation, no pressure</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+    </footer>
+
+</body>
+</html>
