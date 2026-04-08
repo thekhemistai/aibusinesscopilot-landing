@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AiBusinessCopilot — The ABC's of Running Your Business Autonomously</title>
-    <meta name="description" content="Done-for-you AI setup for small businesses. Claude Teams handles your docs, scheduling, and follow-ups. No IT department needed.">
+    <meta name="description" content="Done-for-you AI setup for businesses and professionals. We handle the tech so you can focus on what matters.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
     <style>
         :root {
-            --primary: #1a1a2e;
+            --bg-deep: #0a0a1a;
+            --bg-surface: #0d0f1e;
+            --bg-card: rgba(15, 18, 40, 0.6);
+            --neon-blue: #00d4ff;
+            --neon-cyan: #00ffd5;
+            --neon-purple: #a855f7;
+            --neon-pink: #e94560;
             --accent: #e94560;
             --accent-hover: #ff6b81;
-            --light: #f5f5f5;
             --white: #ffffff;
-            --gray: #6b7280;
-            --dark-gray: #374151;
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: rgba(255,255,255,0.5);
             --success: #10b981;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-blue: 0 0 30px rgba(0, 212, 255, 0.3);
+            --glow-pink: 0 0 30px rgba(233, 69, 96, 0.3);
         }
 
         * {
@@ -30,9 +40,31 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: var(--dark-gray);
+            color: var(--text-primary);
             line-height: 1.6;
-            background: var(--white);
+            background: var(--bg-deep);
+            overflow-x: hidden;
+        }
+
+        /* GRID BACKGROUND */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
         }
 
         /* NAV */
@@ -40,10 +72,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 100;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         nav .container {
@@ -58,27 +91,32 @@
         nav .logo {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--white);
             text-decoration: none;
         }
 
         nav .logo span {
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         nav a.cta-sm {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             padding: 0.5rem 1.2rem;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
-            transition: background 0.2s;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
         }
 
         nav a.cta-sm:hover {
-            background: var(--accent-hover);
+            box-shadow: var(--glow-blue);
+            transform: translateY(-1px);
         }
 
         .container {
@@ -89,65 +127,96 @@
 
         /* HERO */
         .hero {
-            padding: 8rem 0 5rem;
+            padding: 10rem 0 5rem;
             text-align: center;
-            background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
-            color: var(--white);
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+                        var(--bg-deep);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+            animation: heroPulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes heroPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 800;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             line-height: 1.15;
+            color: var(--white);
         }
 
-        .hero h1 span {
-            color: var(--accent);
+        .hero h1 .glow {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
         }
 
         .hero p {
             font-size: 1.25rem;
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto 2.5rem;
-            opacity: 0.9;
+            color: var(--text-muted);
         }
 
         .btn {
             display: inline-block;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             padding: 1rem 2.5rem;
             border-radius: 8px;
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 700;
-            transition: all 0.2s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
         }
 
         .btn:hover {
-            background: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid var(--white);
+            border: 2px solid rgba(0, 212, 255, 0.5);
             margin-left: 1rem;
+            box-shadow: none;
         }
 
         .btn-outline:hover {
-            background: var(--white);
-            color: var(--primary);
-            box-shadow: none;
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--neon-blue);
+            box-shadow: var(--glow-blue);
+            color: var(--white);
         }
 
         /* TRUST BAR */
         .trust-bar {
-            background: var(--light);
+            background: rgba(0, 212, 255, 0.03);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
             padding: 1.5rem 0;
             text-align: center;
         }
@@ -164,12 +233,65 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.95rem;
-            color: var(--dark-gray);
+            color: var(--text-muted);
             font-weight: 500;
         }
 
         .trust-item .icon {
             font-size: 1.3rem;
+        }
+
+        /* TAB TOGGLE */
+        .tab-toggle-wrapper {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+
+        .tab-toggle {
+            display: inline-flex;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 5px;
+            position: relative;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-btn.active {
+            color: var(--white);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .tab-btn:not(.active):hover {
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* SECTIONS */
@@ -181,15 +303,18 @@
             text-transform: uppercase;
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--accent);
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         h2 {
             font-size: 2.2rem;
             font-weight: 800;
-            color: var(--primary);
+            color: var(--white);
             margin-bottom: 1rem;
         }
 
@@ -199,7 +324,7 @@
 
         .subtitle {
             font-size: 1.15rem;
-            color: var(--gray);
+            color: var(--text-muted);
             max-width: 600px;
             margin-bottom: 3rem;
         }
@@ -210,9 +335,17 @@
             margin-right: auto;
         }
 
+        /* GLOWING DIVIDER */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
+            opacity: 0.3;
+            margin: 0;
+        }
+
         /* PROBLEM */
         .problem {
-            background: var(--light);
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .pain-points {
@@ -223,11 +356,20 @@
         }
 
         .pain-point {
-            background: var(--white);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 1.8rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            border-left: 3px solid var(--neon-blue);
+            transition: all 0.3s;
+        }
+
+        .pain-point:hover {
+            border-left-color: var(--neon-purple);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.1);
+            transform: translateY(-3px);
         }
 
         .pain-point .icon {
@@ -238,12 +380,12 @@
         .pain-point h3 {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--white);
         }
 
         .pain-point p {
             font-size: 0.95rem;
-            color: var(--gray);
+            color: var(--text-muted);
         }
 
         /* SOLUTION */
@@ -259,20 +401,33 @@
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
         .feature {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
+            transform: translateY(-4px);
         }
 
         .feature .icon-circle {
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #16213e);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
+            border: 1px solid rgba(0, 212, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -283,26 +438,17 @@
         .feature h3 {
             font-size: 1.15rem;
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--white);
         }
 
         .feature p {
-            color: var(--gray);
+            color: var(--text-muted);
             font-size: 0.95rem;
         }
 
         /* HOW IT WORKS */
         .how-it-works {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .how-it-works h2 {
-            color: var(--white);
-        }
-
-        .how-it-works .subtitle {
-            color: rgba(255,255,255,0.7);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .steps {
@@ -314,15 +460,25 @@
 
         .step {
             text-align: center;
-            padding: 1.5rem;
-            position: relative;
+            padding: 2rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .step:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateY(-3px);
         }
 
         .step-number {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             font-size: 1.3rem;
             font-weight: 800;
@@ -330,21 +486,23 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
         .step h3 {
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
+            color: var(--white);
         }
 
         .step p {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
         }
 
         /* PRICING */
         .pricing {
-            background: var(--light);
+            background: rgba(0, 0, 0, 0.15);
         }
 
         .pricing-grid {
@@ -356,25 +514,34 @@
         }
 
         .pricing-card {
-            background: var(--white);
-            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 2.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.2);
         }
 
         .pricing-card.featured {
-            border: 3px solid var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
         }
 
         .pricing-card.featured::before {
             content: 'POPULAR';
             position: absolute;
-            top: 15px;
-            right: -30px;
-            background: var(--accent);
+            top: 18px;
+            right: -28px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             padding: 0.3rem 2rem;
             font-size: 0.7rem;
@@ -385,20 +552,23 @@
 
         .pricing-card h3 {
             font-size: 1.3rem;
-            color: var(--primary);
+            color: var(--white);
             margin-bottom: 0.5rem;
         }
 
         .pricing-card .price {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--primary);
             margin-bottom: 0.3rem;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .pricing-card .price-note {
             font-size: 0.9rem;
-            color: var(--gray);
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
 
@@ -411,6 +581,7 @@
         .pricing-card ul li {
             padding: 0.5rem 0;
             font-size: 0.95rem;
+            color: var(--text-muted);
             display: flex;
             align-items: flex-start;
             gap: 0.5rem;
@@ -418,7 +589,7 @@
 
         .pricing-card ul li::before {
             content: '✓';
-            color: var(--success);
+            color: var(--neon-cyan);
             font-weight: 700;
             flex-shrink: 0;
         }
@@ -426,9 +597,22 @@
         /* CTA */
         .cta-section {
             text-align: center;
-            background: linear-gradient(135deg, var(--primary) 0%, #16213e 100%);
+            background: radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+                        var(--bg-deep);
             color: var(--white);
             padding: 5rem 0;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
+            opacity: 0.4;
         }
 
         .cta-section h2 {
@@ -439,7 +623,7 @@
 
         .cta-section p {
             font-size: 1.15rem;
-            opacity: 0.9;
+            color: var(--text-muted);
             max-width: 500px;
             margin: 0 auto 2rem;
         }
@@ -451,24 +635,89 @@
 
         /* FOOTER */
         footer {
-            background: var(--primary);
-            color: rgba(255,255,255,0.5);
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-dim);
             text-align: center;
             padding: 2rem;
             font-size: 0.85rem;
         }
 
         footer a {
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             text-decoration: none;
+            transition: color 0.2s;
         }
 
         footer a:hover {
+            color: var(--neon-blue);
+        }
+
+        /* SCROLL ANIMATIONS */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* PERSONAL TAB FEATURES INLINE */
+        .personal-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .personal-feature {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .personal-feature:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .personal-feature .pf-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .personal-feature h3 {
+            font-size: 1rem;
             color: var(--white);
+            margin-bottom: 0.4rem;
+        }
+
+        .personal-feature p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* PERSONAL PRICING - single card centered */
+        .pricing-single {
+            max-width: 420px;
+            margin: 0 auto;
         }
 
         /* MOBILE */
         @media (max-width: 768px) {
+            .hero {
+                padding: 8rem 0 4rem;
+            }
+
             .hero h1 {
                 font-size: 2rem;
             }
@@ -499,6 +748,25 @@
             .pricing-grid {
                 grid-template-columns: 1fr;
             }
+
+            .tab-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .personal-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .personal-features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -508,16 +776,18 @@
     <nav>
         <div class="container">
             <a href="#" class="logo">AiBusiness<span>Copilot</span></a>
-            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="cta-sm">Book a Call →</a>
+            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="cta-sm">Book a Call &rarr;</a>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
         <div class="container">
-            <h1>The <span>ABC</span>'s of running<br>your business autonomously</h1>
-            <p>Done-for-you AI setup for small businesses. We handle the tech so you can focus on what you do best — running your company.</p>
-            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free 15-Min Discovery Call</a>
+            <h1 class="fade-up">The <span class="glow">ABC</span>'s of running<br>your business autonomously</h1>
+            <p class="fade-up">Done-for-you AI setup for businesses and professionals. We handle the tech so you can focus on what matters.</p>
+            <div class="fade-up">
+                <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free 15-Min Discovery Call</a>
+            </div>
         </div>
     </section>
 
@@ -534,7 +804,7 @@
             </div>
             <div class="trust-item">
                 <span class="icon">⚡</span>
-                Live in 1–2 weeks
+                Live in 1-2 weeks
             </div>
             <div class="trust-item">
                 <span class="icon">🤝</span>
@@ -543,145 +813,297 @@
         </div>
     </div>
 
-    <!-- PROBLEM -->
-    <section class="problem">
+    <!-- TAB TOGGLE -->
+    <div class="tab-toggle-wrapper">
         <div class="container">
-            <div class="section-label">The Problem</div>
-            <h2>You didn't start a business to drown in paperwork</h2>
-            <p class="subtitle">Small businesses with 1–20 employees are spending hours every week on tasks AI could handle in seconds. But figuring out where to start feels overwhelming.</p>
-            <div class="pain-points">
-                <div class="pain-point">
-                    <div class="icon">📧</div>
-                    <h3>Inbox Overload</h3>
-                    <p>Hundreds of emails a week. Sorting, responding, following up — it eats your entire morning.</p>
-                </div>
-                <div class="pain-point">
-                    <div class="icon">📅</div>
-                    <h3>Scheduling Chaos</h3>
-                    <p>Back-and-forth texts, double bookings, missed appointments. Your calendar is a mess.</p>
-                </div>
-                <div class="pain-point">
-                    <div class="icon">📝</div>
-                    <h3>Document Drudgery</h3>
-                    <p>Proposals, invoices, reports — you rewrite the same things over and over.</p>
-                </div>
-                <div class="pain-point">
-                    <div class="icon">🤷</div>
-                    <h3>Don't Know Where to Start</h3>
-                    <p>You know AI can help, but there's no IT department and every tool claims to be "the one."</p>
-                </div>
+            <div class="tab-toggle">
+                <button class="tab-btn active" data-tab="business" onclick="switchTab('business')">For Businesses</button>
+                <button class="tab-btn" data-tab="personal" onclick="switchTab('personal')">For Individuals</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- SOLUTION -->
-    <section class="solution">
-        <div class="container">
-            <div class="section-label">The Solution</div>
-            <h2>Your AI copilot, fully set up and running</h2>
-            <p class="subtitle centered">We set up Claude Teams for your business — configured, trained, and ready to handle the busywork.</p>
-            <div class="features">
-                <div class="feature">
-                    <div class="icon-circle">📨</div>
-                    <h3>Email Triage</h3>
-                    <p>Claude drafts responses, categorizes incoming mail, and flags what needs your attention.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon-circle">🗓️</div>
-                    <h3>Smart Scheduling</h3>
-                    <p>Automated appointment booking, reminders, and follow-ups. No more back-and-forth.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon-circle">📄</div>
-                    <h3>Document Drafting</h3>
-                    <p>Proposals, invoices, reports — Claude generates them from your templates and past work.</p>
-                </div>
-                <div class="feature">
-                    <div class="icon-circle">💬</div>
-                    <h3>Customer Follow-ups</h3>
-                    <p>Automated check-ins and personalized outreach that keep your clients engaged.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ============ BUSINESS TAB ============ -->
+    <div id="tab-business" class="tab-content active">
 
-    <!-- HOW IT WORKS -->
-    <section class="how-it-works">
-        <div class="container">
-            <div class="section-label">How It Works</div>
-            <h2 class="centered">Four steps to autonomous</h2>
-            <p class="subtitle centered">From first call to fully operational. We handle everything.</p>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Discovery Survey</h3>
-                    <p>We learn your workflows, pain points, and current tools. Takes 20 minutes.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Setup & Configure</h3>
-                    <p>We build your Claude Teams environment and custom automations. 1–2 weeks.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Training Session</h3>
-                    <p>Hands-on training for you and your team. In-person or video. 2–4 hours.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Weekly Check-ins</h3>
-                    <p>Ongoing optimization, new features, and support. We make sure it keeps working.</p>
+        <!-- PROBLEM -->
+        <section class="problem">
+            <div class="container">
+                <div class="section-label fade-up">The Problem</div>
+                <h2 class="fade-up">You didn't start a business to drown in paperwork</h2>
+                <p class="subtitle fade-up">Small businesses with 1-20 employees are spending hours every week on tasks AI could handle in seconds. But figuring out where to start feels overwhelming.</p>
+                <div class="pain-points">
+                    <div class="pain-point fade-up">
+                        <div class="icon">📧</div>
+                        <h3>Inbox Overload</h3>
+                        <p>Hundreds of emails a week. Sorting, responding, following up — it eats your entire morning.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">📅</div>
+                        <h3>Scheduling Chaos</h3>
+                        <p>Back-and-forth texts, double bookings, missed appointments. Your calendar is a mess.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">📝</div>
+                        <h3>Document Drudgery</h3>
+                        <p>Proposals, invoices, reports — you rewrite the same things over and over.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">🤷</div>
+                        <h3>Don't Know Where to Start</h3>
+                        <p>You know AI can help, but there's no IT department and every tool claims to be "the one."</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- PRICING -->
-    <section class="pricing">
-        <div class="container">
-            <div class="section-label">Pricing</div>
-            <h2 class="centered">Simple, transparent pricing</h2>
-            <p class="subtitle centered">No hidden fees. No long-term contracts required for setup.</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>🔧 AI Setup</h3>
-                    <div class="price">$2,500–$4,000</div>
-                    <div class="price-note">One-time</div>
-                    <ul>
-                        <li>Business AI readiness survey</li>
-                        <li>Claude Teams configuration</li>
-                        <li>Custom automation build</li>
-                        <li>2–4 hour training session</li>
-                        <li>Custom quick-start guide</li>
-                        <li>30-day email support included</li>
-                    </ul>
-                    <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
-                </div>
-                <div class="pricing-card featured">
-                    <h3>🤝 Managed AI</h3>
-                    <div class="price">$500–$750</div>
-                    <div class="price-note">/month · 3-month minimum</div>
-                    <ul>
-                        <li>Weekly 30–60 min check-ins</li>
-                        <li>Workflow optimization</li>
-                        <li>New AI feature rollouts</li>
-                        <li>Email & text support</li>
-                        <li>Monthly ROI report</li>
-                        <li>6 & 12-month prepay discounts</li>
-                    </ul>
-                    <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
+        <div class="glow-divider"></div>
+
+        <!-- SOLUTION -->
+        <section class="solution">
+            <div class="container">
+                <div class="section-label fade-up">The Solution</div>
+                <h2 class="fade-up">Your AI copilot, fully set up and running</h2>
+                <p class="subtitle centered fade-up">We set up Claude Teams for your business — configured, trained, and ready to handle the busywork.</p>
+                <div class="features">
+                    <div class="feature fade-up">
+                        <div class="icon-circle">📨</div>
+                        <h3>Email Triage</h3>
+                        <p>Claude drafts responses, categorizes incoming mail, and flags what needs your attention.</p>
+                    </div>
+                    <div class="feature fade-up">
+                        <div class="icon-circle">🗓️</div>
+                        <h3>Smart Scheduling</h3>
+                        <p>Automated appointment booking, reminders, and follow-ups. No more back-and-forth.</p>
+                    </div>
+                    <div class="feature fade-up">
+                        <div class="icon-circle">📄</div>
+                        <h3>Document Drafting</h3>
+                        <p>Proposals, invoices, reports — Claude generates them from your templates and past work.</p>
+                    </div>
+                    <div class="feature fade-up">
+                        <div class="icon-circle">💬</div>
+                        <h3>Customer Follow-ups</h3>
+                        <p>Automated check-ins and personalized outreach that keep your clients engaged.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <div class="glow-divider"></div>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-label fade-up">How It Works</div>
+                <h2 class="centered fade-up">Four steps to autonomous</h2>
+                <p class="subtitle centered fade-up">From first call to fully operational. We handle everything.</p>
+                <div class="steps">
+                    <div class="step fade-up">
+                        <div class="step-number">1</div>
+                        <h3>Discovery Survey</h3>
+                        <p>We learn your workflows, pain points, and current tools. Takes 20 minutes.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">2</div>
+                        <h3>Setup & Configure</h3>
+                        <p>We build your Claude Teams environment and custom automations. 1-2 weeks.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">3</div>
+                        <h3>Training Session</h3>
+                        <p>Hands-on training for you and your team. In-person or video. 2-4 hours.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">4</div>
+                        <h3>Weekly Check-ins</h3>
+                        <p>Ongoing optimization, new features, and support. We make sure it keeps working.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="glow-divider"></div>
+
+        <!-- PRICING -->
+        <section class="pricing">
+            <div class="container">
+                <div class="section-label fade-up">Pricing</div>
+                <h2 class="centered fade-up">Simple, transparent pricing</h2>
+                <p class="subtitle centered fade-up">No hidden fees. No long-term contracts required for setup.</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card fade-up">
+                        <h3>🔧 AI Setup</h3>
+                        <div class="price">$2,500-$4,000</div>
+                        <div class="price-note">One-time</div>
+                        <ul>
+                            <li>Business AI readiness survey</li>
+                            <li>Claude Teams configuration</li>
+                            <li>Custom automation build</li>
+                            <li>2-4 hour training session</li>
+                            <li>Custom quick-start guide</li>
+                            <li>30-day email support included</li>
+                        </ul>
+                        <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
+                    </div>
+                    <div class="pricing-card featured fade-up">
+                        <h3>🤝 Managed AI</h3>
+                        <div class="price">$500-$750</div>
+                        <div class="price-note">/month · 3-month minimum</div>
+                        <ul>
+                            <li>Weekly 30-60 min check-ins</li>
+                            <li>Workflow optimization</li>
+                            <li>New AI feature rollouts</li>
+                            <li>Email & text support</li>
+                            <li>Monthly ROI report</li>
+                            <li>6 & 12-month prepay discounts</li>
+                        </ul>
+                        <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ============ PERSONAL TAB ============ -->
+    <div id="tab-personal" class="tab-content">
+
+        <!-- PROBLEM -->
+        <section class="problem">
+            <div class="container">
+                <div class="section-label fade-up">The Problem</div>
+                <h2 class="fade-up">Your knowledge is scattered everywhere</h2>
+                <p class="subtitle fade-up">Your knowledge is scattered across docs, notes, bookmarks, and files. You waste hours searching for things you already know.</p>
+                <div class="pain-points">
+                    <div class="pain-point fade-up">
+                        <div class="icon">📂</div>
+                        <h3>Scattered Files</h3>
+                        <p>Important documents spread across Google Drive, Dropbox, email, desktop folders, and random downloads.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">🔍</div>
+                        <h3>Can't Find What You Need</h3>
+                        <p>You know you saved it somewhere. You spend 20 minutes searching and still come up empty.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">🧠</div>
+                        <h3>Knowledge Decay</h3>
+                        <p>Great insights from articles, courses, and research — forgotten within weeks because there's no system.</p>
+                    </div>
+                    <div class="pain-point fade-up">
+                        <div class="icon">⏰</div>
+                        <h3>Wasted Time</h3>
+                        <p>Re-researching things you've already learned. Re-reading articles you've already read. Starting from scratch every time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="glow-divider"></div>
+
+        <!-- SOLUTION -->
+        <section class="solution">
+            <div class="container">
+                <div class="section-label fade-up">The Solution</div>
+                <h2 class="fade-up">Your personal knowledge base, built for you</h2>
+                <p class="subtitle centered fade-up">We build you a personal knowledge base — your documents, research, and industry intel organized, searchable, and compounding over time.</p>
+                <div class="personal-features">
+                    <div class="personal-feature fade-up">
+                        <span class="pf-icon">🔍</span>
+                        <h3>Universal Search</h3>
+                        <p>Find anything across all your documents instantly</p>
+                    </div>
+                    <div class="personal-feature fade-up">
+                        <span class="pf-icon">📚</span>
+                        <h3>Auto-Organization</h3>
+                        <p>AI categorizes and links your knowledge automatically</p>
+                    </div>
+                    <div class="personal-feature fade-up">
+                        <span class="pf-icon">🧠</span>
+                        <h3>AI-Powered Q&A</h3>
+                        <p>Ask questions and get answers from your own knowledge</p>
+                    </div>
+                    <div class="personal-feature fade-up">
+                        <span class="pf-icon">📈</span>
+                        <h3>Compounding Knowledge</h3>
+                        <p>Your base grows smarter and more valuable over time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="glow-divider"></div>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-label fade-up">How It Works</div>
+                <h2 class="centered fade-up">Four steps to your second brain</h2>
+                <p class="subtitle centered fade-up">From scattered files to a searchable, intelligent knowledge system.</p>
+                <div class="steps">
+                    <div class="step fade-up">
+                        <div class="step-number">1</div>
+                        <h3>Survey</h3>
+                        <p>We learn about your documents, research habits, and what you need to find fast.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">2</div>
+                        <h3>Build</h3>
+                        <p>We ingest, organize, and structure your knowledge base. Takes about 1 week.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">3</div>
+                        <h3>Training</h3>
+                        <p>We show you how to search, add to, and get the most out of your knowledge base.</p>
+                    </div>
+                    <div class="step fade-up">
+                        <div class="step-number">4</div>
+                        <h3>Annual Maintenance</h3>
+                        <p>Ongoing updates, re-organization, and new document ingestion to keep it current.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="glow-divider"></div>
+
+        <!-- PRICING -->
+        <section class="pricing">
+            <div class="container">
+                <div class="section-label fade-up">Pricing</div>
+                <h2 class="centered fade-up">Invest in your second brain</h2>
+                <p class="subtitle centered fade-up">One-time build, then low-cost maintenance to keep it growing.</p>
+                <div class="pricing-single">
+                    <div class="pricing-card featured fade-up">
+                        <h3>🧠 Personal Knowledge Base</h3>
+                        <div class="price">$1,500</div>
+                        <div class="price-note">One-time build + $500/year maintenance</div>
+                        <ul>
+                            <li>Personalized knowledge survey</li>
+                            <li>Document ingestion & organization</li>
+                            <li>AI-powered search & Q&A setup</li>
+                            <li>Training session (1-2 hours)</li>
+                            <li>Custom quick-start guide</li>
+                            <li>Annual maintenance & updates</li>
+                        </ul>
+                        <a href="mailto:ty@aibusinesscopilot.io?subject=Knowledge%20Base%20Inquiry" class="btn" style="width:100%;display:block;">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 
     <!-- FINAL CTA -->
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to stop drowning in busywork?</h2>
-            <p>Book a free 15-minute discovery call. We'll learn about your business and show you exactly how AI can help.</p>
-            <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free Discovery Call</a>
-            <p style="margin-top:1.5rem;font-size:0.9rem;opacity:0.7;">ty@aibusinesscopilot.io · No obligation, no pressure</p>
+            <h2 class="fade-up">Ready to step into the future?</h2>
+            <p class="fade-up">Book a free 15-minute discovery call. We'll learn about your needs and show you exactly how AI can help.</p>
+            <div class="fade-up">
+                <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free Discovery Call</a>
+            </div>
+            <p class="fade-up" style="margin-top:1.5rem;font-size:0.9rem;color:var(--text-dim);">ty@aibusinesscopilot.io · No obligation, no pressure</p>
         </div>
     </section>
 
@@ -689,6 +1111,47 @@
     <footer>
         <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
     </footer>
+
+    <!-- JS: Tab switching + scroll animations -->
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+            document.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+            var target = document.getElementById('tab-' + tab);
+            target.classList.add('active');
+            // Re-trigger fade animations for newly visible content
+            target.querySelectorAll('.fade-up').forEach(function(el) {
+                el.classList.remove('visible');
+                void el.offsetWidth; // force reflow
+                observeFadeUp(el);
+            });
+        }
+
+        // Intersection Observer for scroll animations
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        function observeFadeUp(el) {
+            observer.observe(el);
+        }
+
+        document.querySelectorAll('.fade-up').forEach(function(el) {
+            // Only observe elements in active tab or outside tabs
+            var tabParent = el.closest('.tab-content');
+            if (!tabParent || tabParent.classList.contains('active')) {
+                observer.observe(el);
+            }
+        });
+    </script>
 
 </body>
 </html>
