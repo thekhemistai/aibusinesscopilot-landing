@@ -22,21 +22,15 @@
             --text-muted: #94a3b8;
             --text-dim: rgba(255,255,255,0.5);
             --success: #10b981;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glow-blue: 0 0 30px rgba(0, 212, 255, 0.3);
             --glow-pink: 0 0 30px rgba(233, 69, 96, 0.3);
+            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -46,32 +40,50 @@
             overflow-x: hidden;
         }
 
-        /* GRID BACKGROUND */
-        body::before {
-            content: '';
+        /* ===== PARTICLE CANVAS ===== */
+        #particle-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
         }
 
-        body > * {
+        /* ===== FLOATING GEOMETRIC SHAPES ===== */
+        .geo-shapes {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .geo-shape {
+            position: absolute;
+            opacity: 0.04;
+            animation: geoFloat linear infinite;
+        }
+
+        .geo-shape svg {
+            width: 100%; height: 100%;
+        }
+
+        @keyframes geoFloat {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        body > *:not(#particle-canvas):not(.geo-shapes) {
             position: relative;
             z-index: 1;
         }
 
-        /* NAV */
+        /* ===== NAV ===== */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             background: rgba(10, 10, 26, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -125,33 +137,38 @@
             padding: 0 2rem;
         }
 
-        /* HERO */
+        /* ===== HERO WITH ANIMATED GRADIENT ===== */
         .hero {
             padding: 10rem 0 5rem;
             text-align: center;
-            background: radial-gradient(ellipse at 50% 0%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
-                        var(--bg-deep);
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
+        .hero-gradient-bg {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 600px;
-            height: 600px;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
-            animation: heroPulse 4s ease-in-out infinite;
-            pointer-events: none;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(233, 69, 96, 0.08) 0%, transparent 50%);
+            background-size: 200% 200%;
+            animation: heroGradientShift 8s ease-in-out infinite;
+            z-index: 0;
         }
 
-        @keyframes heroPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        @keyframes heroGradientShift {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 50% 100%; }
+            75% { background-position: 0% 50%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .hero > .container {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -168,6 +185,22 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
+        }
+
+        /* Typing cursor */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: var(--neon-blue);
+            margin-left: 2px;
+            animation: cursorBlink 0.7s step-end infinite;
+            vertical-align: text-bottom;
+            box-shadow: 0 0 8px var(--neon-blue);
+        }
+
+        @keyframes cursorBlink {
+            50% { opacity: 0; }
         }
 
         .hero p {
@@ -212,7 +245,7 @@
             color: var(--white);
         }
 
-        /* TRUST BAR */
+        /* ===== TRUST BAR ===== */
         .trust-bar {
             background: rgba(0, 212, 255, 0.03);
             border-top: 1px solid var(--glass-border);
@@ -237,11 +270,9 @@
             font-weight: 500;
         }
 
-        .trust-item .icon {
-            font-size: 1.3rem;
-        }
+        .trust-item .icon { font-size: 1.3rem; }
 
-        /* TAB TOGGLE */
+        /* ===== TAB TOGGLE ===== */
         .tab-toggle-wrapper {
             text-align: center;
             padding: 4rem 0 2rem;
@@ -253,7 +284,6 @@
             border: 1px solid var(--glass-border);
             border-radius: 50px;
             padding: 5px;
-            position: relative;
         }
 
         .tab-btn {
@@ -276,28 +306,22 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
-        .tab-btn:not(.active):hover {
-            color: var(--text-primary);
-        }
+        .tab-btn:not(.active):hover { color: var(--text-primary); }
 
         .tab-content {
             display: none;
             animation: fadeIn 0.5s ease;
         }
 
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* SECTIONS */
-        section {
-            padding: 5rem 0;
-        }
+        /* ===== SECTIONS ===== */
+        section { padding: 5rem 0; }
 
         .section-label {
             text-transform: uppercase;
@@ -318,9 +342,7 @@
             margin-bottom: 1rem;
         }
 
-        h2.centered {
-            text-align: center;
-        }
+        h2.centered { text-align: center; }
 
         .subtitle {
             font-size: 1.15rem;
@@ -335,18 +357,82 @@
             margin-right: auto;
         }
 
-        /* GLOWING DIVIDER */
+        /* ===== GLOW DIVIDER ===== */
         .glow-divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
             opacity: 0.3;
-            margin: 0;
         }
 
-        /* PROBLEM */
-        .problem {
-            background: rgba(0, 0, 0, 0.2);
+        /* ===== GLOWING ANIMATED BORDERS ===== */
+        @keyframes glowPulse {
+            0%, 100% {
+                border-color: rgba(0, 212, 255, 0.08);
+                box-shadow: 0 0 0 rgba(0, 212, 255, 0);
+            }
+            50% {
+                border-color: rgba(0, 212, 255, 0.25);
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.06), inset 0 0 20px rgba(0, 212, 255, 0.03);
+            }
         }
+
+        @keyframes glowPulsePurple {
+            0%, 100% {
+                border-color: rgba(168, 85, 247, 0.08);
+                box-shadow: 0 0 0 rgba(168, 85, 247, 0);
+            }
+            50% {
+                border-color: rgba(168, 85, 247, 0.25);
+                box-shadow: 0 0 20px rgba(168, 85, 247, 0.06), inset 0 0 20px rgba(168, 85, 247, 0.03);
+            }
+        }
+
+        @keyframes glowPulsePink {
+            0%, 100% {
+                border-color: rgba(233, 69, 96, 0.08);
+                box-shadow: 0 0 0 rgba(233, 69, 96, 0);
+            }
+            50% {
+                border-color: rgba(233, 69, 96, 0.25);
+                box-shadow: 0 0 20px rgba(233, 69, 96, 0.06), inset 0 0 20px rgba(233, 69, 96, 0.03);
+            }
+        }
+
+        .glow-border {
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        .glow-border-purple {
+            animation: glowPulsePurple 4s ease-in-out infinite;
+        }
+
+        .glow-border-pink {
+            animation: glowPulsePink 4s ease-in-out infinite;
+        }
+
+        /* Stagger glow animations */
+        .glow-border:nth-child(2), .glow-border-purple:nth-child(2) { animation-delay: 1s; }
+        .glow-border:nth-child(3), .glow-border-pink:nth-child(1) { animation-delay: 2s; }
+        .glow-border:nth-child(4) { animation-delay: 3s; }
+
+        /* ===== GLASSMORPHISM CARDS (shared) ===== */
+        .glass-card {
+            background: rgba(15, 18, 40, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        .glass-card:hover {
+            background: rgba(15, 18, 40, 0.7);
+        }
+
+        /* ===== PROBLEM SECTION ===== */
+        .problem { background: rgba(0, 0, 0, 0.2); }
 
         .pain-points {
             display: grid;
@@ -356,48 +442,23 @@
         }
 
         .pain-point {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             padding: 1.8rem;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
             border-left: 3px solid var(--neon-blue);
             transition: all 0.3s;
         }
 
         .pain-point:hover {
             border-left-color: var(--neon-purple);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.1);
             transform: translateY(-3px);
         }
 
-        .pain-point .icon {
-            font-size: 2rem;
-            margin-bottom: 0.8rem;
-        }
+        .pain-point .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+        .pain-point h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
+        .pain-point p { font-size: 0.95rem; color: var(--text-muted); }
 
-        .pain-point h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
-
-        .pain-point p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        /* SOLUTION */
-        .solution h2 {
-            text-align: center;
-        }
-
-        .solution .subtitle {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        /* ===== SOLUTION ===== */
+        .solution h2 { text-align: center; }
+        .solution .subtitle { text-align: center; margin-left: auto; margin-right: auto; }
 
         .features {
             display: grid;
@@ -408,23 +469,10 @@
         .feature {
             text-align: center;
             padding: 2.5rem 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-
-        .feature:hover {
-            border-color: rgba(0, 212, 255, 0.2);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
-            transform: translateY(-4px);
         }
 
         .feature .icon-circle {
-            width: 70px;
-            height: 70px;
+            width: 70px; height: 70px;
             border-radius: 50%;
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
             border: 1px solid rgba(0, 212, 255, 0.2);
@@ -435,48 +483,25 @@
             font-size: 1.8rem;
         }
 
-        .feature h3 {
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
+        .feature h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--white); }
+        .feature p { color: var(--text-muted); font-size: 0.95rem; }
 
-        .feature p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* HOW IT WORKS */
-        .how-it-works {
-            background: rgba(0, 0, 0, 0.3);
-        }
+        /* ===== HOW IT WORKS ===== */
+        .how-it-works { background: rgba(0, 0, 0, 0.3); }
 
         .steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 2rem;
-            position: relative;
         }
 
         .step {
             text-align: center;
             padding: 2rem 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-
-        .step:hover {
-            border-color: rgba(0, 212, 255, 0.2);
-            transform: translateY(-3px);
         }
 
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
@@ -489,21 +514,11 @@
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
-        .step h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-        }
+        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
+        .step p { font-size: 0.9rem; color: var(--text-muted); }
 
-        .step p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* PRICING */
-        .pricing {
-            background: rgba(0, 0, 0, 0.15);
-        }
+        /* ===== PRICING ===== */
+        .pricing { background: rgba(0, 0, 0, 0.15); }
 
         .pricing-grid {
             display: grid;
@@ -514,21 +529,10 @@
         }
 
         .pricing-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
             padding: 2.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0, 212, 255, 0.2);
         }
 
         .pricing-card.featured {
@@ -539,8 +543,7 @@
         .pricing-card.featured::before {
             content: 'POPULAR';
             position: absolute;
-            top: 18px;
-            right: -28px;
+            top: 18px; right: -28px;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             padding: 0.3rem 2rem;
@@ -550,11 +553,7 @@
             letter-spacing: 1px;
         }
 
-        .pricing-card h3 {
-            font-size: 1.3rem;
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
+        .pricing-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
 
         .pricing-card .price {
             font-size: 2.5rem;
@@ -594,7 +593,42 @@
             flex-shrink: 0;
         }
 
-        /* CTA */
+        /* ===== STATS / COUNTERS ===== */
+        .stats-bar {
+            padding: 3rem 0;
+            background: rgba(0, 212, 255, 0.02);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        /* ===== CTA ===== */
         .cta-section {
             text-align: center;
             background: radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
@@ -607,33 +641,17 @@
         .cta-section::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
             opacity: 0.4;
         }
 
-        .cta-section h2 {
-            color: var(--white);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+        .cta-section h2 { color: var(--white); font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.15rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
+        .cta-section .btn { font-size: 1.2rem; padding: 1.2rem 3rem; }
 
-        .cta-section p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-section .btn {
-            font-size: 1.2rem;
-            padding: 1.2rem 3rem;
-        }
-
-        /* FOOTER */
+        /* ===== FOOTER ===== */
         footer {
             background: rgba(0, 0, 0, 0.4);
             border-top: 1px solid var(--glass-border);
@@ -649,23 +667,37 @@
             transition: color 0.2s;
         }
 
-        footer a:hover {
-            color: var(--neon-blue);
-        }
+        footer a:hover { color: var(--neon-blue); }
 
-        /* SCROLL ANIMATIONS */
-        .fade-up {
+        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .fade-up.visible {
+        .reveal.from-left {
+            transform: translateX(-60px);
+        }
+
+        .reveal.from-right {
+            transform: translateX(60px);
+        }
+
+        .reveal.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate(0, 0);
         }
 
-        /* PERSONAL TAB FEATURES INLINE */
+        /* Stagger children */
+        .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.1s; }
+        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.2s; }
+        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.3s; }
+        .reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.4s; }
+
+        /* Personal tab features */
         .personal-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -676,59 +708,20 @@
         .personal-feature {
             text-align: center;
             padding: 2rem 1rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s;
         }
 
-        .personal-feature:hover {
-            border-color: rgba(0, 212, 255, 0.2);
-            transform: translateY(-3px);
-        }
+        .personal-feature .pf-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+        .personal-feature h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; }
+        .personal-feature p { font-size: 0.85rem; color: var(--text-muted); }
 
-        .personal-feature .pf-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.8rem;
-            display: block;
-        }
+        .pricing-single { max-width: 420px; margin: 0 auto; }
 
-        .personal-feature h3 {
-            font-size: 1rem;
-            color: var(--white);
-            margin-bottom: 0.4rem;
-        }
-
-        .personal-feature p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* PERSONAL PRICING - single card centered */
-        .pricing-single {
-            max-width: 420px;
-            margin: 0 auto;
-        }
-
-        /* MOBILE */
+        /* ===== MOBILE ===== */
         @media (max-width: 768px) {
-            .hero {
-                padding: 8rem 0 4rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1.05rem;
-            }
-
-            h2 {
-                font-size: 1.7rem;
-            }
+            .hero { padding: 8rem 0 4rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.05rem; }
+            h2 { font-size: 1.7rem; }
 
             .btn-outline {
                 margin-left: 0;
@@ -745,32 +738,37 @@
                 gap: 1rem;
             }
 
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
+            .pricing-grid { grid-template-columns: 1fr; }
 
             .tab-btn {
                 padding: 0.7rem 1.5rem;
                 font-size: 0.9rem;
             }
 
-            .personal-features {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .personal-features { grid-template-columns: repeat(2, 1fr); }
+            .cta-section h2 { font-size: 1.8rem; }
 
-            .cta-section h2 {
-                font-size: 1.8rem;
+            .stats-grid { gap: 2rem; }
+            .stat-number { font-size: 2rem; }
+
+            .reveal.from-left,
+            .reveal.from-right {
+                transform: translateY(40px);
             }
         }
 
         @media (max-width: 480px) {
-            .personal-features {
-                grid-template-columns: 1fr;
-            }
+            .personal-features { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- FLOATING GEOMETRIC SHAPES -->
+    <div class="geo-shapes" id="geo-shapes"></div>
 
     <!-- NAV -->
     <nav>
@@ -782,10 +780,11 @@
 
     <!-- HERO -->
     <section class="hero">
+        <div class="hero-gradient-bg"></div>
         <div class="container">
-            <h1 class="fade-up">The <span class="glow">ABC</span>'s of running<br>your business autonomously</h1>
-            <p class="fade-up">Done-for-you AI setup for businesses and professionals. We handle the tech so you can focus on what matters.</p>
-            <div class="fade-up">
+            <h1 class="reveal" id="hero-heading">The <span class="glow">ABC</span>'s of running<br>your business autonomously</h1>
+            <p class="reveal">Done-for-you AI setup for businesses and professionals. We handle the tech so you can focus on what matters.</p>
+            <div class="reveal">
                 <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free 15-Min Discovery Call</a>
             </div>
         </div>
@@ -794,21 +793,33 @@
     <!-- TRUST BAR -->
     <div class="trust-bar">
         <div class="container">
-            <div class="trust-item">
-                <span class="icon">🛡️</span>
-                No IT department needed
-            </div>
-            <div class="trust-item">
-                <span class="icon">🔌</span>
-                Works with your existing tools
-            </div>
-            <div class="trust-item">
-                <span class="icon">⚡</span>
-                Live in 1-2 weeks
-            </div>
-            <div class="trust-item">
-                <span class="icon">🤝</span>
-                Local & personal service
+            <div class="trust-item"><span class="icon">🛡️</span> No IT department needed</div>
+            <div class="trust-item"><span class="icon">🔌</span> Works with your existing tools</div>
+            <div class="trust-item"><span class="icon">⚡</span> Live in 1-2 weeks</div>
+            <div class="trust-item"><span class="icon">🤝</span> Local & personal service</div>
+        </div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <div class="stat-number"><span class="counter" data-target="10" data-suffix="+">0</span></div>
+                    <div class="stat-label">Hours Saved / Week</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-number"><span class="counter" data-target="85" data-suffix="%">0</span></div>
+                    <div class="stat-label">Less Manual Busywork</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-number"><span class="counter" data-target="2" data-suffix=" Weeks">0</span></div>
+                    <div class="stat-label">Average Setup Time</div>
+                </div>
+                <div class="stat-item reveal">
+                    <div class="stat-number"><span class="counter" data-target="100" data-suffix="%">0</span></div>
+                    <div class="stat-label">Done For You</div>
+                </div>
             </div>
         </div>
     </div>
@@ -826,29 +837,28 @@
     <!-- ============ BUSINESS TAB ============ -->
     <div id="tab-business" class="tab-content active">
 
-        <!-- PROBLEM -->
         <section class="problem">
             <div class="container">
-                <div class="section-label fade-up">The Problem</div>
-                <h2 class="fade-up">You didn't start a business to drown in paperwork</h2>
-                <p class="subtitle fade-up">Small businesses with 1-20 employees are spending hours every week on tasks AI could handle in seconds. But figuring out where to start feels overwhelming.</p>
-                <div class="pain-points">
-                    <div class="pain-point fade-up">
+                <div class="section-label reveal">The Problem</div>
+                <h2 class="reveal">You didn't start a business to drown in paperwork</h2>
+                <p class="subtitle reveal">Small businesses with 1-20 employees are spending hours every week on tasks AI could handle in seconds. But figuring out where to start feels overwhelming.</p>
+                <div class="pain-points reveal-stagger">
+                    <div class="pain-point glass-card glow-border reveal">
                         <div class="icon">📧</div>
                         <h3>Inbox Overload</h3>
                         <p>Hundreds of emails a week. Sorting, responding, following up — it eats your entire morning.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border-purple reveal">
                         <div class="icon">📅</div>
                         <h3>Scheduling Chaos</h3>
                         <p>Back-and-forth texts, double bookings, missed appointments. Your calendar is a mess.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border-pink reveal">
                         <div class="icon">📝</div>
                         <h3>Document Drudgery</h3>
                         <p>Proposals, invoices, reports — you rewrite the same things over and over.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border reveal">
                         <div class="icon">🤷</div>
                         <h3>Don't Know Where to Start</h3>
                         <p>You know AI can help, but there's no IT department and every tool claims to be "the one."</p>
@@ -859,29 +869,28 @@
 
         <div class="glow-divider"></div>
 
-        <!-- SOLUTION -->
         <section class="solution">
             <div class="container">
-                <div class="section-label fade-up">The Solution</div>
-                <h2 class="fade-up">Your AI copilot, fully set up and running</h2>
-                <p class="subtitle centered fade-up">We set up Claude Teams for your business — configured, trained, and ready to handle the busywork.</p>
-                <div class="features">
-                    <div class="feature fade-up">
+                <div class="section-label reveal">The Solution</div>
+                <h2 class="reveal">Your AI copilot, fully set up and running</h2>
+                <p class="subtitle centered reveal">We set up Claude Teams for your business — configured, trained, and ready to handle the busywork.</p>
+                <div class="features reveal-stagger">
+                    <div class="feature glass-card glow-border tilt-card reveal">
                         <div class="icon-circle">📨</div>
                         <h3>Email Triage</h3>
                         <p>Claude drafts responses, categorizes incoming mail, and flags what needs your attention.</p>
                     </div>
-                    <div class="feature fade-up">
+                    <div class="feature glass-card glow-border-purple tilt-card reveal">
                         <div class="icon-circle">🗓️</div>
                         <h3>Smart Scheduling</h3>
                         <p>Automated appointment booking, reminders, and follow-ups. No more back-and-forth.</p>
                     </div>
-                    <div class="feature fade-up">
+                    <div class="feature glass-card glow-border-pink tilt-card reveal">
                         <div class="icon-circle">📄</div>
                         <h3>Document Drafting</h3>
                         <p>Proposals, invoices, reports — Claude generates them from your templates and past work.</p>
                     </div>
-                    <div class="feature fade-up">
+                    <div class="feature glass-card glow-border tilt-card reveal">
                         <div class="icon-circle">💬</div>
                         <h3>Customer Follow-ups</h3>
                         <p>Automated check-ins and personalized outreach that keep your clients engaged.</p>
@@ -892,29 +901,28 @@
 
         <div class="glow-divider"></div>
 
-        <!-- HOW IT WORKS -->
         <section class="how-it-works">
             <div class="container">
-                <div class="section-label fade-up">How It Works</div>
-                <h2 class="centered fade-up">Four steps to autonomous</h2>
-                <p class="subtitle centered fade-up">From first call to fully operational. We handle everything.</p>
-                <div class="steps">
-                    <div class="step fade-up">
+                <div class="section-label reveal">How It Works</div>
+                <h2 class="centered reveal">Four steps to autonomous</h2>
+                <p class="subtitle centered reveal">From first call to fully operational. We handle everything.</p>
+                <div class="steps reveal-stagger">
+                    <div class="step glass-card glow-border reveal">
                         <div class="step-number">1</div>
                         <h3>Discovery Survey</h3>
                         <p>We learn your workflows, pain points, and current tools. Takes 20 minutes.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border-purple reveal">
                         <div class="step-number">2</div>
                         <h3>Setup & Configure</h3>
                         <p>We build your Claude Teams environment and custom automations. 1-2 weeks.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border-pink reveal">
                         <div class="step-number">3</div>
                         <h3>Training Session</h3>
                         <p>Hands-on training for you and your team. In-person or video. 2-4 hours.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border reveal">
                         <div class="step-number">4</div>
                         <h3>Weekly Check-ins</h3>
                         <p>Ongoing optimization, new features, and support. We make sure it keeps working.</p>
@@ -925,14 +933,13 @@
 
         <div class="glow-divider"></div>
 
-        <!-- PRICING -->
         <section class="pricing">
             <div class="container">
-                <div class="section-label fade-up">Pricing</div>
-                <h2 class="centered fade-up">Simple, transparent pricing</h2>
-                <p class="subtitle centered fade-up">No hidden fees. No long-term contracts required for setup.</p>
+                <div class="section-label reveal">Pricing</div>
+                <h2 class="centered reveal">Simple, transparent pricing</h2>
+                <p class="subtitle centered reveal">No hidden fees. No long-term contracts required for setup.</p>
                 <div class="pricing-grid">
-                    <div class="pricing-card fade-up">
+                    <div class="pricing-card glass-card glow-border tilt-card reveal">
                         <h3>🔧 AI Setup</h3>
                         <div class="price">$2,500-$4,000</div>
                         <div class="price-note">One-time</div>
@@ -946,7 +953,7 @@
                         </ul>
                         <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn" style="width:100%;display:block;">Get Started</a>
                     </div>
-                    <div class="pricing-card featured fade-up">
+                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
                         <h3>🤝 Managed AI</h3>
                         <div class="price">$500-$750</div>
                         <div class="price-note">/month · 3-month minimum</div>
@@ -969,29 +976,28 @@
     <!-- ============ PERSONAL TAB ============ -->
     <div id="tab-personal" class="tab-content">
 
-        <!-- PROBLEM -->
         <section class="problem">
             <div class="container">
-                <div class="section-label fade-up">The Problem</div>
-                <h2 class="fade-up">Your knowledge is scattered everywhere</h2>
-                <p class="subtitle fade-up">Your knowledge is scattered across docs, notes, bookmarks, and files. You waste hours searching for things you already know.</p>
-                <div class="pain-points">
-                    <div class="pain-point fade-up">
+                <div class="section-label reveal">The Problem</div>
+                <h2 class="reveal">Your knowledge is scattered everywhere</h2>
+                <p class="subtitle reveal">Your knowledge is scattered across docs, notes, bookmarks, and files. You waste hours searching for things you already know.</p>
+                <div class="pain-points reveal-stagger">
+                    <div class="pain-point glass-card glow-border reveal">
                         <div class="icon">📂</div>
                         <h3>Scattered Files</h3>
                         <p>Important documents spread across Google Drive, Dropbox, email, desktop folders, and random downloads.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border-purple reveal">
                         <div class="icon">🔍</div>
                         <h3>Can't Find What You Need</h3>
                         <p>You know you saved it somewhere. You spend 20 minutes searching and still come up empty.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border-pink reveal">
                         <div class="icon">🧠</div>
                         <h3>Knowledge Decay</h3>
                         <p>Great insights from articles, courses, and research — forgotten within weeks because there's no system.</p>
                     </div>
-                    <div class="pain-point fade-up">
+                    <div class="pain-point glass-card glow-border reveal">
                         <div class="icon">⏰</div>
                         <h3>Wasted Time</h3>
                         <p>Re-researching things you've already learned. Re-reading articles you've already read. Starting from scratch every time.</p>
@@ -1002,29 +1008,28 @@
 
         <div class="glow-divider"></div>
 
-        <!-- SOLUTION -->
         <section class="solution">
             <div class="container">
-                <div class="section-label fade-up">The Solution</div>
-                <h2 class="fade-up">Your personal knowledge base, built for you</h2>
-                <p class="subtitle centered fade-up">We build you a personal knowledge base — your documents, research, and industry intel organized, searchable, and compounding over time.</p>
-                <div class="personal-features">
-                    <div class="personal-feature fade-up">
+                <div class="section-label reveal">The Solution</div>
+                <h2 class="reveal">Your personal knowledge base, built for you</h2>
+                <p class="subtitle centered reveal">We build you a personal knowledge base — your documents, research, and industry intel organized, searchable, and compounding over time.</p>
+                <div class="personal-features reveal-stagger">
+                    <div class="personal-feature glass-card glow-border tilt-card reveal">
                         <span class="pf-icon">🔍</span>
                         <h3>Universal Search</h3>
                         <p>Find anything across all your documents instantly</p>
                     </div>
-                    <div class="personal-feature fade-up">
+                    <div class="personal-feature glass-card glow-border-purple tilt-card reveal">
                         <span class="pf-icon">📚</span>
                         <h3>Auto-Organization</h3>
                         <p>AI categorizes and links your knowledge automatically</p>
                     </div>
-                    <div class="personal-feature fade-up">
+                    <div class="personal-feature glass-card glow-border-pink tilt-card reveal">
                         <span class="pf-icon">🧠</span>
                         <h3>AI-Powered Q&A</h3>
                         <p>Ask questions and get answers from your own knowledge</p>
                     </div>
-                    <div class="personal-feature fade-up">
+                    <div class="personal-feature glass-card glow-border tilt-card reveal">
                         <span class="pf-icon">📈</span>
                         <h3>Compounding Knowledge</h3>
                         <p>Your base grows smarter and more valuable over time</p>
@@ -1035,29 +1040,28 @@
 
         <div class="glow-divider"></div>
 
-        <!-- HOW IT WORKS -->
         <section class="how-it-works">
             <div class="container">
-                <div class="section-label fade-up">How It Works</div>
-                <h2 class="centered fade-up">Four steps to your second brain</h2>
-                <p class="subtitle centered fade-up">From scattered files to a searchable, intelligent knowledge system.</p>
-                <div class="steps">
-                    <div class="step fade-up">
+                <div class="section-label reveal">How It Works</div>
+                <h2 class="centered reveal">Four steps to your second brain</h2>
+                <p class="subtitle centered reveal">From scattered files to a searchable, intelligent knowledge system.</p>
+                <div class="steps reveal-stagger">
+                    <div class="step glass-card glow-border reveal">
                         <div class="step-number">1</div>
                         <h3>Survey</h3>
                         <p>We learn about your documents, research habits, and what you need to find fast.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border-purple reveal">
                         <div class="step-number">2</div>
                         <h3>Build</h3>
                         <p>We ingest, organize, and structure your knowledge base. Takes about 1 week.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border-pink reveal">
                         <div class="step-number">3</div>
                         <h3>Training</h3>
                         <p>We show you how to search, add to, and get the most out of your knowledge base.</p>
                     </div>
-                    <div class="step fade-up">
+                    <div class="step glass-card glow-border reveal">
                         <div class="step-number">4</div>
                         <h3>Annual Maintenance</h3>
                         <p>Ongoing updates, re-organization, and new document ingestion to keep it current.</p>
@@ -1068,14 +1072,13 @@
 
         <div class="glow-divider"></div>
 
-        <!-- PRICING -->
         <section class="pricing">
             <div class="container">
-                <div class="section-label fade-up">Pricing</div>
-                <h2 class="centered fade-up">Invest in your second brain</h2>
-                <p class="subtitle centered fade-up">One-time build, then low-cost maintenance to keep it growing.</p>
+                <div class="section-label reveal">Pricing</div>
+                <h2 class="centered reveal">Invest in your second brain</h2>
+                <p class="subtitle centered reveal">One-time build, then low-cost maintenance to keep it growing.</p>
                 <div class="pricing-single">
-                    <div class="pricing-card featured fade-up">
+                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
                         <h3>🧠 Personal Knowledge Base</h3>
                         <div class="price">$1,500</div>
                         <div class="price-note">One-time build + $500/year maintenance</div>
@@ -1098,12 +1101,12 @@
     <!-- FINAL CTA -->
     <section class="cta-section">
         <div class="container">
-            <h2 class="fade-up">Ready to step into the future?</h2>
-            <p class="fade-up">Book a free 15-minute discovery call. We'll learn about your needs and show you exactly how AI can help.</p>
-            <div class="fade-up">
+            <h2 class="reveal">Ready to step into the future?</h2>
+            <p class="reveal">Book a free 15-minute discovery call. We'll learn about your needs and show you exactly how AI can help.</p>
+            <div class="reveal">
                 <a href="mailto:ty@aibusinesscopilot.io?subject=Discovery%20Call%20Request" class="btn">Book Your Free Discovery Call</a>
             </div>
-            <p class="fade-up" style="margin-top:1.5rem;font-size:0.9rem;color:var(--text-dim);">ty@aibusinesscopilot.io · No obligation, no pressure</p>
+            <p class="reveal" style="margin-top:1.5rem;font-size:0.9rem;color:var(--text-dim);">ty@aibusinesscopilot.io · No obligation, no pressure</p>
         </div>
     </section>
 
@@ -1112,45 +1115,363 @@
         <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
     </footer>
 
-    <!-- JS: Tab switching + scroll animations -->
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach(function(btn) {
-                btn.classList.toggle('active', btn.dataset.tab === tab);
-            });
-            document.querySelectorAll('.tab-content').forEach(function(content) {
-                content.classList.remove('active');
-            });
-            var target = document.getElementById('tab-' + tab);
-            target.classList.add('active');
-            // Re-trigger fade animations for newly visible content
-            target.querySelectorAll('.fade-up').forEach(function(el) {
-                el.classList.remove('visible');
-                void el.offsetWidth; // force reflow
-                observeFadeUp(el);
-            });
+    /* ===== 1. PARTICLE / NEURAL NETWORK BACKGROUND ===== */
+    (function() {
+        var canvas = document.getElementById('particle-canvas');
+        var ctx = canvas.getContext('2d');
+        var particles = [];
+        var particleCount = 80;
+        var connectionDist = 150;
+        var mouse = { x: null, y: null };
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
 
-        // Intersection Observer for scroll animations
-        var observer = new IntersectionObserver(function(entries) {
+        resize();
+        window.addEventListener('resize', resize);
+
+        document.addEventListener('mousemove', function(e) {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        function Particle() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 2 + 0.5;
+            this.color = Math.random() > 0.5 ? '0, 212, 255' : '168, 85, 247';
+        }
+
+        for (var i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                // Draw particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(' + p.color + ', 0.6)';
+                ctx.fill();
+
+                // Connect to nearby particles
+                for (var j = i + 1; j < particles.length; j++) {
+                    var p2 = particles[j];
+                    var dx = p.x - p2.x;
+                    var dy = p.y - p2.y;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDist) {
+                        var opacity = (1 - dist / connectionDist) * 0.15;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = 'rgba(0, 212, 255, ' + opacity + ')';
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect to mouse
+                if (mouse.x !== null) {
+                    var mdx = p.x - mouse.x;
+                    var mdy = p.y - mouse.y;
+                    var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                    if (mDist < 200) {
+                        var mOpacity = (1 - mDist / 200) * 0.25;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = 'rgba(168, 85, 247, ' + mOpacity + ')';
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    })();
+
+    /* ===== 7. FLOATING GEOMETRIC SHAPES ===== */
+    (function() {
+        var container = document.getElementById('geo-shapes');
+        var shapes = [
+            '<svg viewBox="0 0 100 100"><polygon points="50,5 95,97.5 5,97.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1"/></svg>',
+            '<svg viewBox="0 0 100 100"><polygon points="50,3 93.3,25 93.3,75 50,97 6.7,75 6.7,25" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1"/></svg>',
+            '<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="1" transform="rotate(45 50 50)"/></svg>',
+            '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1"/></svg>'
+        ];
+
+        for (var i = 0; i < 12; i++) {
+            var el = document.createElement('div');
+            el.className = 'geo-shape';
+            var size = 30 + Math.random() * 60;
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = Math.random() * 100 + '%';
+            el.style.animationDuration = (15 + Math.random() * 25) + 's';
+            el.style.animationDelay = -(Math.random() * 20) + 's';
+            el.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+            container.appendChild(el);
+        }
+    })();
+
+    /* ===== 2. SCROLL-TRIGGERED REVEAL (IntersectionObserver) ===== */
+    (function() {
+        var revealObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        function observeFadeUp(el) {
-            observer.observe(el);
+        function observeReveals(root) {
+            var els = (root || document).querySelectorAll('.reveal');
+            els.forEach(function(el) {
+                var tabParent = el.closest('.tab-content');
+                if (!tabParent || tabParent.classList.contains('active')) {
+                    revealObserver.observe(el);
+                }
+            });
         }
 
-        document.querySelectorAll('.fade-up').forEach(function(el) {
-            // Only observe elements in active tab or outside tabs
-            var tabParent = el.closest('.tab-content');
-            if (!tabParent || tabParent.classList.contains('active')) {
-                observer.observe(el);
+        observeReveals();
+
+        // Expose for tab switching
+        window._observeReveals = observeReveals;
+        window._revealObserver = revealObserver;
+    })();
+
+    /* ===== 5. TYPING EFFECT ON HERO ===== */
+    (function() {
+        var heading = document.getElementById('hero-heading');
+        var fullHTML = heading.innerHTML;
+        var textOnly = heading.textContent;
+        var cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+
+        // Build a map: text index -> HTML structure
+        // We'll type out the text while preserving HTML tags
+        var segments = [];
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = fullHTML;
+
+        function extractSegments(node) {
+            if (node.nodeType === 3) { // text node
+                for (var i = 0; i < node.textContent.length; i++) {
+                    segments.push({ char: node.textContent[i], node: node, index: i });
+                }
+            } else if (node.nodeType === 1) { // element
+                for (var c = 0; c < node.childNodes.length; c++) {
+                    extractSegments(node.childNodes[c]);
+                }
             }
+        }
+        extractSegments(tempDiv);
+
+        // Hide text, then type it out
+        heading.innerHTML = '';
+        heading.appendChild(cursor);
+
+        // Clone the original structure but empty
+        var clone = tempDiv.cloneNode(true);
+        function emptyTextNodes(node) {
+            if (node.nodeType === 3) {
+                node.textContent = '';
+            } else {
+                for (var c = 0; c < node.childNodes.length; c++) {
+                    emptyTextNodes(node.childNodes[c]);
+                }
+            }
+        }
+        emptyTextNodes(clone);
+
+        heading.innerHTML = '';
+        while (clone.firstChild) heading.appendChild(clone.firstChild);
+        heading.appendChild(cursor);
+
+        // Get matching text nodes from the live heading
+        var liveTextNodes = [];
+        function collectTextNodes(node) {
+            if (node.nodeType === 3) liveTextNodes.push(node);
+            else {
+                for (var c = 0; c < node.childNodes.length; c++) {
+                    if (node.childNodes[c] !== cursor) collectTextNodes(node.childNodes[c]);
+                }
+            }
+        }
+        collectTextNodes(heading);
+
+        // Map segments to live text nodes
+        var liveIndex = 0;
+        var charInNode = 0;
+        var segmentMap = [];
+        var origTextNodes = [];
+        function collectOrigTextNodes(node) {
+            if (node.nodeType === 3) origTextNodes.push(node);
+            else { for (var c = 0; c < node.childNodes.length; c++) collectOrigTextNodes(node.childNodes[c]); }
+        }
+        collectOrigTextNodes(tempDiv);
+
+        // Simple approach: type character by character into live text nodes
+        var totalChars = 0;
+        var nodeChars = [];
+        for (var n = 0; n < origTextNodes.length; n++) {
+            var len = origTextNodes[n].textContent.length;
+            nodeChars.push(len);
+            totalChars += len;
+        }
+
+        var typed = 0;
+        var nodeIdx = 0;
+        var charIdx = 0;
+        var origTexts = origTextNodes.map(function(n) { return n.textContent; });
+
+        function typeNext() {
+            if (typed >= totalChars) {
+                // Remove cursor after a delay
+                setTimeout(function() { if (cursor.parentNode) cursor.parentNode.removeChild(cursor); }, 2000);
+                return;
+            }
+
+            // Find which node/char
+            while (nodeIdx < nodeChars.length && charIdx >= nodeChars[nodeIdx]) {
+                charIdx = 0;
+                nodeIdx++;
+            }
+
+            if (nodeIdx < liveTextNodes.length) {
+                liveTextNodes[nodeIdx].textContent = origTexts[nodeIdx].substring(0, charIdx + 1);
+            }
+
+            charIdx++;
+            typed++;
+
+            var delay = 35;
+            if (typed > 0 && origTexts[nodeIdx] && origTexts[nodeIdx][charIdx - 1] === ' ') delay = 15;
+
+            setTimeout(typeNext, delay);
+        }
+
+        // Start after a brief pause
+        setTimeout(typeNext, 500);
+    })();
+
+    /* ===== 4. 3D TILT EFFECT ON HOVER ===== */
+    (function() {
+        var tiltCards = document.querySelectorAll('.tilt-card');
+
+        tiltCards.forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var rect = card.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+                var centerX = rect.width / 2;
+                var centerY = rect.height / 2;
+                var rotateX = ((y - centerY) / centerY) * -8;
+                var rotateY = ((x - centerX) / centerX) * 8;
+
+                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
         });
+    })();
+
+    /* ===== 8. ANIMATED COUNTERS ===== */
+    (function() {
+        var counters = document.querySelectorAll('.counter');
+        var counted = new Set();
+
+        var counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !counted.has(entry.target)) {
+                    counted.add(entry.target);
+                    var el = entry.target;
+                    var target = parseInt(el.dataset.target);
+                    var suffix = el.dataset.suffix || '';
+                    var duration = 2000;
+                    var start = 0;
+                    var startTime = null;
+
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        // Ease out cubic
+                        var eased = 1 - Math.pow(1 - progress, 3);
+                        var current = Math.floor(eased * target);
+                        el.textContent = current + suffix;
+                        if (progress < 1) {
+                            requestAnimationFrame(step);
+                        } else {
+                            el.textContent = target + suffix;
+                        }
+                    }
+
+                    requestAnimationFrame(step);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(function(c) { counterObserver.observe(c); });
+    })();
+
+    /* ===== TAB SWITCHING ===== */
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.dataset.tab === tab);
+        });
+        document.querySelectorAll('.tab-content').forEach(function(content) {
+            content.classList.remove('active');
+        });
+        var target = document.getElementById('tab-' + tab);
+        target.classList.add('active');
+
+        // Re-trigger reveal animations
+        target.querySelectorAll('.reveal').forEach(function(el) {
+            el.classList.remove('visible');
+            void el.offsetWidth;
+            window._revealObserver.observe(el);
+        });
+
+        // Re-bind tilt cards in new tab
+        target.querySelectorAll('.tilt-card').forEach(function(card) {
+            card.addEventListener('mousemove', function(e) {
+                var rect = card.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var y = e.clientY - rect.top;
+                var centerX = rect.width / 2;
+                var centerY = rect.height / 2;
+                var rotateX = ((y - centerY) / centerY) * -8;
+                var rotateY = ((x - centerX) / centerX) * 8;
+                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+    }
     </script>
 
 </body>
