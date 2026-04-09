@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AiBusinessCopilot — Services & Pricing</title>
+    <meta name="description" content="AI workforce deployment for businesses. Custom AI setup, knowledge bases, and ongoing management. Get started in 2 weeks.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <style>
+        :root {
+            --bg-deep: #0a0a1a;
+            --bg-surface: #0d0f1e;
+            --bg-card: rgba(15, 18, 40, 0.6);
+            --neon-blue: #00d4ff;
+            --neon-cyan: #00ffd5;
+            --neon-purple: #a855f7;
+            --neon-pink: #e94560;
+            --white: #ffffff;
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-deep);
+        }
+
+        /* ===== PAGE WRAPPER ===== */
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        /* Subtle background glow */
+        .page::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 25% 15%, rgba(0, 212, 255, 0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-mark .icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .logo-mark .name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .logo-mark .name span {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .header h1 .accent {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .tagline {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--neon-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), transparent);
+        }
+
+        /* ===== SERVICE CARDS ===== */
+        .services {
+            margin-bottom: 3rem;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.75rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: border-color 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: rgba(0, 212, 255, 0.25);
+        }
+
+        .service-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .service-card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-card-header h3 .num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .card-blue .num { background: rgba(0, 212, 255, 0.15); color: var(--neon-blue); }
+        .card-purple .num { background: rgba(168, 85, 247, 0.15); color: var(--neon-purple); }
+        .card-pink .num { background: rgba(233, 69, 96, 0.15); color: var(--neon-pink); }
+
+        .price-tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .card-blue .price-tag { background: rgba(0, 212, 255, 0.1); color: var(--neon-blue); border: 1px solid rgba(0, 212, 255, 0.2); }
+        .card-purple .price-tag { background: rgba(168, 85, 247, 0.1); color: var(--neon-purple); border: 1px solid rgba(168, 85, 247, 0.2); }
+        .card-pink .price-tag { background: rgba(233, 69, 96, 0.1); color: var(--neon-pink); border: 1px solid rgba(233, 69, 96, 0.2); }
+
+        .service-card ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1.5rem;
+        }
+
+        .service-card li {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            padding-left: 1.4rem;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .card-blue li::before { color: var(--neon-blue); }
+        .card-purple li::before { color: var(--neon-purple); }
+        .card-pink li::before { color: var(--neon-pink); }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-it-works {
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 1.25rem 0.75rem;
+            position: relative;
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--neon-blue);
+            margin-bottom: 0.75rem;
+        }
+
+        .step h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.35rem;
+        }
+
+        .step p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Connector lines between steps */
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 2.1rem;
+            right: -0.5rem;
+            width: calc(100% - 3rem);
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3));
+            transform: translateX(100%);
+            z-index: -1;
+        }
+
+        /* ===== WHY US ===== */
+        .why-us {
+            margin-bottom: 3rem;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .why-item {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            padding: 1rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+        }
+
+        .why-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 212, 255, 0.08);
+            border-radius: 8px;
+        }
+
+        .why-item h4 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+
+        .why-item p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ===== CTA FOOTER ===== */
+        .cta-footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .cta-footer h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-footer .sub {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: var(--white);
+            padding: 0.85rem 2.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.4);
+        }
+
+        /* ===== BOTTOM FOOTER ===== */
+        .bottom-footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .bottom-footer a {
+            color: var(--neon-blue);
+            text-decoration: none;
+        }
+
+        .bottom-footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .page { padding: 2rem 1.25rem; }
+            .header h1 { font-size: 1.75rem; }
+            .header .tagline { font-size: 1rem; }
+            .service-card ul { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .step:not(:last-child)::after { display: none; }
+            .why-grid { grid-template-columns: 1fr; }
+            .service-card-header { flex-direction: column; }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.5rem; }
+            .steps { grid-template-columns: 1fr; }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            :root {
+                --bg-deep: #ffffff;
+                --bg-surface: #ffffff;
+                --bg-card: #ffffff;
+                --neon-blue: #0077b6;
+                --neon-cyan: #00838f;
+                --neon-purple: #7c3aed;
+                --neon-pink: #c81d4e;
+                --white: #111111;
+                --text-primary: #1a1a1a;
+                --text-muted: #555555;
+                --glass-bg: #f5f5f5;
+                --glass-border: #dddddd;
+            }
+
+            body {
+                background: #fff;
+                color: #1a1a1a;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page { padding: 0; max-width: 100%; }
+            .page::before { display: none; }
+
+            .header h1 .accent {
+                -webkit-text-fill-color: var(--neon-blue);
+                color: var(--neon-blue);
+            }
+
+            .logo-mark .name span {
+                -webkit-text-fill-color: var(--neon-blue);
+                color: var(--neon-blue);
+            }
+
+            .logo-mark .icon {
+                background: var(--neon-blue);
+                box-shadow: none;
+            }
+
+            .service-card {
+                border: 1px solid #ddd;
+                background: #fafafa;
+                backdrop-filter: none;
+                break-inside: avoid;
+            }
+
+            .cta-footer {
+                background: #f5f5f5;
+                border: 1px solid #ddd;
+                backdrop-filter: none;
+            }
+
+            .cta-btn {
+                background: var(--neon-blue);
+                box-shadow: none;
+                color: #fff !important;
+                -webkit-text-fill-color: #fff;
+            }
+
+            .step-num {
+                background: #f0f0f0;
+                border-color: #ccc;
+            }
+
+            .why-item {
+                background: #f9f9f9;
+                border-color: #ddd;
+            }
+
+            a { color: var(--neon-blue) !important; }
+            a[href]::after { content: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-mark">
+                <div class="icon">🤖</div>
+                <div class="name"><span>AiBusiness</span>Copilot</div>
+            </div>
+            <h1>Your <span class="accent">AI Workforce</span>, Deployed.</h1>
+            <p class="tagline">We set up AI systems that run your business tasks autonomously — so you can focus on growth.</p>
+        </header>
+
+        <!-- SERVICES -->
+        <section class="services">
+            <div class="section-title">What We Do</div>
+            <div class="service-grid">
+
+                <!-- Service 1 -->
+                <div class="service-card card-blue">
+                    <div class="service-card-header">
+                        <h3><span class="num">1</span> Business AI Setup</h3>
+                        <span class="price-tag">$2,500–$4,000 + $500–$750/mo</span>
+                    </div>
+                    <ul>
+                        <li>Custom AI assistant for your business workflows</li>
+                        <li>Email automation, document generation, scheduling</li>
+                        <li>Integrates with Google Workspace, Microsoft 365, Slack & more</li>
+                        <li>Live in 2 weeks</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card card-purple">
+                    <div class="service-card-header">
+                        <h3><span class="num">2</span> Knowledge Base</h3>
+                        <span class="price-tag">$1,500 build + $500/year</span>
+                    </div>
+                    <ul>
+                        <li>AI-powered search across all your business documents</li>
+                        <li>Instant answers from your own data</li>
+                        <li>No more digging through folders or asking coworkers</li>
+                        <li>Always up to date</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card card-pink">
+                    <div class="service-card-header">
+                        <h3><span class="num">3</span> Ongoing AI Management</h3>
+                        <span class="price-tag">$500–$750/mo</span>
+                    </div>
+                    <ul>
+                        <li>Continuous optimization and updates</li>
+                        <li>New workflow automation as your business evolves</li>
+                        <li>Priority support</li>
+                        <li>Monthly performance reports</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <div class="section-title">How It Works</div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>Free Assessment</h4>
+                    <p>Take our 2-minute survey to tell us about your business</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>Custom Proposal</h4>
+                    <p>We map your AI opportunities and build a tailored plan</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>Build & Deploy</h4>
+                    <p>Your AI workforce goes live in 2 weeks</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h4>Ongoing Optimization</h4>
+                    <p>We keep it running, improving, and growing with you</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US -->
+        <section class="why-us">
+            <div class="section-title">Why AiBusinessCopilot</div>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🎯</div>
+                    <div>
+                        <h4>Not a Chatbot</h4>
+                        <p>A trained AI workforce tailored to your specific business operations</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">⚡</div>
+                    <div>
+                        <h4>2 Weeks, Not Months</h4>
+                        <p>Fast deployment so you see ROI quickly, not someday</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🛡️</div>
+                    <div>
+                        <h4>Fully Managed</h4>
+                        <p>We handle everything — you don't need to be technical</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🇺🇸</div>
+                    <div>
+                        <h4>US-Based, Human-Backed</h4>
+                        <p>Real humans building, monitoring, and supporting your AI systems</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-footer">
+            <h2>Ready to Deploy Your AI Workforce?</h2>
+            <p class="sub">Start with a free 2-minute assessment. No commitment, no sales pitch.</p>
+            <a href="[INTAKE_SURVEY_LINK]" class="cta-btn">Take the Free Assessment →</a>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="bottom-footer">
+            <div>© 2025 AiBusinessCopilot. All rights reserved.</div>
+            <div class="links">
+                <a href="https://aibusinesscopilot.io">aibusinesscopilot.io</a>
+                <a href="mailto:support@aibusinesscopilot.io">support@aibusinesscopilot.io</a>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>
