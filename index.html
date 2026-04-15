@@ -4,38 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AiBusinessCopilot — Premium AI Systems, Set Up For You</title>
-    <meta name="description" content="Premium done-for-you AI systems for businesses and operators. From Claude setup to custom AI systems, we handle the build so you get the leverage.">
+    <meta name="description" content="Premium done-for-you AI systems for businesses and operators. From Claude setup to custom AI operators, we handle the build so you get the leverage.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #0a0a1a;
-            --bg-surface: #0d0f1e;
-            --bg-card: rgba(15, 18, 40, 0.6);
+            --bg-deep: #050510;
+            --bg-surface: #0a0a1a;
+            --bg-card: rgba(15, 18, 40, 0.5);
             --neon-blue: #00d4ff;
             --neon-cyan: #00ffd5;
             --neon-purple: #a855f7;
-            --neon-pink: #e94560;
-            --accent: #e94560;
-            --accent-hover: #ff6b81;
+            --neon-violet: #7c3aed;
             --white: #ffffff;
             --text-primary: #e2e8f0;
             --text-muted: #94a3b8;
-            --text-dim: rgba(255,255,255,0.5);
-            --success: #10b981;
-            --glass-bg: rgba(255, 255, 255, 0.04);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glow-blue: 0 0 30px rgba(0, 212, 255, 0.3);
-            --glow-pink: 0 0 30px rgba(233, 69, 96, 0.3);
-            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.3);
+            --text-dim: rgba(255,255,255,0.4);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
             background: var(--bg-deep);
             overflow-x: hidden;
         }
@@ -49,44 +45,44 @@
             pointer-events: none;
         }
 
-        /* ===== FLOATING GEOMETRIC SHAPES ===== */
-        .geo-shapes {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .geo-shape {
-            position: absolute;
-            opacity: 0.04;
-            animation: geoFloat linear infinite;
-        }
-
-        .geo-shape svg {
-            width: 100%; height: 100%;
-        }
-
-        @keyframes geoFloat {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-40px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        body > *:not(#particle-canvas):not(.geo-shapes) {
+        body > *:not(#particle-canvas) {
             position: relative;
             z-index: 1;
+        }
+
+        /* ===== AMBIENT GLOW BLOBS ===== */
+        .ambient-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .ambient-glow.a {
+            width: 600px; height: 600px;
+            background: rgba(0, 212, 255, 0.06);
+            top: -200px; left: -100px;
+            animation: ambientDrift 20s ease-in-out infinite;
+        }
+        .ambient-glow.b {
+            width: 500px; height: 500px;
+            background: rgba(124, 58, 237, 0.05);
+            bottom: -150px; right: -100px;
+            animation: ambientDrift 25s ease-in-out infinite reverse;
+        }
+        @keyframes ambientDrift {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -20px); }
+            66% { transform: translate(-20px, 30px); }
         }
 
         /* ===== NAV ===== */
         nav {
             position: fixed;
             top: 0; width: 100%;
-            background: rgba(10, 10, 26, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 5, 16, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             z-index: 100;
             border-bottom: 1px solid var(--glass-border);
         }
@@ -101,10 +97,11 @@
         }
 
         nav .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 800;
             color: var(--white);
             text-decoration: none;
+            letter-spacing: -0.02em;
         }
 
         nav .logo span {
@@ -115,20 +112,21 @@
         }
 
         nav a.cta-sm {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            color: var(--neon-blue);
             padding: 0.5rem 1.2rem;
             border-radius: 6px;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
         }
 
         nav a.cta-sm:hover {
-            box-shadow: var(--glow-blue);
-            transform: translateY(-1px);
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
         }
 
         .container {
@@ -137,9 +135,9 @@
             padding: 0 2rem;
         }
 
-        /* ===== HERO WITH ANIMATED GRADIENT ===== */
+        /* ===== HERO ===== */
         .hero {
-            padding: 10rem 0 5rem;
+            padding: 12rem 0 6rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -149,21 +147,11 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: 
-                radial-gradient(ellipse at 30% 20%, rgba(0, 212, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(233, 69, 96, 0.08) 0%, transparent 50%);
-            background-size: 200% 200%;
-            animation: heroGradientShift 8s ease-in-out infinite;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 212, 255, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 30% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 70% 70%, rgba(0, 255, 213, 0.05) 0%, transparent 50%);
             z-index: 0;
-        }
-
-        @keyframes heroGradientShift {
-            0% { background-position: 0% 0%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 50% 100%; }
-            75% { background-position: 0% 50%; }
-            100% { background-position: 0% 0%; }
         }
 
         .hero > .container {
@@ -171,45 +159,65 @@
             z-index: 2;
         }
 
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 212, 255, 0.06);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 100px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--neon-blue);
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--neon-blue);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+        }
+
         .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 900;
             margin-bottom: 1.5rem;
-            line-height: 1.15;
+            line-height: 1.1;
             color: var(--white);
+            letter-spacing: -0.03em;
         }
 
         .hero h1 .glow {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
-        }
-
-        /* Typing cursor */
-        .typing-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: var(--neon-blue);
-            margin-left: 2px;
-            animation: cursorBlink 0.7s step-end infinite;
-            vertical-align: text-bottom;
-            box-shadow: 0 0 8px var(--neon-blue);
-        }
-
-        @keyframes cursorBlink {
-            50% { opacity: 0; }
         }
 
         .hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
+            font-size: 1.2rem;
+            max-width: 620px;
             margin: 0 auto 2.5rem;
             color: var(--text-muted);
+            line-height: 1.7;
         }
 
+        .hero-sub {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* ===== CTA BUTTON ===== */
         .btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
@@ -217,41 +225,26 @@
             padding: 1rem 2.5rem;
             border-radius: 8px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(0, 212, 255, 0.1);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid rgba(0, 212, 255, 0.5);
-            margin-left: 1rem;
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 212, 255, 0.1);
-            border-color: var(--neon-blue);
-            box-shadow: var(--glow-blue);
-            color: var(--white);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.35), 0 0 80px rgba(0, 212, 255, 0.15);
         }
 
         /* ===== TRUST BAR ===== */
         .trust-bar {
-            background: rgba(0, 212, 255, 0.03);
             border-top: 1px solid var(--glass-border);
             border-bottom: 1px solid var(--glass-border);
             padding: 1.5rem 0;
             text-align: center;
+            background: rgba(0, 212, 255, 0.01);
         }
 
         .trust-bar .container {
@@ -265,70 +258,22 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-weight: 500;
         }
 
-        .trust-item .icon { font-size: 1.3rem; }
-
-        /* ===== TAB TOGGLE ===== */
-        .tab-toggle-wrapper {
-            text-align: center;
-            padding: 4rem 0 2rem;
-        }
-
-        .tab-toggle {
-            display: inline-flex;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 5px;
-        }
-
-        .tab-btn {
-            padding: 0.8rem 2.5rem;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .tab-btn.active {
-            color: var(--white);
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .tab-btn:not(.active):hover { color: var(--text-primary); }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .trust-item .icon { font-size: 1.1rem; }
 
         /* ===== SECTIONS ===== */
-        section { padding: 5rem 0; }
+        section { padding: 6rem 0; }
 
         .section-label {
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.75rem;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -340,15 +285,18 @@
             font-weight: 800;
             color: var(--white);
             margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
         }
 
         h2.centered { text-align: center; }
 
         .subtitle {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 580px;
             margin-bottom: 3rem;
+            line-height: 1.7;
         }
 
         .subtitle.centered {
@@ -361,79 +309,51 @@
         .glow-divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
-        /* ===== GLOWING ANIMATED BORDERS ===== */
+        /* ===== GLOW ANIMATIONS ===== */
         @keyframes glowPulse {
-            0%, 100% {
-                border-color: rgba(0, 212, 255, 0.08);
-                box-shadow: 0 0 0 rgba(0, 212, 255, 0);
-            }
-            50% {
-                border-color: rgba(0, 212, 255, 0.25);
-                box-shadow: 0 0 20px rgba(0, 212, 255, 0.06), inset 0 0 20px rgba(0, 212, 255, 0.03);
-            }
+            0%, 100% { border-color: rgba(0, 212, 255, 0.06); }
+            50% { border-color: rgba(0, 212, 255, 0.18); }
         }
-
         @keyframes glowPulsePurple {
-            0%, 100% {
-                border-color: rgba(168, 85, 247, 0.08);
-                box-shadow: 0 0 0 rgba(168, 85, 247, 0);
-            }
-            50% {
-                border-color: rgba(168, 85, 247, 0.25);
-                box-shadow: 0 0 20px rgba(168, 85, 247, 0.06), inset 0 0 20px rgba(168, 85, 247, 0.03);
-            }
+            0%, 100% { border-color: rgba(124, 58, 237, 0.06); }
+            50% { border-color: rgba(124, 58, 237, 0.18); }
+        }
+        @keyframes glowPulseCyan {
+            0%, 100% { border-color: rgba(0, 255, 213, 0.06); }
+            50% { border-color: rgba(0, 255, 213, 0.18); }
         }
 
-        @keyframes glowPulsePink {
-            0%, 100% {
-                border-color: rgba(233, 69, 96, 0.08);
-                box-shadow: 0 0 0 rgba(233, 69, 96, 0);
-            }
-            50% {
-                border-color: rgba(233, 69, 96, 0.25);
-                box-shadow: 0 0 20px rgba(233, 69, 96, 0.06), inset 0 0 20px rgba(233, 69, 96, 0.03);
-            }
-        }
+        .glow-border { animation: glowPulse 5s ease-in-out infinite; }
+        .glow-border-purple { animation: glowPulsePurple 5s ease-in-out infinite; }
+        .glow-border-cyan { animation: glowPulseCyan 5s ease-in-out infinite; }
 
-        .glow-border {
-            animation: glowPulse 4s ease-in-out infinite;
-        }
+        .glow-border:nth-child(2) { animation-delay: 1.2s; }
+        .glow-border:nth-child(3) { animation-delay: 2.4s; }
+        .glow-border:nth-child(4) { animation-delay: 3.6s; }
+        .glow-border-purple:nth-child(2) { animation-delay: 1.2s; }
+        .glow-border-purple:nth-child(3) { animation-delay: 2.4s; }
+        .glow-border-purple:nth-child(4) { animation-delay: 3.6s; }
 
-        .glow-border-purple {
-            animation: glowPulsePurple 4s ease-in-out infinite;
-        }
-
-        .glow-border-pink {
-            animation: glowPulsePink 4s ease-in-out infinite;
-        }
-
-        /* Stagger glow animations */
-        .glow-border:nth-child(2), .glow-border-purple:nth-child(2) { animation-delay: 1s; }
-        .glow-border:nth-child(3), .glow-border-pink:nth-child(1) { animation-delay: 2s; }
-        .glow-border:nth-child(4) { animation-delay: 3s; }
-
-        /* ===== GLASSMORPHISM CARDS (shared) ===== */
+        /* ===== GLASS CARDS ===== */
         .glass-card {
-            background: rgba(15, 18, 40, 0.5);
+            background: rgba(15, 18, 40, 0.4);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            will-change: transform;
+            border-radius: 14px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .glass-card:hover {
-            background: rgba(15, 18, 40, 0.7);
+            background: rgba(15, 18, 40, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* ===== PROBLEM SECTION ===== */
-        .problem { background: rgba(0, 0, 0, 0.2); }
-
+        /* ===== PAIN POINTS GRID ===== */
         .pain-points {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -442,28 +362,23 @@
         }
 
         .pain-point {
-            padding: 1.8rem;
-            border-left: 3px solid var(--neon-blue);
-            transition: all 0.3s;
+            padding: 2rem;
+            border-left: 2px solid rgba(0, 212, 255, 0.3);
         }
 
         .pain-point:hover {
-            border-left-color: var(--neon-purple);
-            transform: translateY(-3px);
+            border-left-color: var(--neon-blue);
         }
 
-        .pain-point .icon { font-size: 2rem; margin-bottom: 0.8rem; }
-        .pain-point h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
-        .pain-point p { font-size: 0.95rem; color: var(--text-muted); }
+        .pain-point .icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+        .pain-point h3 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
+        .pain-point p { font-size: 0.92rem; color: var(--text-muted); }
 
-        /* ===== SOLUTION ===== */
-        .solution h2 { text-align: center; }
-        .solution .subtitle { text-align: center; margin-left: auto; margin-right: auto; }
-
+        /* ===== FEATURES GRID ===== */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .feature {
@@ -472,169 +387,62 @@
         }
 
         .feature .icon-circle {
-            width: 70px; height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            width: 64px; height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.2rem;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
-        .feature h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--white); }
-        .feature p { color: var(--text-muted); font-size: 0.95rem; }
+        .feature h3 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
+        .feature p { color: var(--text-muted); font-size: 0.92rem; }
 
-        /* ===== HOW IT WORKS ===== */
-        .how-it-works { background: rgba(0, 0, 0, 0.3); }
-
+        /* ===== STEPS ===== */
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
         }
 
         .step {
             text-align: center;
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 1.5rem;
         }
 
         .step-number {
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
-            font-size: 1.3rem;
+            font-size: 0.75rem;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
-        .step p { font-size: 0.9rem; color: var(--text-muted); }
-
-        /* ===== PRICING ===== */
-        .pricing { background: rgba(0, 0, 0, 0.15); }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        .pricing-card {
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .pricing-card.featured {
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
-        }
-
-        .pricing-card.featured::before {
-            content: 'POPULAR';
-            position: absolute;
-            top: 18px; right: -28px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
-            padding: 0.3rem 2rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            transform: rotate(45deg);
-            letter-spacing: 1px;
-        }
-
-        .pricing-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
-
-        .pricing-card .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.3rem;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .pricing-card .price-note {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .pricing-card ul {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-card ul li {
-            padding: 0.5rem 0;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .pricing-card ul li::before {
-            content: '✓';
-            color: var(--neon-cyan);
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        /* ===== STATS / COUNTERS ===== */
-        .stats-bar {
-            padding: 3rem 0;
-            background: rgba(0, 212, 255, 0.02);
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.2;
+            margin-bottom: 1rem;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
+        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
+        .step p { font-size: 0.92rem; color: var(--text-muted); }
+
+        /* ===== SECTION ACCENT GLOWS ===== */
+        .section-glow-blue {
+            background: radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0, 212, 255, 0.04) 0%, transparent 60%);
+        }
+        .section-glow-purple {
+            background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(124, 58, 237, 0.04) 0%, transparent 60%);
         }
 
-        /* ===== CTA ===== */
+        /* ===== FINAL CTA ===== */
         .cta-section {
             text-align: center;
-            background: radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
-                        var(--bg-deep);
-            color: var(--white);
-            padding: 5rem 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 212, 255, 0.06) 0%, transparent 60%),
+                var(--bg-deep);
+            padding: 8rem 0;
             position: relative;
         }
 
@@ -644,21 +452,26 @@
             top: 0; left: 0; right: 0;
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
-        .cta-section h2 { color: var(--white); font-size: 2.5rem; margin-bottom: 1rem; }
-        .cta-section p { font-size: 1.15rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
-        .cta-section .btn { font-size: 1.2rem; padding: 1.2rem 3rem; }
+        .cta-section h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.1rem; color: var(--text-muted); max-width: 520px; margin: 0 auto 2rem; }
 
         /* ===== FOOTER ===== */
         footer {
-            background: rgba(0, 0, 0, 0.4);
             border-top: 1px solid var(--glass-border);
             color: var(--text-dim);
-            text-align: center;
             padding: 2rem;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         footer a {
@@ -669,96 +482,48 @@
 
         footer a:hover { color: var(--neon-blue); }
 
-        /* ===== SCROLL REVEAL ANIMATIONS ===== */
+        /* ===== SCROLL REVEAL ===== */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.from-left {
-            transform: translateX(-60px);
-        }
-
-        .reveal.from-right {
-            transform: translateX(60px);
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .reveal.visible {
             opacity: 1;
-            transform: translate(0, 0);
+            transform: translateY(0);
         }
 
-        /* Stagger children */
         .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.1s; }
-        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.2s; }
-        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.3s; }
-        .reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.4s; }
-
-        /* Personal tab features */
-        .personal-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .personal-feature {
-            text-align: center;
-            padding: 2rem 1rem;
-        }
-
-        .personal-feature .pf-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
-        .personal-feature h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; }
-        .personal-feature p { font-size: 0.85rem; color: var(--text-muted); }
-
-        .pricing-single { max-width: 420px; margin: 0 auto; }
+        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
 
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
-            .hero { padding: 8rem 0 4rem; }
-            .hero h1 { font-size: 2rem; }
+            .hero { padding: 9rem 0 4rem; }
+            .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1.05rem; }
             h2 { font-size: 1.7rem; }
 
-            .btn-outline {
-                margin-left: 0;
-                margin-top: 0.8rem;
-            }
-
             nav .container {
                 flex-direction: column;
-                gap: 0.8rem;
+                gap: 0.6rem;
+                padding: 0.8rem 1.5rem;
             }
 
             .trust-bar .container {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 0.8rem;
             }
 
-            .pricing-grid { grid-template-columns: 1fr; }
-
-            .tab-btn {
-                padding: 0.7rem 1.5rem;
-                font-size: 0.9rem;
-            }
-
-            .personal-features { grid-template-columns: repeat(2, 1fr); }
             .cta-section h2 { font-size: 1.8rem; }
 
-            .stats-grid { gap: 2rem; }
-            .stat-number { font-size: 2rem; }
-
-            .reveal.from-left,
-            .reveal.from-right {
-                transform: translateY(40px);
+            footer .container {
+                flex-direction: column;
+                text-align: center;
             }
-        }
-
-        @media (max-width: 480px) {
-            .personal-features { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -767,8 +532,9 @@
     <!-- PARTICLE CANVAS -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- FLOATING GEOMETRIC SHAPES -->
-    <div class="geo-shapes" id="geo-shapes"></div>
+    <!-- AMBIENT GLOWS -->
+    <div class="ambient-glow a"></div>
+    <div class="ambient-glow b"></div>
 
     <!-- NAV -->
     <nav>
@@ -782,11 +548,12 @@
     <section class="hero">
         <div class="hero-gradient-bg"></div>
         <div class="container">
-            <h1 class="reveal" id="hero-heading">Premium <span class="glow">AI systems</span><br>set up for your business</h1>
+            <div class="hero-badge reveal"><span class="dot"></span> Premium AI Setup</div>
+            <h1 class="reveal">Premium <span class="glow">AI systems</span><br>set up for your business</h1>
             <p class="reveal">We design and install serious AI systems for founders, teams, and operators. From Claude setup to custom AI operators, we handle the hard part so you get the leverage.</p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn">Get Your AI System Plan</a>
-                <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);">Takes 2 minutes · No commitment · Custom proposal within 24 hours</p>
+                <p class="hero-sub">Takes 2 minutes &middot; No commitment &middot; Custom proposal within 24 hours</p>
             </div>
         </div>
     </section>
@@ -801,337 +568,201 @@
         </div>
     </div>
 
-    <!-- STATS BAR -->
-    <div class="stats-bar">
+    <!-- ============ FOR BUSINESSES ============ -->
+
+    <section class="problem section-glow-blue">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="3" data-suffix="">0</span></div>
-                    <div class="stat-label">Core Premium Offers</div>
+            <div class="section-label reveal">For Businesses</div>
+            <h2 class="reveal">You know AI matters,<br>but the implementation is a mess</h2>
+            <p class="subtitle reveal">Founders and small teams know there's leverage here. The problem is choosing the right setup, wiring it into real work, and trusting it enough to use it daily.</p>
+            <div class="pain-points reveal-stagger">
+                <div class="pain-point glass-card glow-border reveal">
+                    <div class="icon">📧</div>
+                    <h3>Tool Chaos</h3>
+                    <p>Every AI tool claims to be the answer. Most teams end up with subscriptions, confusion, and no real system.</p>
                 </div>
-                <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="24" data-suffix=" hr">0</span></div>
-                    <div class="stat-label">Proposal Turnaround</div>
+                <div class="pain-point glass-card glow-border-purple reveal">
+                    <div class="icon">📅</div>
+                    <h3>Bad Implementations</h3>
+                    <p>Half-configured setups waste time, create trust issues, and make AI feel like more work instead of less.</p>
                 </div>
-                <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="5" data-suffix="k+">0</span></div>
-                    <div class="stat-label">Custom Systems Start At</div>
+                <div class="pain-point glass-card glow-border-cyan reveal">
+                    <div class="icon">📝</div>
+                    <h3>No Internal Expertise</h3>
+                    <p>You don't have time to become the AI systems integrator for your own business.</p>
                 </div>
-                <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="100" data-suffix="%">0</span></div>
-                    <div class="stat-label">Done For You</div>
+                <div class="pain-point glass-card glow-border reveal">
+                    <div class="icon">🤷</div>
+                    <h3>High Stakes</h3>
+                    <p>When AI touches client work, internal knowledge, or operations, sloppy setup is expensive.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- TAB TOGGLE -->
-    <div class="tab-toggle-wrapper">
+    <div class="glow-divider"></div>
+
+    <section class="solution">
         <div class="container">
-            <div class="tab-toggle">
-                <button class="tab-btn active" data-tab="business" onclick="switchTab('business')">For Businesses</button>
-                <button class="tab-btn" data-tab="personal" onclick="switchTab('personal')">For Operators</button>
+            <div class="section-label reveal">The Solution</div>
+            <h2 class="centered reveal">We build the system, you get the leverage</h2>
+            <p class="subtitle centered reveal">AIBC is premium done-for-you implementation. We configure the right AI setup for your business, connect it to your workflow, and hand you something that actually works.</p>
+            <div class="features reveal-stagger">
+                <div class="feature glass-card glow-border reveal">
+                    <div class="icon-circle">📨</div>
+                    <h3>Claude Setup</h3>
+                    <p>We turn Claude into a real business tool with structure, prompts, playbooks, and workflow alignment.</p>
+                </div>
+                <div class="feature glass-card glow-border-purple reveal">
+                    <div class="icon-circle">🗓️</div>
+                    <h3>Custom AI Systems</h3>
+                    <p>For clients who need more than a chat app — custom operators built around your tools, channels, and processes.</p>
+                </div>
+                <div class="feature glass-card glow-border-cyan reveal">
+                    <div class="icon-circle">📄</div>
+                    <h3>Dedicated AI Box</h3>
+                    <p>We configure a dedicated Mac mini or AI machine and deliver it ready to work. Zero friction.</p>
+                </div>
+                <div class="feature glass-card glow-border reveal">
+                    <div class="icon-circle">💬</div>
+                    <h3>Managed Care</h3>
+                    <p>We don't just install and disappear. We refine, maintain, and improve the system as your needs evolve.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ============ BUSINESS TAB ============ -->
-    <div id="tab-business" class="tab-content active">
+    <div class="glow-divider"></div>
 
-        <section class="problem">
-            <div class="container">
-                <div class="section-label reveal">The Problem</div>
-                <h2 class="reveal">You know AI matters, but the implementation is a mess</h2>
-                <p class="subtitle reveal">Founders and small teams know there is leverage here. The problem is choosing the right setup, wiring it into real work, and trusting it enough to use it daily.
-                <div class="pain-points reveal-stagger">
-                    <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">📧</div>
-                        <h3>Tool Chaos</h3>
-                        <p>Every AI tool claims to be the answer. Most teams end up with subscriptions, confusion, and no real system.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border-purple reveal">
-                        <div class="icon">📅</div>
-                        <h3>Bad Implementations</h3>
-                        <p>Half-configured setups waste time, create trust issues, and make AI feel like more work instead of less.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border-pink reveal">
-                        <div class="icon">📝</div>
-                        <h3>No Internal Expertise</h3>
-                        <p>You do not have time to become the AI systems integrator for your own business.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">🤷</div>
-                        <h3>High Stakes</h3>
-                        <p>When AI touches client work, internal knowledge, or operations, sloppy setup is expensive.</p>
-                    </div>
+    <!-- ============ HOW IT WORKS ============ -->
+
+    <section class="how-it-works section-glow-purple">
+        <div class="container">
+            <div class="section-label reveal">How It Works</div>
+            <h2 class="centered reveal">Four steps to a working AI system</h2>
+            <p class="subtitle centered reveal">Simple process, premium execution, no guesswork on your side.</p>
+            <div class="steps reveal-stagger">
+                <div class="step glass-card glow-border reveal">
+                    <div class="step-number">Step 01</div>
+                    <h3>Assessment</h3>
+                    <p>We learn your workflow, goals, tools, and constraints so we can recommend the right system.</p>
+                </div>
+                <div class="step glass-card glow-border-purple reveal">
+                    <div class="step-number">Step 02</div>
+                    <h3>System Design</h3>
+                    <p>We map the implementation, pick the right stack, and define the setup around your real use case.</p>
+                </div>
+                <div class="step glass-card glow-border-cyan reveal">
+                    <div class="step-number">Step 03</div>
+                    <h3>Build & Install</h3>
+                    <p>We configure, connect, tune, and hand off the system once it's ready to use.</p>
+                </div>
+                <div class="step glass-card glow-border reveal">
+                    <div class="step-number">Step 04</div>
+                    <h3>Support & Refinement</h3>
+                    <p>With Managed Care, we keep it sharp as your workflow changes and new opportunities appear.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <div class="glow-divider"></div>
+    <div class="glow-divider"></div>
 
-        <section class="solution">
-            <div class="container">
-                <div class="section-label reveal">The Solution</div>
-                <h2 class="reveal">We build the system, you get the leverage</h2>
-                <p class="subtitle centered reveal">AIBC is premium done-for-you implementation. We configure the right AI setup for your business, connect it to your workflow, and hand you something that actually works.</p>
-                <div class="features reveal-stagger">
-                    <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">📨</div>
-                        <h3>Claude Setup</h3>
-                        <p>We turn Claude into a real business tool with structure, prompts, playbooks, and workflow alignment.</p>
-                    </div>
-                    <div class="feature glass-card glow-border-purple tilt-card reveal">
-                        <div class="icon-circle">🗓️</div>
-                        <h3>Custom AI Systems</h3>
-                        <p>For clients who need more than a chat app, we build custom operators around your tools, channels, and internal processes.</p>
-                    </div>
-                    <div class="feature glass-card glow-border-pink tilt-card reveal">
-                        <div class="icon-circle">📄</div>
-                        <h3>Dedicated AI Box</h3>
-                        <p>Need the cleanest premium path? We can configure a dedicated Mac mini or AI machine and deliver it ready to work.</p>
-                    </div>
-                    <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">💬</div>
-                        <h3>Managed Care</h3>
-                        <p>We do not just install it and disappear. We refine, maintain, and improve the system as your needs evolve.</p>
-                    </div>
+    <!-- ============ FOR OPERATORS ============ -->
+
+    <section class="problem section-glow-blue">
+        <div class="container">
+            <div class="section-label reveal">For Operators</div>
+            <h2 class="reveal">You want AI leverage<br>without becoming the technical operator</h2>
+            <p class="subtitle reveal">For solo operators, consultants, and high-agency individuals, the problem isn't interest — it's turning raw AI capability into a system you can trust.</p>
+            <div class="pain-points reveal-stagger">
+                <div class="pain-point glass-card glow-border reveal">
+                    <div class="icon">📂</div>
+                    <h3>Too Many Tools</h3>
+                    <p>You've tried a few AI products already, but none of them became a real part of how you work.</p>
+                </div>
+                <div class="pain-point glass-card glow-border-purple reveal">
+                    <div class="icon">🔍</div>
+                    <h3>No Clear System</h3>
+                    <p>Prompts, files, notes, and workflows live in different places, so the value never compounds.</p>
+                </div>
+                <div class="pain-point glass-card glow-border-cyan reveal">
+                    <div class="icon">🧠</div>
+                    <h3>Trust Issues</h3>
+                    <p>You want something more powerful, but you don't want a sloppy setup touching work that matters.</p>
+                </div>
+                <div class="pain-point glass-card glow-border reveal">
+                    <div class="icon">⏰</div>
+                    <h3>Wasted Energy</h3>
+                    <p>You should be using AI to move faster, not spending nights trying to piece together the stack yourself.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <div class="glow-divider"></div>
+    <div class="glow-divider"></div>
 
-        <section class="how-it-works">
-            <div class="container">
-                <div class="section-label reveal">How It Works</div>
-                <h2 class="centered reveal">Four steps to a working AI system</h2>
-                <p class="subtitle centered reveal">Simple process, premium execution, no guesswork on your side.</p>
-                <div class="steps reveal-stagger">
-                    <div class="step glass-card glow-border reveal">
-                        <div class="step-number">1</div>
-                        <h3>Assessment</h3>
-                        <p>We learn your workflow, goals, tools, and constraints so we can recommend the right system.</p>
-                    </div>
-                    <div class="step glass-card glow-border-purple reveal">
-                        <div class="step-number">2</div>
-                        <h3>System Design</h3>
-                        <p>We map the implementation, pick the right stack, and define the setup around your real use case.</p>
-                    </div>
-                    <div class="step glass-card glow-border-pink reveal">
-                        <div class="step-number">3</div>
-                        <h3>Build & Install</h3>
-                        <p>We configure, connect, tune, and hand off the system once it is ready to use.</p>
-                    </div>
-                    <div class="step glass-card glow-border reveal">
-                        <div class="step-number">4</div>
-                        <h3>Support & Refinement</h3>
-                        <p>With Managed Care, we keep it sharp as your workflow changes and new opportunities appear.</p>
-                    </div>
+    <section class="solution">
+        <div class="container">
+            <div class="section-label reveal">The Solution</div>
+            <h2 class="centered reveal">A serious AI setup,<br>built around how you work</h2>
+            <p class="subtitle centered reveal">Whether you need a trusted Claude setup or a deeper custom system, we configure the stack so your workflows become faster, cleaner, and easier to trust.</p>
+            <div class="features reveal-stagger">
+                <div class="feature glass-card glow-border reveal">
+                    <div class="icon-circle">🔍</div>
+                    <h3>Trusted Claude Setup</h3>
+                    <p>Claude configured around your real work, not generic demos</p>
+                </div>
+                <div class="feature glass-card glow-border-purple reveal">
+                    <div class="icon-circle">📚</div>
+                    <h3>Workflow Alignment</h3>
+                    <p>Prompts, structure, and knowledge arranged around how you actually operate</p>
+                </div>
+                <div class="feature glass-card glow-border-cyan reveal">
+                    <div class="icon-circle">🧠</div>
+                    <h3>Custom Systems</h3>
+                    <p>Upgrade path for operators who want something more powerful than a single app</p>
+                </div>
+                <div class="feature glass-card glow-border reveal">
+                    <div class="icon-circle">📈</div>
+                    <h3>Ongoing Refinement</h3>
+                    <p>Your system gets sharper over time instead of drifting into chaos</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="pricing">
-            <div class="container">
-                <div class="section-label reveal">Pricing</div>
-                <h2 class="centered reveal">Premium pricing for serious implementation</h2>
-                <p class="subtitle centered reveal">We are not selling a toy. We are building advanced systems that most people do not know how to set up properly.</p>
-                <div class="pricing-grid">
-                    <div class="pricing-card glass-card glow-border tilt-card reveal">
-                        <h3>🧠 Claude Setup</h3>
-                        <div class="price">$3,000</div>
-                        <div class="price-note">One-time setup</div>
-                        <ul>
-                            <li>Claude configured around your workflow</li>
-                            <li>Knowledge organization and prompt/system design</li>
-                            <li>Operating playbook and onboarding handoff</li>
-                            <li>30-day support included</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn" style="width:100%;display:block;">Get Your AI System Plan</a>
-                    </div>
-                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
-                        <h3>⚙️ Custom AI System</h3>
-                        <div class="price">$5,000</div>
-                        <div class="price-note">Starting point</div>
-                        <ul>
-                            <li>Custom AI operator for your business</li>
-                            <li>Local or dedicated machine install</li>
-                            <li>Channels, memory, protocols, and workflow setup</li>
-                            <li>Built and tuned around your actual operations</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn" style="width:100%;display:block;">Get Your AI System Plan</a>
-                    </div>
-                    <div class="pricing-card glass-card glow-border-pink tilt-card reveal">
-                        <h3>🖥️ Dedicated AI Box</h3>
-                        <div class="price">$5,000+</div>
-                        <div class="price-note">Custom quote</div>
-                        <ul>
-                            <li>Dedicated Mac mini or AI machine sourced by us</li>
-                            <li>Fully configured and tested before delivery</li>
-                            <li>Ready-to-use premium hardware lane</li>
-                            <li>Best fit for clients who want zero friction</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn" style="width:100%;display:block;">Request A Quote</a>
-                    </div>
-                </div>
-                <p class="subtitle centered reveal" style="margin-top:2rem;">Dedicated AI Box starts at $5,000. Managed Care starts at $500/mo. Client controls their own API account and billing.</p>
-            </div>
-        </section>
-
-    </div>
-
-    <!-- ============ PERSONAL TAB ============ -->
-    <div id="tab-personal" class="tab-content">
-
-        <section class="problem">
-            <div class="container">
-                <div class="section-label reveal">The Problem</div>
-                <h2 class="reveal">You want AI leverage without becoming the technical operator</h2>
-                <p class="subtitle reveal">For solo operators, consultants, and high-agency individuals, the problem is not interest. It is turning raw AI capability into a system you can trust and actually use.
-                <div class="pain-points reveal-stagger">
-                    <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">📂</div>
-                        <h3>Too Many Tools</h3>
-                        <p>You have tried a few AI products already, but none of them became a real part of how you work.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border-purple reveal">
-                        <div class="icon">🔍</div>
-                        <h3>No Clear System</h3>
-                        <p>Prompts, files, notes, and workflows live in different places, so the value never compounds.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border-pink reveal">
-                        <div class="icon">🧠</div>
-                        <h3>Trust Issues</h3>
-                        <p>You want something more powerful, but you do not want a sloppy setup touching work that matters.</p>
-                    </div>
-                    <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">⏰</div>
-                        <h3>Wasted Energy</h3>
-                        <p>You should be using AI to move faster, not spending nights trying to piece together the stack yourself.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="glow-divider"></div>
-
-        <section class="solution">
-            <div class="container">
-                <div class="section-label reveal">The Solution</div>
-                <h2 class="reveal">A serious AI setup, built around how you work</h2>
-                <p class="subtitle centered reveal">Whether you need a trusted Claude setup or a deeper custom system, we configure the stack so your workflows become faster, cleaner, and easier to trust.
-                <div class="personal-features reveal-stagger">
-                    <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <span class="pf-icon">🔍</span>
-                        <h3>Trusted Claude Setup</h3>
-                        <p>Claude configured around your real work, not generic demos</p>
-                    </div>
-                    <div class="personal-feature glass-card glow-border-purple tilt-card reveal">
-                        <span class="pf-icon">📚</span>
-                        <h3>Workflow Alignment</h3>
-                        <p>Prompts, structure, and knowledge arranged around how you actually operate</p>
-                    </div>
-                    <div class="personal-feature glass-card glow-border-pink tilt-card reveal">
-                        <span class="pf-icon">🧠</span>
-                        <h3>Custom Systems</h3>
-                        <p>Upgrade path for operators who want something more powerful than a single app</p>
-                    </div>
-                    <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <span class="pf-icon">📈</span>
-                        <h3>Ongoing Refinement</h3>
-                        <p>Your system gets sharper over time instead of drifting into chaos</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="glow-divider"></div>
-
-        <section class="how-it-works">
-            <div class="container">
-                <div class="section-label reveal">How It Works</div>
-                <h2 class="centered reveal">Four steps to your AI operator stack</h2>
-                <p class="subtitle centered reveal">Clear intake, sharp setup, and a system that feels built for you.
-                <div class="steps reveal-stagger">
-                    <div class="step glass-card glow-border reveal">
-                        <div class="step-number">1</div>
-                        <h3>Intake</h3>
-                        <p>We learn how you work, where the friction is, and what kind of leverage matters most.</p>
-                    </div>
-                    <div class="step glass-card glow-border-purple reveal">
-                        <div class="step-number">2</div>
-                        <h3>System Design</h3>
-                        <p>We choose the right level of setup, from premium Claude configuration to custom operator build.</p>
-                    </div>
-                    <div class="step glass-card glow-border-pink reveal">
-                        <div class="step-number">3</div>
-                        <h3>Configuration</h3>
-                        <p>We set it up, connect the right pieces, and tune it around your actual workflow.</p>
-                    </div>
-                    <div class="step glass-card glow-border reveal">
-                        <div class="step-number">4</div>
-                        <h3>Support</h3>
-                        <p>Managed Care is available if you want refinement, maintenance, and upgrades over time.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="glow-divider"></div>
-
-        <section class="pricing">
-            <div class="container">
-                <div class="section-label reveal">Pricing</div>
-                <h2 class="centered reveal">Premium setup for high-agency operators</h2>
-                <p class="subtitle centered reveal">If you want a real system, we build one. If you want something simple but sharp, we configure that too.</p>
-                <div class="pricing-single">
-                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
-                        <h3>🧠 Claude Setup</h3>
-                        <div class="price">$3,000</div>
-                        <div class="price-note">One-time setup</div>
-                        <ul>
-                            <li>Claude configured around your workflow</li>
-                            <li>Knowledge organization and prompt/system design</li>
-                            <li>Operating playbook and onboarding handoff</li>
-                            <li>Upgrade path into a custom AI system if needed</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5zlmVeTf7-GWYofd82E4z3oaC8qD0PX8IwBO43KRn2ziobw/viewform" class="btn" style="width:100%;display:block;">Get Your AI System Plan</a>
-                    </div>
-                </div>
-                <p class="subtitle centered reveal" style="margin-top:2rem;">Need dedicated hardware? Dedicated AI Box starts at $5,000.</p>
-            </div>
-        </section>
-
-    </div>
+    <div class="glow-divider"></div>
 
     <!-- FINAL CTA -->
     <section class="cta-section">
         <div class="container">
             <h2 class="reveal">Ready for a serious AI system?</h2>
-            <p class="reveal">Tell us how you work and what you want AI to handle. We will recommend the right setup and send you a custom plan.</p>
+            <p class="reveal">Tell us how you work and what you want AI to handle. We'll recommend the right setup and send you a custom plan.</p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn">Get Your AI System Plan</a>
             </div>
-            <p class="reveal" style="margin-top:1rem;font-size:0.95rem;color:var(--text-dim);">Takes 2 minutes · No commitment · Custom proposal within 24 hours</p>
+            <p class="reveal" style="margin-top:1.5rem;font-size:0.85rem;color:var(--text-dim);">Claude Setup starts at $3k &middot; Custom Systems from $5k &middot; Managed Care from $500/mo</p>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+        <div class="container">
+            <span>&copy; 2026 AiBusinessCopilot</span>
+            <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a>
+            <span>All rights reserved</span>
+        </div>
     </footer>
 
     <script>
-    /* ===== 1. PARTICLE / NEURAL NETWORK BACKGROUND ===== */
+    /* ===== PARTICLE / NEURAL NETWORK BACKGROUND ===== */
     (function() {
         var canvas = document.getElementById('particle-canvas');
         var ctx = canvas.getContext('2d');
         var particles = [];
-        var particleCount = 80;
-        var connectionDist = 150;
+        var particleCount = 60;
+        var connectionDist = 140;
         var mouse = { x: null, y: null };
 
         function resize() {
@@ -1150,10 +781,10 @@
         function Particle() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = Math.random() * 2 + 0.5;
-            this.color = Math.random() > 0.5 ? '0, 212, 255' : '168, 85, 247';
+            this.vx = (Math.random() - 0.5) * 0.3;
+            this.vy = (Math.random() - 0.5) * 0.3;
+            this.radius = Math.random() * 1.5 + 0.5;
+            this.color = Math.random() > 0.5 ? '0, 212, 255' : '124, 58, 237';
         }
 
         for (var i = 0; i < particleCount; i++) {
@@ -1171,13 +802,11 @@
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-                // Draw particle
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(' + p.color + ', 0.6)';
+                ctx.fillStyle = 'rgba(' + p.color + ', 0.4)';
                 ctx.fill();
 
-                // Connect to nearby particles
                 for (var j = i + 1; j < particles.length; j++) {
                     var p2 = particles[j];
                     var dx = p.x - p2.x;
@@ -1185,7 +814,7 @@
                     var dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < connectionDist) {
-                        var opacity = (1 - dist / connectionDist) * 0.15;
+                        var opacity = (1 - dist / connectionDist) * 0.1;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -1195,18 +824,17 @@
                     }
                 }
 
-                // Connect to mouse
                 if (mouse.x !== null) {
                     var mdx = p.x - mouse.x;
                     var mdy = p.y - mouse.y;
                     var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-                    if (mDist < 200) {
-                        var mOpacity = (1 - mDist / 200) * 0.25;
+                    if (mDist < 180) {
+                        var mOpacity = (1 - mDist / 180) * 0.15;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = 'rgba(168, 85, 247, ' + mOpacity + ')';
-                        ctx.lineWidth = 0.8;
+                        ctx.strokeStyle = 'rgba(124, 58, 237, ' + mOpacity + ')';
+                        ctx.lineWidth = 0.6;
                         ctx.stroke();
                     }
                 }
@@ -1218,269 +846,20 @@
         animate();
     })();
 
-    /* ===== 7. FLOATING GEOMETRIC SHAPES ===== */
+    /* ===== SCROLL REVEAL ===== */
     (function() {
-        var container = document.getElementById('geo-shapes');
-        var shapes = [
-            '<svg viewBox="0 0 100 100"><polygon points="50,5 95,97.5 5,97.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1"/></svg>',
-            '<svg viewBox="0 0 100 100"><polygon points="50,3 93.3,25 93.3,75 50,97 6.7,75 6.7,25" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1"/></svg>',
-            '<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="1" transform="rotate(45 50 50)"/></svg>',
-            '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1"/></svg>'
-        ];
-
-        for (var i = 0; i < 12; i++) {
-            var el = document.createElement('div');
-            el.className = 'geo-shape';
-            var size = 30 + Math.random() * 60;
-            el.style.width = size + 'px';
-            el.style.height = size + 'px';
-            el.style.left = Math.random() * 100 + '%';
-            el.style.top = Math.random() * 100 + '%';
-            el.style.animationDuration = (15 + Math.random() * 25) + 's';
-            el.style.animationDelay = -(Math.random() * 20) + 's';
-            el.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
-            container.appendChild(el);
-        }
-    })();
-
-    /* ===== 2. SCROLL-TRIGGERED REVEAL (IntersectionObserver) ===== */
-    (function() {
-        var revealObserver = new IntersectionObserver(function(entries) {
+        var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-        function observeReveals(root) {
-            var els = (root || document).querySelectorAll('.reveal');
-            els.forEach(function(el) {
-                var tabParent = el.closest('.tab-content');
-                if (!tabParent || tabParent.classList.contains('active')) {
-                    revealObserver.observe(el);
-                }
-            });
-        }
-
-        observeReveals();
-
-        // Expose for tab switching
-        window._observeReveals = observeReveals;
-        window._revealObserver = revealObserver;
-    })();
-
-    /* ===== 5. TYPING EFFECT ON HERO ===== */
-    (function() {
-        var heading = document.getElementById('hero-heading');
-        var fullHTML = heading.innerHTML;
-        var textOnly = heading.textContent;
-        var cursor = document.createElement('span');
-        cursor.className = 'typing-cursor';
-
-        // Build a map: text index -> HTML structure
-        // We'll type out the text while preserving HTML tags
-        var segments = [];
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = fullHTML;
-
-        function extractSegments(node) {
-            if (node.nodeType === 3) { // text node
-                for (var i = 0; i < node.textContent.length; i++) {
-                    segments.push({ char: node.textContent[i], node: node, index: i });
-                }
-            } else if (node.nodeType === 1) { // element
-                for (var c = 0; c < node.childNodes.length; c++) {
-                    extractSegments(node.childNodes[c]);
-                }
-            }
-        }
-        extractSegments(tempDiv);
-
-        // Hide text, then type it out
-        heading.innerHTML = '';
-        heading.appendChild(cursor);
-
-        // Clone the original structure but empty
-        var clone = tempDiv.cloneNode(true);
-        function emptyTextNodes(node) {
-            if (node.nodeType === 3) {
-                node.textContent = '';
-            } else {
-                for (var c = 0; c < node.childNodes.length; c++) {
-                    emptyTextNodes(node.childNodes[c]);
-                }
-            }
-        }
-        emptyTextNodes(clone);
-
-        heading.innerHTML = '';
-        while (clone.firstChild) heading.appendChild(clone.firstChild);
-        heading.appendChild(cursor);
-
-        // Get matching text nodes from the live heading
-        var liveTextNodes = [];
-        function collectTextNodes(node) {
-            if (node.nodeType === 3) liveTextNodes.push(node);
-            else {
-                for (var c = 0; c < node.childNodes.length; c++) {
-                    if (node.childNodes[c] !== cursor) collectTextNodes(node.childNodes[c]);
-                }
-            }
-        }
-        collectTextNodes(heading);
-
-        // Map segments to live text nodes
-        var liveIndex = 0;
-        var charInNode = 0;
-        var segmentMap = [];
-        var origTextNodes = [];
-        function collectOrigTextNodes(node) {
-            if (node.nodeType === 3) origTextNodes.push(node);
-            else { for (var c = 0; c < node.childNodes.length; c++) collectOrigTextNodes(node.childNodes[c]); }
-        }
-        collectOrigTextNodes(tempDiv);
-
-        // Simple approach: type character by character into live text nodes
-        var totalChars = 0;
-        var nodeChars = [];
-        for (var n = 0; n < origTextNodes.length; n++) {
-            var len = origTextNodes[n].textContent.length;
-            nodeChars.push(len);
-            totalChars += len;
-        }
-
-        var typed = 0;
-        var nodeIdx = 0;
-        var charIdx = 0;
-        var origTexts = origTextNodes.map(function(n) { return n.textContent; });
-
-        function typeNext() {
-            if (typed >= totalChars) {
-                // Remove cursor after a delay
-                setTimeout(function() { if (cursor.parentNode) cursor.parentNode.removeChild(cursor); }, 2000);
-                return;
-            }
-
-            // Find which node/char
-            while (nodeIdx < nodeChars.length && charIdx >= nodeChars[nodeIdx]) {
-                charIdx = 0;
-                nodeIdx++;
-            }
-
-            if (nodeIdx < liveTextNodes.length) {
-                liveTextNodes[nodeIdx].textContent = origTexts[nodeIdx].substring(0, charIdx + 1);
-            }
-
-            charIdx++;
-            typed++;
-
-            var delay = 35;
-            if (typed > 0 && origTexts[nodeIdx] && origTexts[nodeIdx][charIdx - 1] === ' ') delay = 15;
-
-            setTimeout(typeNext, delay);
-        }
-
-        // Start after a brief pause
-        setTimeout(typeNext, 500);
-    })();
-
-    /* ===== 4. 3D TILT EFFECT ON HOVER ===== */
-    (function() {
-        var tiltCards = document.querySelectorAll('.tilt-card');
-
-        tiltCards.forEach(function(card) {
-            card.addEventListener('mousemove', function(e) {
-                var rect = card.getBoundingClientRect();
-                var x = e.clientX - rect.left;
-                var y = e.clientY - rect.top;
-                var centerX = rect.width / 2;
-                var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -8;
-                var rotateY = ((x - centerX) / centerX) * 8;
-
-                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            });
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            observer.observe(el);
         });
     })();
-
-    /* ===== 8. ANIMATED COUNTERS ===== */
-    (function() {
-        var counters = document.querySelectorAll('.counter');
-        var counted = new Set();
-
-        var counterObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting && !counted.has(entry.target)) {
-                    counted.add(entry.target);
-                    var el = entry.target;
-                    var target = parseInt(el.dataset.target);
-                    var suffix = el.dataset.suffix || '';
-                    var duration = 2000;
-                    var start = 0;
-                    var startTime = null;
-
-                    function step(timestamp) {
-                        if (!startTime) startTime = timestamp;
-                        var progress = Math.min((timestamp - startTime) / duration, 1);
-                        // Ease out cubic
-                        var eased = 1 - Math.pow(1 - progress, 3);
-                        var current = Math.floor(eased * target);
-                        el.textContent = current + suffix;
-                        if (progress < 1) {
-                            requestAnimationFrame(step);
-                        } else {
-                            el.textContent = target + suffix;
-                        }
-                    }
-
-                    requestAnimationFrame(step);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(function(c) { counterObserver.observe(c); });
-    })();
-
-    /* ===== TAB SWITCHING ===== */
-    function switchTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.classList.toggle('active', btn.dataset.tab === tab);
-        });
-        document.querySelectorAll('.tab-content').forEach(function(content) {
-            content.classList.remove('active');
-        });
-        var target = document.getElementById('tab-' + tab);
-        target.classList.add('active');
-
-        // Re-trigger reveal animations
-        target.querySelectorAll('.reveal').forEach(function(el) {
-            el.classList.remove('visible');
-            void el.offsetWidth;
-            window._revealObserver.observe(el);
-        });
-
-        // Re-bind tilt cards in new tab
-        target.querySelectorAll('.tilt-card').forEach(function(card) {
-            card.addEventListener('mousemove', function(e) {
-                var rect = card.getBoundingClientRect();
-                var x = e.clientX - rect.left;
-                var y = e.clientY - rect.top;
-                var centerX = rect.width / 2;
-                var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -8;
-                var rotateY = ((x - centerX) / centerX) * 8;
-                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
-            });
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            });
-        });
-    }
     </script>
 
 </body>
