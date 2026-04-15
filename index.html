@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AiBusinessCopilot — Premium AI Systems, Set Up For You</title>
-    <meta name="description" content="Premium done-for-you AI systems for businesses and operators. From Claude setup to custom AI systems, we handle the build so you get the leverage.">
+    <title>AiBusinessCopilot — Done-For-You AI Agent Setup</title>
+    <meta name="description" content="Done-for-you AI agent setup for businesses and professionals. We handle the build so you get the leverage. Live in 1-2 weeks.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ===== RESET & VARS ===== */
         :root {
-            --bg: #0a0a0a;
-            --bg-surface: #0f0f0f;
+            --bg-deep: #050510;
+            --bg: #0a0a14;
             --bg-card: rgba(255, 255, 255, 0.03);
-            --accent: #00c8ff;
-            --accent-dim: rgba(0, 200, 255, 0.12);
-            --accent-border: rgba(0, 200, 255, 0.18);
+            --cyan: #00d4ff;
+            --cyan-mid: rgba(0, 212, 255, 0.35);
+            --cyan-dim: rgba(0, 212, 255, 0.08);
+            --cyan-glow: rgba(0, 212, 255, 0.15);
+            --violet: #7b61ff;
+            --violet-dim: rgba(123, 97, 255, 0.08);
+            --violet-glow: rgba(123, 97, 255, 0.15);
+            --emerald: #00e68a;
             --white: #ffffff;
-            --text-primary: #e8eaed;
-            --text-muted: #8a9099;
-            --text-dim: rgba(255,255,255,0.35);
-            --border: rgba(255, 255, 255, 0.07);
-            --border-hover: rgba(0, 200, 255, 0.25);
+            --text: #e0e4ec;
+            --text-muted: #7a8494;
+            --text-dim: rgba(255,255,255,0.3);
+            --border: rgba(255, 255, 255, 0.06);
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,26 +37,68 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: var(--text-primary);
+            color: var(--text);
             line-height: 1.7;
-            background: var(--bg);
+            background: var(--bg-deep);
             overflow-x: hidden;
         }
 
-        /* ===== GRID BACKGROUND ===== */
-        body::before {
-            content: '';
+        /* ===== AMBIENT BACKGROUND ===== */
+        .bg-ambient {
             position: fixed;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(0, 200, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 200, 255, 0.03) 1px, transparent 1px);
-            background-size: 64px 64px;
             z-index: 0;
             pointer-events: none;
+            overflow: hidden;
         }
 
-        body > *:not(style) {
+        .bg-ambient::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(ellipse, rgba(0, 212, 255, 0.07) 0%, transparent 70%);
+            animation: ambientDrift1 20s ease-in-out infinite;
+        }
+
+        .bg-ambient::after {
+            content: '';
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(ellipse, rgba(123, 97, 255, 0.06) 0%, transparent 70%);
+            animation: ambientDrift2 25s ease-in-out infinite;
+        }
+
+        @keyframes ambientDrift1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5%, 10%); }
+        }
+
+        @keyframes ambientDrift2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-8%, -5%); }
+        }
+
+        /* Subtle grid overlay */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 0%, transparent 100%);
+        }
+
+        body > *:not(.bg-ambient):not(.bg-grid):not(style) {
             position: relative;
             z-index: 1;
         }
@@ -57,55 +106,61 @@
         /* ===== NAV ===== */
         nav {
             position: fixed;
-            top: 0; width: 100%;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            top: 0;
+            width: 100%;
             z-index: 100;
+            background: rgba(5, 5, 16, 0.7);
+            backdrop-filter: blur(20px) saturate(1.4);
+            -webkit-backdrop-filter: blur(20px) saturate(1.4);
             border-bottom: 1px solid var(--border);
         }
 
-        nav .nav-inner {
-            max-width: 1160px;
+        .nav-inner {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1.1rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.15rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--white);
             text-decoration: none;
             letter-spacing: -0.02em;
         }
 
-        .logo .accent { color: var(--accent); }
+        .logo .accent {
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
         .nav-cta {
-            background: transparent;
-            border: 1px solid var(--accent-border);
-            color: var(--accent);
-            padding: 0.5rem 1.25rem;
-            border-radius: 6px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: var(--cyan);
+            padding: 0.55rem 1.4rem;
+            border-radius: 8px;
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 600;
-            letter-spacing: 0.01em;
-            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+            transition: all 0.3s;
         }
 
         .nav-cta:hover {
-            background: var(--accent-dim);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
+            background: rgba(0, 212, 255, 0.18);
+            border-color: var(--cyan);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), inset 0 0 25px rgba(0, 212, 255, 0.05);
         }
 
         /* ===== CONTAINER ===== */
         .container {
-            max-width: 1160px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
         }
@@ -115,83 +170,207 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 7rem 0 5rem;
+            padding: 8rem 0 6rem;
             text-align: center;
             position: relative;
+            overflow: hidden;
         }
 
-        .hero::after {
-            content: '';
+        /* Hero aurora effect */
+        .hero-aurora {
             position: absolute;
-            top: 20%;
+            top: 0;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
+            transform: translateX(-50%);
+            width: 140%;
+            height: 100%;
             pointer-events: none;
             z-index: 0;
         }
 
-        .hero .container { position: relative; z-index: 1; }
+        .hero-aurora::before {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 60%);
+            filter: blur(60px);
+            animation: auroraFloat1 12s ease-in-out infinite;
+        }
 
-        .hero-eyebrow {
-            display: inline-block;
+        .hero-aurora::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 97, 255, 0.1) 0%, transparent 60%);
+            filter: blur(60px);
+            animation: auroraFloat2 15s ease-in-out infinite;
+        }
+
+        @keyframes auroraFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        @keyframes auroraFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-30px, 20px) scale(0.9); }
+            66% { transform: translate(20px, -40px) scale(1.1); }
+        }
+
+        /* Hero central orb */
+        .hero-orb {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-orb::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%,
+                rgba(0, 212, 255, 0.08) 0%,
+                rgba(123, 97, 255, 0.05) 40%,
+                transparent 70%);
+            filter: blur(40px);
+            animation: orbPulse 8s ease-in-out infinite;
+        }
+
+        .hero-orb::after {
+            content: '';
+            position: absolute;
+            inset: 15%;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 212, 255, 0.06);
+            animation: orbRing 20s linear infinite;
+        }
+
+        @keyframes orbPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        @keyframes orbRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero .container { position: relative; z-index: 2; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--accent);
-            border: 1px solid var(--accent-border);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 212, 255, 0.25);
             border-radius: 100px;
-            padding: 0.35rem 1rem;
+            padding: 0.45rem 1.25rem;
             margin-bottom: 2.5rem;
-            background: var(--accent-dim);
+            background: rgba(0, 212, 255, 0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 6vw, 5rem);
-            font-weight: 800;
-            line-height: 1.08;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-weight: 700;
+            line-height: 1.1;
             letter-spacing: -0.03em;
             color: var(--white);
             margin-bottom: 1.75rem;
         }
 
-        .hero h1 .highlight {
-            color: var(--accent);
+        .hero h1 .glow-text {
+            background: linear-gradient(135deg, var(--cyan), #00e6b8, var(--cyan));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.3));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .hero p {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 400;
-            max-width: 580px;
+            max-width: 600px;
             margin: 0 auto 3rem;
             color: var(--text-muted);
-            line-height: 1.75;
+            line-height: 1.8;
         }
 
+        /* ===== GLOW CTA BUTTON ===== */
         .btn-primary {
             display: inline-block;
-            background: var(--accent);
+            position: relative;
+            background: linear-gradient(135deg, var(--cyan), #00b8e6);
             color: #000;
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
+            padding: 1rem 2.75rem;
+            border-radius: 12px;
             text-decoration: none;
             font-size: 1rem;
             font-weight: 700;
             letter-spacing: -0.01em;
-            transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
-            box-shadow: 0 0 30px rgba(0, 200, 255, 0.25);
+            transition: all 0.3s;
+            box-shadow:
+                0 0 20px rgba(0, 212, 255, 0.3),
+                0 0 60px rgba(0, 212, 255, 0.15);
+            animation: ctaPulse 3s ease-in-out infinite;
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 50px rgba(0, 200, 255, 0.4);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow:
+                0 0 30px rgba(0, 212, 255, 0.5),
+                0 0 80px rgba(0, 212, 255, 0.25),
+                0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .hero-note {
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 60px rgba(0, 212, 255, 0.15); }
+            50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2); }
+        }
+
+        .hero-sub-note {
             margin-top: 1.25rem;
             font-size: 0.85rem;
             color: var(--text-dim);
@@ -199,16 +378,19 @@
 
         /* ===== TRUST BAR ===== */
         .trust-bar {
+            position: relative;
+            padding: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.02);
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            padding: 1.25rem 0;
+            backdrop-filter: blur(10px);
         }
 
         .trust-inner {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 2.5rem;
+            gap: 3rem;
             flex-wrap: wrap;
         }
 
@@ -218,157 +400,278 @@
             font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
-        .trust-dot {
-            width: 5px; height: 5px;
-            border-radius: 50%;
-            background: var(--accent);
-            opacity: 0.6;
+        .trust-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--cyan-dim);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
             flex-shrink: 0;
         }
 
         /* ===== SECTIONS ===== */
         section { padding: 7rem 0; }
 
-        .section-tag {
-            font-size: 0.7rem;
+        .section-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--accent);
+            color: var(--cyan);
             margin-bottom: 1rem;
         }
 
+        .section-label.violet { color: var(--violet); }
+
         h2 {
-            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+            font-weight: 700;
             letter-spacing: -0.025em;
             color: var(--white);
             line-height: 1.15;
             margin-bottom: 1rem;
         }
 
-        .section-sub {
+        .section-desc {
             font-size: 1.05rem;
             color: var(--text-muted);
-            max-width: 560px;
+            max-width: 580px;
             line-height: 1.8;
         }
 
         .text-center { text-align: center; }
         .mx-auto { margin-left: auto; margin-right: auto; }
 
-        /* ===== DIVIDER ===== */
+        /* ===== SECTION DIVIDERS ===== */
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), var(--border), rgba(123, 97, 255, 0.15), transparent);
         }
 
-        /* ===== CARDS ===== */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: border-color 0.25s, box-shadow 0.25s;
+        /* ===== SECTION GLOWS ===== */
+        .section-glow {
+            position: relative;
         }
 
-        .card:hover {
-            border-color: var(--border-hover);
-            box-shadow: 0 0 30px rgba(0, 200, 255, 0.05);
+        .section-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse, var(--cyan-glow) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .section-glow.violet-glow::before {
+            background: radial-gradient(ellipse, var(--violet-glow) 0%, transparent 70%);
+        }
+
+        /* ===== GLASS CARDS ===== */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), transparent 50%, rgba(123, 97, 255, 0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 212, 255, 0.2);
+            box-shadow:
+                0 0 40px rgba(0, 212, 255, 0.08),
+                0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
         }
 
         /* ===== PAIN POINTS ===== */
         .pain-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin-top: 3.5rem;
         }
 
         .pain-card {
-            padding: 1.75rem 1.5rem;
-            border-left: 2px solid var(--accent-border);
+            padding: 2rem 1.75rem;
+            border-left: 3px solid rgba(0, 212, 255, 0.2);
         }
 
-        .pain-card:hover { border-left-color: var(--accent); }
+        .pain-card:hover {
+            border-left-color: var(--cyan);
+        }
 
-        .pain-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
-        .pain-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-        .pain-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+        .pain-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
+        }
 
-        /* ===== FEATURES ===== */
+        .pain-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .pain-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+        /* ===== FEATURE CARDS ===== */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-top: 3.5rem;
         }
 
         .feature-card {
-            padding: 2rem 1.75rem;
+            padding: 2.25rem 2rem;
             text-align: left;
         }
 
-        .feature-icon {
-            width: 44px; height: 44px;
-            border-radius: 10px;
-            background: var(--accent-dim);
-            border: 1px solid var(--accent-border);
+        .feature-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--cyan-dim), var(--violet-dim));
+            border: 1px solid rgba(0, 212, 255, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 1.25rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
 
-        .feature-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-        .feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
+        .feature-icon-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 18px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
 
         /* ===== HOW IT WORKS ===== */
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 1.5rem;
             margin-top: 3.5rem;
         }
 
         .step-card {
-            padding: 2rem 1.75rem;
+            padding: 2.25rem 2rem;
             text-align: left;
+            position: relative;
         }
 
         .step-num {
-            font-size: 0.7rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cyan), rgba(0, 212, 255, 0.2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1.25rem;
             display: block;
         }
 
-        .step-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-        .step-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
-
-        /* ===== TIER SECTION HEADER ===== */
-        .tier-header {
-            padding: 5rem 0 0;
+        .step-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
         }
 
-        .tier-label {
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+        /* ===== AUDIENCE SECTIONS ===== */
+        .audience-section {
+            position: relative;
+        }
+
+        .audience-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .audience-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
             border-radius: 100px;
-            padding: 0.35rem 1rem;
-            margin-bottom: 1.5rem;
+            border: 1px solid;
+        }
+
+        .audience-badge.business {
+            color: var(--cyan);
+            border-color: rgba(0, 212, 255, 0.25);
+            background: rgba(0, 212, 255, 0.06);
+        }
+
+        .audience-badge.individual {
+            color: var(--violet);
+            border-color: rgba(123, 97, 255, 0.25);
+            background: rgba(123, 97, 255, 0.06);
         }
 
         /* ===== PRICING ===== */
@@ -380,27 +683,34 @@
         }
 
         .pricing-card {
-            padding: 2.25rem;
+            padding: 2.5rem 2rem;
         }
 
         .pricing-card.featured {
-            border-color: var(--accent-border);
-            background: rgba(0, 200, 255, 0.03);
+            border-color: rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 255, 0.03);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.05);
+        }
+
+        .pricing-card.featured::before {
+            opacity: 1;
         }
 
         .pricing-card h3 {
-            font-size: 1.05rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--white);
             margin-bottom: 0.25rem;
         }
 
         .price {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
             color: var(--white);
             letter-spacing: -0.04em;
-            margin-top: 1.25rem;
+            margin-top: 1rem;
             margin-bottom: 0.25rem;
         }
 
@@ -418,10 +728,10 @@
         .price-features li {
             font-size: 0.9rem;
             color: var(--text-muted);
-            padding: 0.45rem 0;
+            padding: 0.5rem 0;
             display: flex;
             align-items: flex-start;
-            gap: 0.6rem;
+            gap: 0.75rem;
             border-bottom: 1px solid var(--border);
         }
 
@@ -429,102 +739,124 @@
 
         .price-features li::before {
             content: '';
-            width: 5px; height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: var(--accent);
-            margin-top: 0.55rem;
+            background: var(--cyan);
+            box-shadow: 0 0 6px var(--cyan);
+            margin-top: 0.5rem;
             flex-shrink: 0;
-            opacity: 0.7;
         }
 
         .btn-card {
             display: block;
             width: 100%;
             text-align: center;
-            padding: 0.85rem;
-            border-radius: 7px;
+            padding: 0.9rem;
+            border-radius: 10px;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 700;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-            color: var(--text-primary);
+            transition: all 0.3s;
+            border: 1px solid var(--glass-border);
+            color: var(--text);
             background: transparent;
         }
 
         .btn-card:hover {
-            border-color: var(--accent-border);
-            color: var(--accent);
-            background: var(--accent-dim);
+            border-color: rgba(0, 212, 255, 0.3);
+            color: var(--cyan);
+            background: rgba(0, 212, 255, 0.06);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
         }
 
         .btn-card.primary {
-            background: var(--accent);
-            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--cyan), #00b8e6);
+            border-color: transparent;
             color: #000;
         }
 
         .btn-card.primary:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 30px rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            transform: translateY(-1px);
         }
 
-        /* ===== PERSONAL FEATURES ===== */
-        .personal-grid {
+        /* ===== INDIVIDUAL/KNOWLEDGE ===== */
+        .knowledge-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.5rem;
             margin-top: 3.5rem;
         }
 
-        .personal-card {
-            padding: 2rem 1.5rem;
+        .knowledge-card {
+            padding: 2rem 1.75rem;
             text-align: left;
         }
 
-        .personal-icon { font-size: 1.75rem; margin-bottom: 1rem; display: block; }
-        .personal-card h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-        .personal-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; }
+        .knowledge-card .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .knowledge-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .knowledge-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
 
         /* ===== CTA SECTION ===== */
         .cta-section {
             text-align: center;
             padding: 8rem 0;
             position: relative;
+            overflow: hidden;
         }
 
         .cta-section::before {
             content: '';
             position: absolute;
-            top: 50%; left: 50%;
+            top: 50%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 800px; height: 400px;
-            background: radial-gradient(ellipse, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
+            width: 800px;
+            height: 500px;
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(123, 97, 255, 0.08) 0%, transparent 50%);
             pointer-events: none;
+            filter: blur(20px);
         }
 
         .cta-section .container { position: relative; z-index: 1; }
 
         .cta-section h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(2rem, 4vw, 3.2rem);
             margin-bottom: 1rem;
         }
 
         .cta-section p {
             font-size: 1.1rem;
             color: var(--text-muted);
-            max-width: 460px;
+            max-width: 500px;
             margin: 0 auto 2.5rem;
+            line-height: 1.8;
         }
 
         /* ===== FOOTER ===== */
         footer {
             border-top: 1px solid var(--border);
             padding: 2.5rem 0;
+            background: rgba(5, 5, 16, 0.5);
         }
 
         .footer-inner {
-            max-width: 1160px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -535,6 +867,7 @@
         }
 
         .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 1rem;
             font-weight: 700;
             color: var(--white);
@@ -542,7 +875,12 @@
             letter-spacing: -0.02em;
         }
 
-        .footer-logo .accent { color: var(--accent); }
+        .footer-logo .accent {
+            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
         .footer-links {
             display: flex;
@@ -554,10 +892,10 @@
             font-size: 0.85rem;
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.3s;
         }
 
-        .footer-links a:hover { color: var(--accent); }
+        .footer-links a:hover { color: var(--cyan); }
 
         .footer-copy {
             font-size: 0.8rem;
@@ -567,9 +905,9 @@
         /* ===== SCROLL REVEAL ===== */
         .reveal {
             opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(32px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .reveal.visible {
@@ -577,22 +915,23 @@
             transform: none;
         }
 
-        .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
-        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
-        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+        .stagger > .reveal:nth-child(1) { transition-delay: 0s; }
+        .stagger > .reveal:nth-child(2) { transition-delay: 0.1s; }
+        .stagger > .reveal:nth-child(3) { transition-delay: 0.2s; }
+        .stagger > .reveal:nth-child(4) { transition-delay: 0.3s; }
 
-        /* ===== MOBILE ===== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             section { padding: 5rem 0; }
             .hero { min-height: auto; padding: 8rem 0 4rem; }
             .hero h1 { font-size: 2.4rem; }
             .hero p { font-size: 1rem; }
+            .hero-orb { width: 350px; height: 350px; }
 
             nav .nav-inner { padding: 1rem 1.25rem; }
 
             .trust-inner {
-                gap: 1.25rem;
+                gap: 1rem;
                 flex-direction: column;
                 align-items: flex-start;
                 padding: 0 2rem;
@@ -601,7 +940,7 @@
             .pain-grid,
             .feature-grid,
             .steps-grid,
-            .personal-grid { grid-template-columns: 1fr; }
+            .knowledge-grid { grid-template-columns: 1fr; }
 
             .pricing-grid { grid-template-columns: 1fr; }
 
@@ -613,34 +952,41 @@
 
         @media (max-width: 480px) {
             .container { padding: 0 1.25rem; }
-            .hero { padding: 7rem 0 4rem; }
+            .hero { padding: 7rem 0 3rem; }
+            .btn-primary { padding: 0.9rem 2rem; font-size: 0.95rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- AMBIENT BACKGROUND -->
+    <div class="bg-ambient"></div>
+    <div class="bg-grid"></div>
+
     <!-- NAV -->
     <nav>
         <div class="nav-inner">
             <a href="#" class="logo">AiBusiness<span class="accent">Copilot</span></a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="nav-cta">Get a plan &rarr;</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="nav-cta">Get Started &rarr;</a>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
+        <div class="hero-aurora"></div>
+        <div class="hero-orb"></div>
         <div class="container">
-            <div class="hero-eyebrow reveal">Done-for-you AI implementation</div>
+            <div class="hero-badge reveal">Done-for-you AI implementation</div>
             <h1 class="reveal">
-                Premium <span class="highlight">AI systems</span><br>built for your business
+                The <span class="glow-text">ABC's</span> of running<br>your business autonomously
             </h1>
             <p class="reveal">
-                We design and install serious AI systems for founders, teams, and operators. From Claude setup to custom AI operators, we handle the hard part so you get the leverage.
+                Done-for-you AI agent setup for businesses and professionals. We design, build, and install the system &mdash; you get the leverage.
             </p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-primary">Get Your AI System Plan</a>
             </div>
-            <p class="hero-note reveal">Takes 2 minutes &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Custom proposal within 24 hours</p>
+            <p class="hero-sub-note reveal">Takes 2 minutes &middot; No commitment &middot; Custom proposal within 24 hours</p>
         </div>
     </section>
 
@@ -648,42 +994,52 @@
     <div class="trust-bar">
         <div class="container">
             <div class="trust-inner">
-                <div class="trust-item"><span class="trust-dot"></span> No IT department needed</div>
-                <div class="trust-item"><span class="trust-dot"></span> Works with your existing tools</div>
-                <div class="trust-item"><span class="trust-dot"></span> Live in 1–2 weeks</div>
-                <div class="trust-item"><span class="trust-dot"></span> Local &amp; personal service</div>
+                <div class="trust-item">
+                    <span class="trust-icon">&#x1F6E1;</span>
+                    No IT department needed
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">&#x1F527;</span>
+                    Works with your existing tools
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">&#x26A1;</span>
+                    Live in 1&ndash;2 weeks
+                </div>
+                <div class="trust-item">
+                    <span class="trust-icon">&#x1F91D;</span>
+                    Local &amp; personal service
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== FOR BUSINESSES ===== -->
-
-    <!-- Business: Problem -->
-    <section>
+    <!-- ===== PROBLEM SECTION ===== -->
+    <section class="section-glow">
         <div class="container">
-            <div class="section-tag reveal">For Businesses — The Problem</div>
-            <h2 class="reveal">You know AI matters.<br>The implementation is the mess.</h2>
-            <p class="section-sub reveal">Founders and small teams know there is leverage here. The problem is choosing the right setup, wiring it into real work, and trusting it enough to use it daily.</p>
-            <div class="pain-grid reveal-stagger">
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">📧</span>
-                    <h3>Tool Chaos</h3>
-                    <p>Every AI tool claims to be the answer. Most teams end up with subscriptions, confusion, and no real system.</p>
+            <div class="section-label reveal">The Problem</div>
+            <h2 class="reveal">You didn't start a business to<br>drown in paperwork.</h2>
+            <p class="section-desc reveal">Founders and operators know AI matters. The problem is choosing the right setup, wiring it into real workflows, and trusting it enough to use it daily.</p>
+            <div class="pain-grid stagger">
+                <div class="pain-card glass-card reveal">
+                    <span class="pain-icon">&#x1F4E8;</span>
+                    <h3>Inbox Overload</h3>
+                    <p>Important emails buried under noise. Hours lost to sorting, responding, and following up on things that could be automated.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">📅</span>
-                    <h3>Bad Implementations</h3>
-                    <p>Half-configured setups waste time, create trust issues, and make AI feel like more work instead of less.</p>
+                <div class="pain-card glass-card reveal">
+                    <span class="pain-icon">&#x1F4C5;</span>
+                    <h3>Scheduling Chaos</h3>
+                    <p>Double-bookings, missed follow-ups, and calendar management eating into productive hours every single week.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">📝</span>
-                    <h3>No Internal Expertise</h3>
-                    <p>You do not have time to become the AI systems integrator for your own business.</p>
+                <div class="pain-card glass-card reveal">
+                    <span class="pain-icon">&#x1F4DD;</span>
+                    <h3>Document Drudgery</h3>
+                    <p>Proposals, contracts, reports. The same formats, slightly different each time. Hours of work that should take minutes.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">🤷</span>
-                    <h3>High Stakes</h3>
-                    <p>When AI touches client work, internal knowledge, or operations, sloppy setup is expensive.</p>
+                <div class="pain-card glass-card reveal">
+                    <span class="pain-icon">&#x1F937;</span>
+                    <h3>Don't Know Where to Start</h3>
+                    <p>Every AI tool claims to be the answer. Most end up abandoned within a week because no one configured them properly.</p>
                 </div>
             </div>
         </div>
@@ -691,32 +1047,32 @@
 
     <div class="divider"></div>
 
-    <!-- Business: Solution -->
-    <section>
+    <!-- ===== SOLUTION SECTION ===== -->
+    <section class="section-glow violet-glow">
         <div class="container">
-            <div class="section-tag reveal">The Solution</div>
-            <h2 class="reveal">We build the system.<br>You get the leverage.</h2>
-            <p class="section-sub reveal">AIBC is premium done-for-you implementation. We configure the right AI setup for your business, connect it to your workflow, and hand you something that actually works.</p>
-            <div class="feature-grid reveal-stagger">
-                <div class="feature-card card reveal">
-                    <div class="feature-icon">📨</div>
-                    <h3>Claude Setup</h3>
-                    <p>We turn Claude into a real business tool with structure, prompts, playbooks, and workflow alignment.</p>
+            <div class="section-label reveal">The Solution</div>
+            <h2 class="reveal">Your AI agent, fully set up<br>and running.</h2>
+            <p class="section-desc reveal">We don't hand you a tutorial. We build the system, connect it to your tools, and hand you something that works from day one.</p>
+            <div class="feature-grid stagger">
+                <div class="feature-card glass-card reveal">
+                    <div class="feature-icon-wrap">&#x1F4E8;</div>
+                    <h3>Email Triage</h3>
+                    <p>Your agent reads, categorizes, drafts responses, and surfaces what actually needs your attention.</p>
                 </div>
-                <div class="feature-card card reveal">
-                    <div class="feature-icon">🗓️</div>
-                    <h3>Custom AI Systems</h3>
-                    <p>For clients who need more than a chat app, we build custom operators around your tools, channels, and internal processes.</p>
+                <div class="feature-card glass-card reveal">
+                    <div class="feature-icon-wrap">&#x1F5D3;</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Automated booking, reminders, and follow-up sequences that keep your calendar clean and productive.</p>
                 </div>
-                <div class="feature-card card reveal">
-                    <div class="feature-icon">🖥️</div>
-                    <h3>Dedicated AI Box</h3>
-                    <p>Need the cleanest premium path? We configure a dedicated Mac mini or AI machine and deliver it ready to work.</p>
+                <div class="feature-card glass-card reveal">
+                    <div class="feature-icon-wrap">&#x1F4C4;</div>
+                    <h3>Document Drafting</h3>
+                    <p>Proposals, contracts, and reports generated from your templates and data. Review and send, not write and rewrite.</p>
                 </div>
-                <div class="feature-card card reveal">
-                    <div class="feature-icon">💬</div>
-                    <h3>Managed Care</h3>
-                    <p>We do not just install it and disappear. We refine, maintain, and improve the system as your needs evolve.</p>
+                <div class="feature-card glass-card reveal">
+                    <div class="feature-icon-wrap">&#x1F4AC;</div>
+                    <h3>Customer Follow-ups</h3>
+                    <p>Automated check-ins, review requests, and nurture sequences that keep relationships warm without your time.</p>
                 </div>
             </div>
         </div>
@@ -724,32 +1080,32 @@
 
     <div class="divider"></div>
 
-    <!-- Business: How It Works -->
+    <!-- ===== HOW IT WORKS ===== -->
     <section>
         <div class="container">
-            <div class="section-tag reveal">How It Works</div>
+            <div class="section-label text-center reveal">How It Works</div>
             <h2 class="text-center reveal">Four steps to a working AI system</h2>
-            <p class="section-sub text-center mx-auto reveal">Simple process, premium execution, no guesswork on your side.</p>
-            <div class="steps-grid reveal-stagger">
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 01</span>
-                    <h3>Assessment</h3>
+            <p class="section-desc text-center mx-auto reveal">Simple process, premium execution. No guesswork on your side.</p>
+            <div class="steps-grid stagger">
+                <div class="step-card glass-card reveal">
+                    <span class="step-num">01</span>
+                    <h3>Discovery Survey</h3>
                     <p>We learn your workflow, goals, tools, and constraints so we can recommend the right system.</p>
                 </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 02</span>
-                    <h3>System Design</h3>
-                    <p>We map the implementation, pick the right stack, and define the setup around your real use case.</p>
+                <div class="step-card glass-card reveal">
+                    <span class="step-num">02</span>
+                    <h3>Setup &amp; Configure</h3>
+                    <p>We design the architecture, pick the right stack, and build the system around your real use case.</p>
                 </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 03</span>
-                    <h3>Build &amp; Install</h3>
-                    <p>We configure, connect, tune, and hand off the system once it is ready to use.</p>
+                <div class="step-card glass-card reveal">
+                    <span class="step-num">03</span>
+                    <h3>Training Session</h3>
+                    <p>A hands-on walkthrough so you know exactly how to use your new system and get value from day one.</p>
                 </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 04</span>
-                    <h3>Support &amp; Refinement</h3>
-                    <p>With Managed Care, we keep it sharp as your workflow changes and new opportunities appear.</p>
+                <div class="step-card glass-card reveal">
+                    <span class="step-num">04</span>
+                    <h3>Weekly Check-ins</h3>
+                    <p>We refine, maintain, and improve the system as your needs evolve. You're never left on your own.</p>
                 </div>
             </div>
         </div>
@@ -757,46 +1113,46 @@
 
     <div class="divider"></div>
 
-    <!-- Business: Pricing -->
-    <section>
+    <!-- ===== FOR BUSINESSES ===== -->
+    <section class="audience-section section-glow">
         <div class="container">
-            <div class="section-tag reveal">Business Pricing</div>
-            <h2 class="reveal">Premium pricing for<br>serious implementation</h2>
-            <p class="section-sub reveal">We are not selling a toy. We are building advanced systems that most people do not know how to set up properly.</p>
-            <div class="pricing-grid reveal-stagger">
-                <div class="pricing-card card reveal">
+            <div class="audience-badge business reveal">&#x1F3E2; For Businesses</div>
+            <h2 class="reveal">AI systems built for<br>teams and operations.</h2>
+            <p class="section-desc reveal">From Claude setup to custom AI operators, we handle the hard part so your team gets leverage without hiring an AI engineer.</p>
+            <div class="pricing-grid stagger">
+                <div class="pricing-card glass-card reveal">
                     <h3>Claude Setup</h3>
                     <div class="price">$3,000</div>
                     <div class="price-note">One-time setup</div>
                     <ul class="price-features">
                         <li>Claude configured around your workflow</li>
-                        <li>Knowledge organization and prompt/system design</li>
-                        <li>Operating playbook and onboarding handoff</li>
+                        <li>Knowledge organization &amp; prompt design</li>
+                        <li>Operating playbook &amp; onboarding handoff</li>
                         <li>30-day support included</li>
                     </ul>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-card">Get Your Plan</a>
                 </div>
-                <div class="pricing-card card featured reveal">
+                <div class="pricing-card glass-card featured reveal">
                     <h3>Custom AI System</h3>
                     <div class="price">$5,000</div>
                     <div class="price-note">Starting point</div>
                     <ul class="price-features">
                         <li>Custom AI operator for your business</li>
                         <li>Local or dedicated machine install</li>
-                        <li>Channels, memory, protocols, and workflow setup</li>
-                        <li>Built and tuned around your actual operations</li>
+                        <li>Channels, memory, protocols &amp; workflow</li>
+                        <li>Built around your actual operations</li>
                     </ul>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-card primary">Get Your Plan</a>
                 </div>
-                <div class="pricing-card card reveal">
+                <div class="pricing-card glass-card reveal">
                     <h3>Dedicated AI Box</h3>
                     <div class="price">$5,000+</div>
                     <div class="price-note">Custom quote</div>
                     <ul class="price-features">
-                        <li>Dedicated Mac mini or AI machine sourced by us</li>
-                        <li>Fully configured and tested before delivery</li>
+                        <li>Dedicated Mac mini or AI machine</li>
+                        <li>Fully configured &amp; tested before delivery</li>
                         <li>Ready-to-use premium hardware lane</li>
-                        <li>Best fit for clients who want zero friction</li>
+                        <li>Zero friction for clients who want the best</li>
                     </ul>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-card">Request a Quote</a>
                 </div>
@@ -807,128 +1163,49 @@
 
     <div class="divider"></div>
 
-    <!-- ===== FOR OPERATORS / PERSONAL ===== -->
-
-    <!-- Personal: Problem -->
-    <section>
+    <!-- ===== FOR INDIVIDUALS ===== -->
+    <section class="audience-section section-glow violet-glow">
         <div class="container">
-            <div class="section-tag reveal">For Operators — The Problem</div>
-            <h2 class="reveal">You want AI leverage without<br>becoming the technical operator.</h2>
-            <p class="section-sub reveal">For solo operators, consultants, and high-agency individuals, the problem is not interest. It is turning raw AI capability into a system you can trust and actually use.</p>
-            <div class="pain-grid reveal-stagger">
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">📂</span>
-                    <h3>Too Many Tools</h3>
-                    <p>You have tried a few AI products already, but none of them became a real part of how you work.</p>
+            <div class="audience-badge individual reveal">&#x1F9D1; For Individuals</div>
+            <h2 class="reveal">Your personal knowledge base,<br>organized and searchable.</h2>
+            <p class="section-desc reveal">For solo operators, consultants, and high-agency individuals. Stop losing ideas and start compounding knowledge.</p>
+            <div class="knowledge-grid stagger">
+                <div class="knowledge-card glass-card reveal">
+                    <span class="card-icon">&#x1F4C2;</span>
+                    <h3>Scattered Files</h3>
+                    <p>Notes in five apps, docs in three folders, ideas in your head. Your knowledge is fragmented across too many places.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">🔍</span>
-                    <h3>No Clear System</h3>
-                    <p>Prompts, files, notes, and workflows live in different places, so the value never compounds.</p>
+                <div class="knowledge-card glass-card reveal">
+                    <span class="card-icon">&#x1F50D;</span>
+                    <h3>Can't Find What You Need</h3>
+                    <p>You wrote it down somewhere. You know it exists. But when you need it, it takes 20 minutes to find or you give up.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">🧠</span>
-                    <h3>Trust Issues</h3>
-                    <p>You want something more powerful, but you do not want a sloppy setup touching work that matters.</p>
+                <div class="knowledge-card glass-card reveal">
+                    <span class="card-icon">&#x1F9E0;</span>
+                    <h3>Knowledge Decay</h3>
+                    <p>Great insights from last month's project are already fading. Without a system, your best thinking doesn't compound.</p>
                 </div>
-                <div class="pain-card card reveal">
-                    <span class="pain-icon">⏰</span>
-                    <h3>Wasted Energy</h3>
+                <div class="knowledge-card glass-card reveal">
+                    <span class="card-icon">&#x23F0;</span>
+                    <h3>Wasted Time</h3>
                     <p>You should be using AI to move faster, not spending nights trying to piece together the stack yourself.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <div class="divider"></div>
-
-    <!-- Personal: Solution -->
-    <section>
-        <div class="container">
-            <div class="section-tag reveal">The Solution</div>
-            <h2 class="reveal">A serious AI setup,<br>built around how you work.</h2>
-            <p class="section-sub reveal">Whether you need a trusted Claude setup or a deeper custom system, we configure the stack so your workflows become faster, cleaner, and easier to trust.</p>
-            <div class="personal-grid reveal-stagger">
-                <div class="personal-card card reveal">
-                    <span class="personal-icon">🔍</span>
-                    <h3>Trusted Claude Setup</h3>
-                    <p>Claude configured around your real work, not generic demos.</p>
-                </div>
-                <div class="personal-card card reveal">
-                    <span class="personal-icon">📚</span>
-                    <h3>Workflow Alignment</h3>
-                    <p>Prompts, structure, and knowledge arranged around how you actually operate.</p>
-                </div>
-                <div class="personal-card card reveal">
-                    <span class="personal-icon">🧠</span>
-                    <h3>Custom Systems</h3>
-                    <p>Upgrade path for operators who want something more powerful than a single app.</p>
-                </div>
-                <div class="personal-card card reveal">
-                    <span class="personal-icon">📈</span>
-                    <h3>Ongoing Refinement</h3>
-                    <p>Your system gets sharper over time instead of drifting into chaos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Personal: How It Works -->
-    <section>
-        <div class="container">
-            <div class="section-tag reveal">How It Works</div>
-            <h2 class="text-center reveal">Four steps to your AI operator stack</h2>
-            <p class="section-sub text-center mx-auto reveal">Clear intake, sharp setup, and a system that feels built for you.</p>
-            <div class="steps-grid reveal-stagger">
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 01</span>
-                    <h3>Intake</h3>
-                    <p>We learn how you work, where the friction is, and what kind of leverage matters most.</p>
-                </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 02</span>
-                    <h3>System Design</h3>
-                    <p>We choose the right level of setup, from premium Claude configuration to custom operator build.</p>
-                </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 03</span>
-                    <h3>Configuration</h3>
-                    <p>We set it up, connect the right pieces, and tune it around your actual workflow.</p>
-                </div>
-                <div class="step-card card reveal">
-                    <span class="step-num">STEP 04</span>
-                    <h3>Support</h3>
-                    <p>Managed Care is available if you want refinement, maintenance, and upgrades over time.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Personal: Pricing -->
-    <section>
-        <div class="container">
-            <div class="section-tag reveal">Operator Pricing</div>
-            <h2 class="reveal">Premium setup for<br>high-agency operators.</h2>
-            <p class="section-sub reveal">If you want a real system, we build one. If you want something simple but sharp, we configure that too.</p>
-            <div class="pricing-grid reveal-stagger" style="max-width:480px;">
-                <div class="pricing-card card featured reveal">
-                    <h3>Claude Setup</h3>
+            <div style="margin-top:3.5rem; max-width:480px;">
+                <div class="pricing-card glass-card featured reveal">
+                    <h3>Personal AI Setup</h3>
                     <div class="price">$3,000</div>
                     <div class="price-note">One-time setup</div>
                     <ul class="price-features">
                         <li>Claude configured around your workflow</li>
-                        <li>Knowledge organization and prompt/system design</li>
-                        <li>Operating playbook and onboarding handoff</li>
-                        <li>Upgrade path into a custom AI system if needed</li>
+                        <li>Knowledge organization &amp; prompt design</li>
+                        <li>Operating playbook &amp; onboarding handoff</li>
+                        <li>Upgrade path into custom AI system</li>
                     </ul>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-card primary">Get Your Plan</a>
                 </div>
             </div>
-            <p class="reveal" style="margin-top:2rem;font-size:0.85rem;color:var(--text-dim);">Need dedicated hardware? Dedicated AI Box starts at $5,000.</p>
         </div>
     </section>
 
@@ -936,12 +1213,12 @@
     <div class="divider"></div>
     <section class="cta-section">
         <div class="container">
-            <h2 class="reveal">Ready for a serious AI system?</h2>
-            <p class="reveal">Tell us how you work and what you want AI to handle. We will recommend the right setup and send you a custom plan.</p>
+            <h2 class="reveal">Ready to stop doing<br>everything manually?</h2>
+            <p class="reveal">Tell us how you work and what you want AI to handle. We'll send you a custom plan within 24 hours.</p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn-primary">Get Your AI System Plan</a>
             </div>
-            <p class="reveal" style="margin-top:1.25rem;font-size:0.85rem;color:var(--text-dim);">Takes 2 minutes &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Custom proposal within 24 hours</p>
+            <p class="reveal" style="margin-top:1.25rem;font-size:0.85rem;color:var(--text-dim);">Takes 2 minutes &middot; No commitment &middot; Free consultation</p>
         </div>
     </section>
 
@@ -953,12 +1230,12 @@
                 <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform">Get a Plan</a>
             </div>
-            <span class="footer-copy">&copy; 2026 AiBusinessCopilot</span>
+            <span class="footer-copy">&copy; 2026 AiBusinessCopilot. All rights reserved.</span>
         </div>
     </footer>
 
     <script>
-    /* Scroll reveal */
+    /* Scroll reveal with stagger */
     (function() {
         var observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
@@ -967,10 +1244,21 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
 
         document.querySelectorAll('.reveal').forEach(function(el) {
             observer.observe(el);
+        });
+    })();
+
+    /* Subtle parallax on hero orb */
+    (function() {
+        var orb = document.querySelector('.hero-orb');
+        if (!orb || window.innerWidth < 768) return;
+        document.addEventListener('mousemove', function(e) {
+            var x = (e.clientX / window.innerWidth - 0.5) * 20;
+            var y = (e.clientY / window.innerHeight - 0.5) * 20;
+            orb.style.transform = 'translate(calc(-50% + ' + x + 'px), calc(-55% + ' + y + 'px))';
         });
     })();
     </script>
