@@ -7,10 +7,10 @@
     <meta name="description" content="We design and implement secure, tailored AI systems that fit your business operations. Private AI assistants, workflow automation, and enterprise-grade deployment.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #06060e;
+            --bg-deep: #050510;
             --bg-surface: #0a0a1a;
             --bg-card: rgba(12, 14, 30, 0.6);
             --neon-blue: #00d4ff;
@@ -49,7 +49,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            opacity: 0.035;
+            opacity: 0.03;
             z-index: 9999;
             pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -65,11 +65,59 @@
             z-index: 0;
             pointer-events: none;
             background-image:
-                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
             background-size: 60px 60px;
             mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
             -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
+        }
+
+        /* ===== AMBIENT LIGHT ORBS ===== */
+        .ambient-orbs {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            animation: orbDrift 20s ease-in-out infinite;
+        }
+
+        .ambient-orb:nth-child(1) {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.4), transparent 70%);
+            top: -10%; left: -10%;
+            animation-duration: 25s;
+        }
+
+        .ambient-orb:nth-child(2) {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.35), transparent 70%);
+            top: 30%; right: -15%;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .ambient-orb:nth-child(3) {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.3), transparent 70%);
+            bottom: 10%; left: 20%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbDrift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(-20px, 30px) scale(0.95); }
+            75% { transform: translate(15px, 15px) scale(1.02); }
         }
 
         /* ===== PARTICLE CANVAS ===== */
@@ -93,7 +141,7 @@
 
         .geo-shape {
             position: absolute;
-            opacity: 0.035;
+            opacity: 0.04;
             animation: geoFloat linear infinite;
         }
 
@@ -107,7 +155,7 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern) {
+        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs) {
             position: relative;
             z-index: 1;
         }
@@ -116,11 +164,11 @@
         nav {
             position: fixed;
             top: 0; width: 100%;
-            background: rgba(6, 6, 14, 0.75);
-            backdrop-filter: blur(24px) saturate(1.2);
-            -webkit-backdrop-filter: blur(24px) saturate(1.2);
+            background: rgba(5, 5, 16, 0.7);
+            backdrop-filter: blur(30px) saturate(1.4);
+            -webkit-backdrop-filter: blur(30px) saturate(1.4);
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         nav .container {
@@ -133,11 +181,12 @@
         }
 
         nav .logo {
-            font-size: 1.3rem;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.35rem;
             font-weight: 800;
             color: var(--white);
             text-decoration: none;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
         }
 
         nav .logo span {
@@ -150,17 +199,30 @@
         nav a.cta-sm {
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
+            padding: 0.55rem 1.3rem;
+            border-radius: 10px;
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), 0 0 40px rgba(168, 85, 247, 0.08);
+            position: relative;
+            overflow: hidden;
         }
 
+        nav a.cta-sm::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+
+        nav a.cta-sm:hover::before { left: 100%; }
+
         nav a.cta-sm:hover {
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.35), 0 0 60px rgba(168, 85, 247, 0.15);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(168, 85, 247, 0.12);
             transform: translateY(-1px);
         }
 
@@ -178,18 +240,60 @@
             overflow: hidden;
         }
 
-        /* MESH GRADIENT — the hero showpiece */
+        /* Aurora effect behind hero */
+        .hero-aurora {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-aurora::before,
+        .hero-aurora::after {
+            content: '';
+            position: absolute;
+            width: 150%; height: 60%;
+            top: -10%;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+        }
+
+        .hero-aurora::before {
+            left: -25%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.5), rgba(124, 58, 237, 0.3), transparent);
+            animation: auroraWave1 8s ease-in-out infinite;
+        }
+
+        .hero-aurora::after {
+            right: -25%;
+            background: linear-gradient(225deg, rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.2), transparent);
+            animation: auroraWave2 10s ease-in-out infinite;
+        }
+
+        @keyframes auroraWave1 {
+            0%, 100% { transform: translateX(0) scaleY(1) rotate(-2deg); }
+            50% { transform: translateX(3%) scaleY(1.15) rotate(2deg); }
+        }
+
+        @keyframes auroraWave2 {
+            0%, 100% { transform: translateX(0) scaleY(1) rotate(2deg); }
+            50% { transform: translateX(-3%) scaleY(1.1) rotate(-2deg); }
+        }
+
+        /* MESH GRADIENT */
         .hero-gradient-bg {
             position: absolute;
             top: -20%; left: -20%;
             width: 140%; height: 140%;
             z-index: 0;
             background:
-                radial-gradient(ellipse 50% 40% at 20% 30%, rgba(0, 212, 255, 0.18) 0%, transparent 60%),
-                radial-gradient(ellipse 45% 35% at 80% 20%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
-                radial-gradient(ellipse 40% 45% at 60% 80%, rgba(233, 69, 96, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 35% 30% at 10% 70%, rgba(0, 255, 213, 0.07) 0%, transparent 50%),
-                radial-gradient(ellipse 30% 25% at 90% 60%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse 50% 40% at 20% 30%, rgba(0, 212, 255, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 45% 35% at 80% 20%, rgba(168, 85, 247, 0.16) 0%, transparent 55%),
+                radial-gradient(ellipse 40% 45% at 60% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 35% 30% at 10% 70%, rgba(0, 255, 213, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 30% 25% at 90% 60%, rgba(124, 58, 237, 0.12) 0%, transparent 50%);
             animation: meshFloat 12s ease-in-out infinite;
             filter: blur(40px);
         }
@@ -209,10 +313,10 @@
             height: 2px;
             background: linear-gradient(90deg,
                 transparent 0%,
-                rgba(0, 212, 255, 0.5) 20%,
-                rgba(168, 85, 247, 0.6) 40%,
-                rgba(233, 69, 96, 0.5) 60%,
-                rgba(0, 255, 213, 0.5) 80%,
+                rgba(0, 212, 255, 0.6) 20%,
+                rgba(168, 85, 247, 0.7) 40%,
+                rgba(233, 69, 96, 0.6) 60%,
+                rgba(0, 255, 213, 0.6) 80%,
                 transparent 100%);
             background-size: 200% 100%;
             animation: auroraShimmer 4s linear infinite;
@@ -230,12 +334,13 @@
         }
 
         .hero h1 {
-            font-size: 3.4rem;
-            font-weight: 900;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 3.6rem;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            line-height: 1.12;
+            line-height: 1.1;
             color: var(--white);
-            letter-spacing: -0.035em;
+            letter-spacing: -0.04em;
         }
 
         .hero h1 .glow {
@@ -245,7 +350,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: textGradient 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.35));
+            filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.4));
         }
 
         @keyframes textGradient {
@@ -261,7 +366,7 @@
             margin-left: 2px;
             animation: cursorBlink 0.7s step-end infinite;
             vertical-align: text-bottom;
-            box-shadow: 0 0 12px var(--neon-blue);
+            box-shadow: 0 0 12px var(--neon-blue), 0 0 24px rgba(0, 212, 255, 0.3);
         }
 
         @keyframes cursorBlink {
@@ -276,12 +381,12 @@
             line-height: 1.7;
         }
 
+        /* ===== PRIMARY CTA BUTTON ===== */
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
             padding: 1rem 2.5rem;
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 700;
@@ -289,18 +394,56 @@
             border: none;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             box-shadow:
                 0 0 20px rgba(0, 212, 255, 0.25),
-                0 0 60px rgba(0, 212, 255, 0.1),
-                0 8px 32px rgba(0, 0, 0, 0.4);
+                0 0 60px rgba(0, 212, 255, 0.08),
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        /* Animated shimmer sweep on CTA */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            animation: btnShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes btnShimmer {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        /* Pulse ring behind CTA */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            transform: translate(-50%, -50%) scale(1);
+            animation: btnPulse 2.5s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes btnPulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0; }
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.02);
+            transform: translateY(-3px) scale(1.03);
             box-shadow:
-                0 0 30px rgba(0, 212, 255, 0.4),
+                0 0 40px rgba(0, 212, 255, 0.4),
                 0 0 80px rgba(0, 212, 255, 0.15),
-                0 12px 40px rgba(0, 0, 0, 0.5);
+                0 0 120px rgba(168, 85, 247, 0.08),
+                0 16px 48px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.15);
         }
 
         .btn-outline {
@@ -310,20 +453,24 @@
             box-shadow: 0 0 15px rgba(0, 212, 255, 0.05);
         }
 
+        .btn-outline::before,
+        .btn-outline::after { display: none; }
+
         .btn-outline:hover {
             background: rgba(0, 212, 255, 0.08);
             border-color: var(--neon-blue);
-            box-shadow: var(--glow-blue);
+            box-shadow: var(--glow-blue), inset 0 0 30px rgba(0, 212, 255, 0.04);
             color: var(--white);
         }
 
         /* ===== TRUST BAR ===== */
         .trust-bar {
-            background: rgba(0, 212, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 1.5rem 0;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.03), rgba(168, 85, 247, 0.02));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.8rem 0;
             text-align: center;
+            position: relative;
         }
 
         .trust-bar .container {
@@ -336,13 +483,35 @@
         .trust-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             font-size: 0.95rem;
             color: var(--text-muted);
             font-weight: 500;
+            transition: color 0.3s;
         }
 
-        .trust-item .icon { font-size: 1.3rem; }
+        .trust-item:hover { color: var(--text-primary); }
+
+        .trust-item .trust-icon {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .trust-item:hover .trust-icon {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .trust-item .trust-icon svg {
+            width: 18px; height: 18px;
+        }
 
         /* ===== TAB TOGGLE ===== */
         .tab-toggle-wrapper {
@@ -357,6 +526,7 @@
             border-radius: 50px;
             padding: 5px;
             position: relative;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.03);
         }
 
         .tab-btn {
@@ -376,7 +546,7 @@
         .tab-btn.active {
             color: var(--white);
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.25);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
         .tab-btn:not(.active):hover { color: var(--text-primary); }
@@ -409,7 +579,8 @@
         }
 
         h2 {
-            font-size: 2.3rem;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 2.4rem;
             font-weight: 800;
             color: var(--white);
             margin-bottom: 1rem;
@@ -432,23 +603,58 @@
             margin-right: auto;
         }
 
-        /* ===== GLOW DIVIDER ===== */
-        .glow-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent 5%, var(--neon-blue), var(--neon-purple), transparent 95%);
-            opacity: 0.25;
-            margin: 0 2rem;
+        /* ===== WAVE DIVIDER ===== */
+        .wave-divider {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ===== GLOWING ANIMATED BORDERS ===== */
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 80px;
+        }
+
+        /* Fallback glow-divider (kept for any missed references) */
+        .glow-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3), transparent 95%);
+            opacity: 0.4;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .glow-divider::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: 20%; right: 20%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2), transparent);
+            filter: blur(2px);
+        }
+
+        /* ===== ANIMATED GRADIENT BORDERS ===== */
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes rotateBorder {
+            to { --angle: 360deg; }
+        }
+
         @keyframes glowPulse {
             0%, 100% {
                 border-color: rgba(0, 212, 255, 0.08);
                 box-shadow: 0 0 0 rgba(0, 212, 255, 0);
             }
             50% {
-                border-color: rgba(0, 212, 255, 0.25);
-                box-shadow: 0 0 25px rgba(0, 212, 255, 0.08), inset 0 0 25px rgba(0, 212, 255, 0.02);
+                border-color: rgba(0, 212, 255, 0.2);
+                box-shadow: 0 0 30px rgba(0, 212, 255, 0.06), inset 0 0 30px rgba(0, 212, 255, 0.02);
             }
         }
 
@@ -458,8 +664,8 @@
                 box-shadow: 0 0 0 rgba(168, 85, 247, 0);
             }
             50% {
-                border-color: rgba(168, 85, 247, 0.25);
-                box-shadow: 0 0 25px rgba(168, 85, 247, 0.08), inset 0 0 25px rgba(168, 85, 247, 0.02);
+                border-color: rgba(168, 85, 247, 0.2);
+                box-shadow: 0 0 30px rgba(168, 85, 247, 0.06), inset 0 0 30px rgba(168, 85, 247, 0.02);
             }
         }
 
@@ -469,22 +675,14 @@
                 box-shadow: 0 0 0 rgba(233, 69, 96, 0);
             }
             50% {
-                border-color: rgba(233, 69, 96, 0.25);
-                box-shadow: 0 0 25px rgba(233, 69, 96, 0.08), inset 0 0 25px rgba(233, 69, 96, 0.02);
+                border-color: rgba(233, 69, 96, 0.2);
+                box-shadow: 0 0 30px rgba(233, 69, 96, 0.06), inset 0 0 30px rgba(233, 69, 96, 0.02);
             }
         }
 
-        .glow-border {
-            animation: glowPulse 4s ease-in-out infinite;
-        }
-
-        .glow-border-purple {
-            animation: glowPulsePurple 4s ease-in-out infinite;
-        }
-
-        .glow-border-pink {
-            animation: glowPulsePink 4s ease-in-out infinite;
-        }
+        .glow-border { animation: glowPulse 4s ease-in-out infinite; }
+        .glow-border-purple { animation: glowPulsePurple 4s ease-in-out infinite; }
+        .glow-border-pink { animation: glowPulsePink 4s ease-in-out infinite; }
 
         .glow-border:nth-child(2), .glow-border-purple:nth-child(2) { animation-delay: 1s; }
         .glow-border:nth-child(3), .glow-border-purple:nth-child(1) { animation-delay: 2s; }
@@ -492,16 +690,25 @@
 
         /* ===== GLASSMORPHISM CARDS ===== */
         .glass-card {
-            background: linear-gradient(135deg, rgba(15, 18, 40, 0.6), rgba(10, 12, 30, 0.4));
+            background: linear-gradient(135deg, rgba(15, 18, 40, 0.7), rgba(10, 12, 30, 0.5));
             backdrop-filter: blur(20px) saturate(1.3);
             -webkit-backdrop-filter: blur(20px) saturate(1.3);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             transform-style: preserve-3d;
             will-change: transform;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Top accent line on cards */
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
         }
 
         /* Shimmer highlight on cards */
@@ -510,8 +717,8 @@
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.03) 55%, transparent 60%);
-            transition: left 0.6s ease;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 55%, transparent 60%);
+            transition: left 0.7s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -521,12 +728,16 @@
         }
 
         .glass-card:hover {
-            background: linear-gradient(135deg, rgba(20, 24, 50, 0.7), rgba(15, 18, 40, 0.5));
-            border-color: rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, rgba(20, 24, 55, 0.8), rgba(15, 18, 45, 0.6));
+            border-color: rgba(255, 255, 255, 0.14);
+            transform: translateY(-4px);
         }
 
         /* ===== PROBLEM SECTION ===== */
-        .problem { background: rgba(0, 0, 0, 0.15); }
+        .problem {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+            position: relative;
+        }
 
         .pain-points {
             display: grid;
@@ -538,15 +749,45 @@
         .pain-point {
             padding: 1.8rem;
             border-left: 3px solid var(--neon-blue);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .pain-point:hover {
             border-left-color: var(--neon-purple);
-            transform: translateY(-3px);
         }
 
-        .pain-point .icon { font-size: 2rem; margin-bottom: 0.8rem; }
-        .pain-point h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
+        .pain-point .card-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.08));
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            transition: all 0.4s;
+        }
+
+        .pain-point:hover .card-icon {
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.12));
+        }
+
+        .pain-point .card-icon svg {
+            width: 22px; height: 22px;
+            stroke: var(--neon-blue);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s;
+        }
+
+        .pain-point:hover .card-icon svg {
+            stroke: var(--neon-cyan);
+        }
+
+        .pain-point h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
         .pain-point p { font-size: 0.95rem; color: var(--text-muted); }
 
         /* ===== SOLUTION ===== */
@@ -565,33 +806,54 @@
         }
 
         .feature .icon-circle {
-            width: 70px; height: 70px;
-            border-radius: 18px;
+            width: 72px; height: 72px;
+            border-radius: 20px;
             background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(168, 85, 247, 0.12));
-            border: 1px solid rgba(0, 212, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.12);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.2rem;
-            font-size: 1.8rem;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.08);
-            transition: box-shadow 0.4s;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.06), inset 0 0 20px rgba(0, 212, 255, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .feature .icon-circle svg {
+            width: 28px; height: 28px;
+            stroke: var(--neon-blue);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s;
         }
 
         .feature:hover .icon-circle {
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2), 0 0 80px rgba(168, 85, 247, 0.1);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2), 0 0 80px rgba(168, 85, 247, 0.08), inset 0 0 30px rgba(0, 212, 255, 0.05);
+            transform: scale(1.05);
+            border-color: rgba(0, 212, 255, 0.2);
         }
 
-        .feature h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--white); }
+        .feature:hover .icon-circle svg {
+            stroke: var(--neon-cyan);
+            filter: drop-shadow(0 0 8px rgba(0, 255, 213, 0.4));
+        }
+
+        .feature h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
         .feature p { color: var(--text-muted); font-size: 0.95rem; }
 
         /* ===== HOW IT WORKS ===== */
-        .how-it-works { background: rgba(0, 0, 0, 0.2); }
+        .how-it-works {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15));
+            position: relative;
+        }
 
         .steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 2rem;
+            position: relative;
         }
 
         .step {
@@ -600,24 +862,38 @@
         }
 
         .step-number {
-            width: 50px; height: 50px;
+            width: 52px; height: 52px;
             border-radius: 14px;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
-            font-size: 1.2rem;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 1.3rem;
             font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.25), 0 0 50px rgba(168, 85, 247, 0.1);
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), 0 0 50px rgba(168, 85, 247, 0.08);
+            position: relative;
         }
 
-        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); }
+        /* Subtle ring around step number */
+        .step-number::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 18px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+        }
+
+        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
         .step p { font-size: 0.9rem; color: var(--text-muted); }
 
         /* ===== PRICING ===== */
-        .pricing { background: rgba(0, 0, 0, 0.1); }
+        .pricing {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.05));
+            position: relative;
+        }
 
         .pricing-grid {
             display: grid;
@@ -635,8 +911,8 @@
         }
 
         .pricing-card.featured {
-            border: 1px solid rgba(0, 212, 255, 0.25);
-            box-shadow: 0 0 50px rgba(0, 212, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.06), 0 0 120px rgba(168, 85, 247, 0.03), inset 0 1px 0 rgba(255,255,255,0.06);
         }
 
         .pricing-card.featured::before {
@@ -644,7 +920,9 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+            background-size: 200% 100%;
+            animation: auroraShimmer 3s linear infinite;
         }
 
         .pricing-card.featured::after {
@@ -660,17 +938,18 @@
             letter-spacing: 1px;
         }
 
-        .pricing-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; }
+        .pricing-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; font-weight: 700; }
 
         .pricing-card .price {
-            font-size: 2.8rem;
-            font-weight: 900;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
             margin-bottom: 0.3rem;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3));
+            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
             letter-spacing: -0.03em;
         }
 
@@ -692,22 +971,27 @@
             color: var(--text-muted);
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .pricing-card ul li::before {
-            content: '✓';
-            color: var(--neon-cyan);
-            font-weight: 700;
+            content: '';
+            display: inline-block;
+            width: 18px; height: 18px;
             flex-shrink: 0;
+            margin-top: 2px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ffd5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
         /* ===== STATS / COUNTERS ===== */
         .stats-bar {
-            padding: 3rem 0;
-            background: rgba(0, 212, 255, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 3.5rem 0;
+            background: linear-gradient(180deg, rgba(0, 212, 255, 0.02), rgba(168, 85, 247, 0.02));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
         }
 
         .stats-grid {
@@ -722,14 +1006,16 @@
         }
 
         .stat-number {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
             font-size: 3rem;
-            font-weight: 900;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.2;
             letter-spacing: -0.03em;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.2));
         }
 
         .stat-label {
@@ -743,41 +1029,49 @@
         .cta-section {
             text-align: center;
             background:
-                radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 40% at 30% 70%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 30% 70%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 70% 30%, rgba(233, 69, 96, 0.04) 0%, transparent 50%),
                 var(--bg-deep);
             color: var(--white);
-            padding: 6rem 0;
+            padding: 7rem 0;
             position: relative;
+            overflow: hidden;
         }
 
         .cta-section::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 5%, var(--neon-blue), var(--neon-purple), transparent 95%);
-            opacity: 0.4;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 5%, rgba(0, 212, 255, 0.4), rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.3), transparent 95%);
+            background-size: 200% 100%;
+            animation: auroraShimmer 5s linear infinite;
         }
 
-        .cta-section h2 { color: var(--white); font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-section h2 {
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
         .cta-section p { font-size: 1.15rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
         .cta-section .btn { font-size: 1.2rem; padding: 1.2rem 3rem; }
 
         /* ===== FOOTER ===== */
         footer {
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-dim);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem 2rem;
             font-size: 0.85rem;
         }
 
         footer a {
             color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.3s;
         }
 
         footer a:hover { color: var(--neon-blue); }
@@ -790,13 +1084,8 @@
                         transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .reveal.from-left {
-            transform: translateX(-60px);
-        }
-
-        .reveal.from-right {
-            transform: translateX(60px);
-        }
+        .reveal.from-left { transform: translateX(-60px); }
+        .reveal.from-right { transform: translateX(60px); }
 
         .reveal.visible {
             opacity: 1;
@@ -804,10 +1093,10 @@
         }
 
         .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.1s; }
-        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.2s; }
-        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.3s; }
-        .reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.4s; }
+        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.12s; }
+        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.24s; }
+        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.36s; }
+        .reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.48s; }
 
         /* Personal tab features */
         .personal-features {
@@ -822,8 +1111,33 @@
             padding: 2rem 1rem;
         }
 
-        .personal-feature .pf-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
-        .personal-feature h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; }
+        .personal-feature .pf-icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            transition: all 0.4s;
+        }
+
+        .personal-feature:hover .pf-icon-wrap {
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .personal-feature .pf-icon-wrap svg {
+            width: 24px; height: 24px;
+            stroke: var(--neon-blue);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .personal-feature h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; font-weight: 700; }
         .personal-feature p { font-size: 0.85rem; color: var(--text-muted); }
 
         .pricing-single { max-width: 420px; margin: 0 auto; }
@@ -831,7 +1145,7 @@
         /* ===== MOBILE ===== */
         @media (max-width: 768px) {
             .hero { padding: 8rem 0 4rem; }
-            .hero h1 { font-size: 2.1rem; }
+            .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1.05rem; }
             h2 { font-size: 1.7rem; }
 
@@ -863,6 +1177,8 @@
             .stats-grid { gap: 2rem; }
             .stat-number { font-size: 2.2rem; }
 
+            .ambient-orb { opacity: 0.08; }
+
             .reveal.from-left,
             .reveal.from-right {
                 transform: translateY(35px);
@@ -878,6 +1194,13 @@
 
     <!-- GRID PATTERN -->
     <div class="grid-pattern"></div>
+
+    <!-- AMBIENT LIGHT ORBS -->
+    <div class="ambient-orbs">
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+    </div>
 
     <!-- PARTICLE CANVAS -->
     <canvas id="particle-canvas"></canvas>
@@ -895,6 +1218,7 @@
 
     <!-- HERO -->
     <section class="hero">
+        <div class="hero-aurora"></div>
         <div class="hero-gradient-bg"></div>
         <div class="container">
             <h1 class="reveal" id="hero-heading">Secure <span class="glow">AI systems</span><br>designed for your business</h1>
@@ -909,10 +1233,30 @@
     <!-- TRUST BAR -->
     <div class="trust-bar">
         <div class="container">
-            <div class="trust-item"><span class="icon">🔒</span> Secure & private deployment</div>
-            <div class="trust-item"><span class="icon">🔗</span> Seamless integration</div>
-            <div class="trust-item"><span class="icon">🛡️</span> Enterprise-grade security</div>
-            <div class="trust-item"><span class="icon">📊</span> Measurable ROI</div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                </div>
+                Secure & private deployment
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </div>
+                Seamless integration
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                </div>
+                Enterprise-grade security
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+                </div>
+                Measurable ROI
+            </div>
         </div>
     </div>
 
@@ -960,22 +1304,30 @@
                 <p class="subtitle reveal">Businesses know AI can transform operations, but without proper implementation, it leads to fragmented tools, security concerns, and wasted investment.
                 <div class="pain-points reveal-stagger">
                     <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">📧</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h4M7 11h2"/><path d="M14 8h3M14 11h3"/></svg>
+                        </div>
                         <h3>Fragmented Tools</h3>
                         <p>Disjointed AI subscriptions with no unified strategy, leading to inefficiency and wasted spend.</p>
                     </div>
                     <div class="pain-point glass-card glow-border-purple reveal">
-                        <div class="icon">📅</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                        </div>
                         <h3>Poor Integration</h3>
                         <p>AI systems that don't connect with existing workflows, creating friction instead of efficiency.</p>
                     </div>
                     <div class="pain-point glass-card glow-border-pink reveal">
-                        <div class="icon">📝</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
                         <h3>Security Uncertainty</h3>
                         <p>Concerns about data privacy, compliance, and whether AI systems meet enterprise security standards.</p>
                     </div>
                     <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">🤷</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                        </div>
                         <h3>No Clear ROI</h3>
                         <p>Difficulty measuring the actual business impact of AI investments without proper system design.</p>
                     </div>
@@ -992,22 +1344,30 @@
                 <p class="subtitle centered reveal">We design and implement secure, tailored AI systems that fit your business operations — from private AI assistants to full workflow automation.</p>
                 <div class="features reveal-stagger">
                     <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">🤖</div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="17" r="2"/><path d="M9 17h6"/></svg>
+                        </div>
                         <h3>Private AI Assistants</h3>
                         <p>AI systems trained on your internal data, configured to understand your business context and terminology.</p>
                     </div>
                     <div class="feature glass-card glow-border-purple tilt-card reveal">
-                        <div class="icon-circle">⚙️</div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </div>
                         <h3>Workflow Automation</h3>
                         <p>Automated email triage, report generation, document drafting, and recurring task management.</p>
                     </div>
                     <div class="feature glass-card glow-border-pink tilt-card reveal">
-                        <div class="icon-circle">🔒</div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                        </div>
                         <h3>Secure Deployment</h3>
                         <p>Local or controlled cloud environments with enterprise-grade security and full data sovereignty.</p>
                     </div>
                     <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">🔗</div>
+                        <div class="icon-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        </div>
                         <h3>Systems Integration</h3>
                         <p>Seamless connection with your existing tools, processes, and business infrastructure.</p>
                     </div>
@@ -1108,22 +1468,30 @@
                 <p class="subtitle reveal">For professionals and operators, the challenge isn't interest — it's deploying AI in a way that's secure, reliable, and genuinely integrated into how you work.
                 <div class="pain-points reveal-stagger">
                     <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">📂</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+                        </div>
                         <h3>Disconnected Systems</h3>
                         <p>Multiple AI tools that don't communicate, creating silos instead of a unified operational system.</p>
                     </div>
                     <div class="pain-point glass-card glow-border-purple reveal">
-                        <div class="icon">🔍</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                        </div>
                         <h3>Unstructured Workflows</h3>
                         <p>Data, processes, and knowledge scattered across platforms, preventing compounding value.</p>
                     </div>
                     <div class="pain-point glass-card glow-border-pink reveal">
-                        <div class="icon">🧠</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                        </div>
                         <h3>Data Privacy Concerns</h3>
                         <p>Hesitant to let third-party AI process sensitive business or client data without proper safeguards.</p>
                     </div>
                     <div class="pain-point glass-card glow-border reveal">
-                        <div class="icon">⏰</div>
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
                         <h3>Implementation Drag</h3>
                         <p>Time spent configuring AI systems is time not spent on high-value business activities.</p>
                     </div>
@@ -1140,22 +1508,30 @@
                 <p class="subtitle centered reveal">From a secure AI assistant to a fully custom operational system, we design and deploy solutions that fit seamlessly into how you already work.
                 <div class="personal-features reveal-stagger">
                     <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <span class="pf-icon">🔍</span>
+                        <div class="pf-icon-wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </div>
                         <h3>Private AI Assistant</h3>
                         <p>Secure AI configured with your knowledge base and workflows</p>
                     </div>
                     <div class="personal-feature glass-card glow-border-purple tilt-card reveal">
-                        <span class="pf-icon">📚</span>
+                        <div class="pf-icon-wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        </div>
                         <h3>Process Automation</h3>
                         <p>Recurring tasks automated with precision and reliability</p>
                     </div>
                     <div class="personal-feature glass-card glow-border-pink tilt-card reveal">
-                        <span class="pf-icon">🧠</span>
+                        <div class="pf-icon-wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        </div>
                         <h3>Custom Architecture</h3>
                         <p>Scalable systems that grow with your operational needs</p>
                     </div>
                     <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <span class="pf-icon">📈</span>
+                        <div class="pf-icon-wrap">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        </div>
                         <h3>Managed Optimization</h3>
                         <p>Continuous refinement and monitoring for peak performance</p>
                     </div>
@@ -1245,7 +1621,7 @@
         var canvas = document.getElementById('particle-canvas');
         var ctx = canvas.getContext('2d');
         var particles = [];
-        var particleCount = 80;
+        var particleCount = 90;
         var connectionDist = 150;
         var mouse = { x: null, y: null };
 
@@ -1262,21 +1638,33 @@
             mouse.y = e.clientY;
         });
 
+        var colors = [
+            '0, 212, 255',
+            '168, 85, 247',
+            '0, 255, 213',
+            '124, 58, 237'
+        ];
+
         function Particle() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
+            this.vx = (Math.random() - 0.5) * 0.35;
+            this.vy = (Math.random() - 0.5) * 0.35;
             this.radius = Math.random() * 2 + 0.5;
-            this.color = Math.random() > 0.5 ? '0, 212, 255' : '168, 85, 247';
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+            this.pulseSpeed = 0.005 + Math.random() * 0.01;
+            this.pulsePhase = Math.random() * Math.PI * 2;
         }
 
         for (var i = 0; i < particleCount; i++) {
             particles.push(new Particle());
         }
 
+        var time = 0;
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            time += 0.016;
 
             for (var i = 0; i < particles.length; i++) {
                 var p = particles[i];
@@ -1286,10 +1674,23 @@
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
+                var pulse = 0.4 + Math.sin(time * 2 + p.pulsePhase) * 0.2;
+
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(' + p.color + ', 0.6)';
+                ctx.fillStyle = 'rgba(' + p.color + ', ' + (0.5 + pulse * 0.3) + ')';
                 ctx.fill();
+
+                // Subtle glow around larger particles
+                if (p.radius > 1.5) {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+                    var grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+                    grd.addColorStop(0, 'rgba(' + p.color + ', 0.1)');
+                    grd.addColorStop(1, 'rgba(' + p.color + ', 0)');
+                    ctx.fillStyle = grd;
+                    ctx.fill();
+                }
 
                 for (var j = i + 1; j < particles.length; j++) {
                     var p2 = particles[j];
@@ -1298,7 +1699,7 @@
                     var dist = Math.sqrt(dx * dx + dy * dy);
 
                     if (dist < connectionDist) {
-                        var opacity = (1 - dist / connectionDist) * 0.15;
+                        var opacity = (1 - dist / connectionDist) * 0.12;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -1317,7 +1718,11 @@
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = 'rgba(168, 85, 247, ' + mOpacity + ')';
+
+                        var grad = ctx.createLinearGradient(p.x, p.y, mouse.x, mouse.y);
+                        grad.addColorStop(0, 'rgba(' + p.color + ', ' + mOpacity + ')');
+                        grad.addColorStop(1, 'rgba(168, 85, 247, ' + (mOpacity * 0.5) + ')');
+                        ctx.strokeStyle = grad;
                         ctx.lineWidth = 0.8;
                         ctx.stroke();
                     }
@@ -1334,16 +1739,17 @@
     (function() {
         var container = document.getElementById('geo-shapes');
         var shapes = [
-            '<svg viewBox="0 0 100 100"><polygon points="50,5 95,97.5 5,97.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="1"/></svg>',
-            '<svg viewBox="0 0 100 100"><polygon points="50,3 93.3,25 93.3,75 50,97 6.7,75 6.7,25" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="1"/></svg>',
-            '<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="1" transform="rotate(45 50 50)"/></svg>',
-            '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="1"/></svg>'
+            '<svg viewBox="0 0 100 100"><polygon points="50,5 95,97.5 5,97.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="0.8"/></svg>',
+            '<svg viewBox="0 0 100 100"><polygon points="50,3 93.3,25 93.3,75 50,97 6.7,75 6.7,25" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="0.8"/></svg>',
+            '<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="0.8" transform="rotate(45 50 50)"/></svg>',
+            '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="0.8"/></svg>',
+            '<svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,57 79,90 50,70 21,90 32,57 5,35 39,35" fill="none" stroke="rgba(0,255,213,0.3)" stroke-width="0.6"/></svg>'
         ];
 
-        for (var i = 0; i < 12; i++) {
+        for (var i = 0; i < 14; i++) {
             var el = document.createElement('div');
             el.className = 'geo-shape';
-            var size = 30 + Math.random() * 60;
+            var size = 25 + Math.random() * 70;
             el.style.width = size + 'px';
             el.style.height = size + 'px';
             el.style.left = Math.random() * 100 + '%';
@@ -1471,8 +1877,8 @@
                 var y = e.clientY - rect.top;
                 var centerX = rect.width / 2;
                 var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -8;
-                var rotateY = ((x - centerX) / centerX) * 8;
+                var rotateX = ((y - centerY) / centerY) * -6;
+                var rotateY = ((x - centerX) / centerX) * 6;
 
                 card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
             });
@@ -1543,8 +1949,8 @@
                 var y = e.clientY - rect.top;
                 var centerX = rect.width / 2;
                 var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -8;
-                var rotateY = ((x - centerX) / centerX) * 8;
+                var rotateX = ((y - centerY) / centerY) * -6;
+                var rotateY = ((x - centerX) / centerX) * 6;
                 card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
             });
             card.addEventListener('mouseleave', function() {
