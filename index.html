@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #050510;
+            --bg-deep: #04050d;
             --bg-surface: #0a0a1a;
             --bg-card: rgba(12, 14, 30, 0.6);
             --neon-blue: #00d4ff;
@@ -57,7 +57,7 @@
             background-size: 256px 256px;
         }
 
-        /* ===== SUBTLE GRID PATTERN ===== */
+        /* ===== PREMIUM DOT MATRIX + FINE GRID ===== */
         .grid-pattern {
             position: fixed;
             top: 0; left: 0;
@@ -65,11 +65,25 @@
             z-index: 0;
             pointer-events: none;
             background-image:
-                linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
+                radial-gradient(circle at center, rgba(148, 163, 184, 0.18) 1px, transparent 1.2px),
+                linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+            background-size: 32px 32px, 128px 128px, 128px 128px;
+            background-position: 0 0, 0 0, 0 0;
+            mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, rgba(0,0,0,0.55) 55%, transparent 95%);
+            -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, rgba(0,0,0,0.55) 55%, transparent 95%);
+        }
+
+        /* ===== CINEMATIC VIGNETTE + TOP SPOTLIGHT ===== */
+        .backdrop-vignette {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 70% 45% at 50% 0%, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.06) 40%, transparent 75%),
+                radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.7) 100%);
         }
 
         /* ===== AMBIENT LIGHT ORBS ===== */
@@ -85,32 +99,34 @@
         .ambient-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.12;
-            animation: orbDrift 20s ease-in-out infinite;
+            filter: blur(60px);
+            opacity: 0.22;
+            animation: orbDrift 28s ease-in-out infinite;
+            will-change: transform;
         }
 
         .ambient-orb:nth-child(1) {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.4), transparent 70%);
-            top: -10%; left: -10%;
-            animation-duration: 25s;
+            width: 520px; height: 520px;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.55), rgba(0, 212, 255, 0.15) 45%, transparent 72%);
+            top: -12%; left: -8%;
+            animation-duration: 32s;
         }
 
         .ambient-orb:nth-child(2) {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.35), transparent 70%);
-            top: 30%; right: -15%;
-            animation-duration: 30s;
-            animation-delay: -5s;
+            width: 460px; height: 460px;
+            background: radial-gradient(circle at 70% 30%, rgba(168, 85, 247, 0.5), rgba(124, 58, 237, 0.15) 45%, transparent 72%);
+            top: 28%; right: -10%;
+            animation-duration: 36s;
+            animation-delay: -6s;
         }
 
         .ambient-orb:nth-child(3) {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(233, 69, 96, 0.3), transparent 70%);
-            bottom: 10%; left: 20%;
-            animation-duration: 22s;
-            animation-delay: -10s;
+            width: 380px; height: 380px;
+            background: radial-gradient(circle at 50% 50%, rgba(233, 69, 96, 0.35), rgba(233, 69, 96, 0.08) 45%, transparent 70%);
+            bottom: 8%; left: 18%;
+            animation-duration: 26s;
+            animation-delay: -12s;
+            opacity: 0.16;
         }
 
         @keyframes orbDrift {
@@ -141,8 +157,9 @@
 
         .geo-shape {
             position: absolute;
-            opacity: 0.04;
+            opacity: 0.06;
             animation: geoFloat linear infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.08));
         }
 
         .geo-shape svg {
@@ -155,7 +172,7 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs) {
+        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette) {
             position: relative;
             z-index: 1;
         }
@@ -253,23 +270,25 @@
         .hero-aurora::after {
             content: '';
             position: absolute;
-            width: 150%; height: 60%;
-            top: -10%;
+            width: 110%; height: 55%;
+            top: -8%;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
+            filter: blur(55px);
+            opacity: 0.28;
         }
 
         .hero-aurora::before {
-            left: -25%;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.5), rgba(124, 58, 237, 0.3), transparent);
+            left: -18%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.7), rgba(124, 58, 237, 0.35) 45%, transparent 75%);
             animation: auroraWave1 8s ease-in-out infinite;
+            mix-blend-mode: screen;
         }
 
         .hero-aurora::after {
-            right: -25%;
-            background: linear-gradient(225deg, rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.2), transparent);
+            right: -18%;
+            background: linear-gradient(225deg, rgba(168, 85, 247, 0.6), rgba(233, 69, 96, 0.3) 45%, transparent 75%);
             animation: auroraWave2 10s ease-in-out infinite;
+            mix-blend-mode: screen;
         }
 
         @keyframes auroraWave1 {
@@ -282,27 +301,42 @@
             50% { transform: translateX(-3%) scaleY(1.1) rotate(-2deg); }
         }
 
-        /* MESH GRADIENT */
+        /* CONIC SPOTLIGHT — premium converging light */
         .hero-gradient-bg {
             position: absolute;
-            top: -20%; left: -20%;
-            width: 140%; height: 140%;
+            top: 50%; left: 50%;
+            width: 1400px; height: 1400px;
+            transform: translate(-50%, -65%);
             z-index: 0;
             background:
-                radial-gradient(ellipse 50% 40% at 20% 30%, rgba(0, 212, 255, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse 45% 35% at 80% 20%, rgba(168, 85, 247, 0.16) 0%, transparent 55%),
-                radial-gradient(ellipse 40% 45% at 60% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse 35% 30% at 10% 70%, rgba(0, 255, 213, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 30% 25% at 90% 60%, rgba(124, 58, 237, 0.12) 0%, transparent 50%);
-            animation: meshFloat 12s ease-in-out infinite;
-            filter: blur(40px);
+                conic-gradient(from 210deg at 50% 50%,
+                    transparent 0deg,
+                    rgba(0, 212, 255, 0.18) 40deg,
+                    rgba(124, 58, 237, 0.22) 90deg,
+                    rgba(168, 85, 247, 0.18) 140deg,
+                    transparent 200deg,
+                    transparent 360deg);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: meshFloat 18s linear infinite;
+            mix-blend-mode: screen;
+        }
+
+        .hero-gradient-bg::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 60%; height: 60%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.12) 40%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(30px);
         }
 
         @keyframes meshFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(2%, -1%) scale(1.02); }
-            50% { transform: translate(-1%, 2%) scale(0.98); }
-            75% { transform: translate(1%, -2%) scale(1.01); }
+            0% { transform: translate(-50%, -65%) rotate(0deg); }
+            100% { transform: translate(-50%, -65%) rotate(360deg); }
         }
 
         /* Aurora shimmer line at top of hero */
@@ -1208,6 +1242,9 @@
     <!-- FLOATING GEOMETRIC SHAPES -->
     <div class="geo-shapes" id="geo-shapes"></div>
 
+    <!-- CINEMATIC VIGNETTE + TOP SPOTLIGHT (above orbs, below content) -->
+    <div class="backdrop-vignette"></div>
+
     <!-- NAV -->
     <nav>
         <div class="container">
@@ -1357,13 +1394,7 @@
                         <h3>Workflow Automation</h3>
                         <p>Automated email triage, report generation, document drafting, and recurring task management.</p>
                     </div>
-                    <div class="feature glass-card glow-border-pink tilt-card reveal">
-                        <div class="icon-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
-                        </div>
-                        <h3>Secure Deployment</h3>
-                        <p>Local or controlled cloud environments with enterprise-grade security and full data sovereignty.</p>
-                    </div>
+
                     <div class="feature glass-card glow-border tilt-card reveal">
                         <div class="icon-circle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -1444,15 +1475,16 @@
                         <div class="price">$5,000+</div>
                         <div class="price-note">Custom engagement</div>
                         <ul>
-                            <li>Dedicated hardware sourced and configured by our team</li>
-                            <li>Full security audit and compliance review</li>
+                            <li>Full OpenClaw deployment on your Mac</li>
+                            <li>AI agent configuration and workflow setup</li>
                             <li>Ongoing monitoring, maintenance, and updates</li>
                             <li>Quarterly system optimization and scaling</li>
                         </ul>
                         <a href="https://docs.google.com/forms/d/e/1FAIpQLSflO8cbzUkCr9Tu7Fuwhs-Nf3WCi7T1Vu33Lbsdb-sTPCKASw/viewform" class="btn" style="width:100%;display:block;">Request a Proposal</a>
                     </div>
+
                 </div>
-                <p class="subtitle centered reveal" style="margin-top:2rem;">Managed AI Infrastructure starts at $5,000. Managed Care & Support plans from $500/mo. All deployments include full data sovereignty documentation.</p>
+                <p class="subtitle centered reveal" style="margin-top:2rem;">Managed Care & Support plans start at $500/mo.</p>
             </div>
         </section>
 
