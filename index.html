@@ -70,33 +70,17 @@
             -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
         }
 
-        /* ===== CINEMATIC VIGNETTE + TOP SPOTLIGHT ===== */
+        /* ===== CINEMATIC EDGE VIGNETTE ===== */
         .backdrop-vignette {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
-            background:
-                radial-gradient(ellipse 70% 45% at 50% 0%, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.06) 40%, transparent 75%),
-                radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.7) 100%);
+            background: radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.7) 100%);
         }
 
 
-        /* Soft horizon glow where vortex meets base */
-        .horizon-glow {
-            position: fixed;
-            left: 0; right: 0;
-            bottom: 30vh;
-            height: 40vh;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(ellipse 35% 80% at 50% 50%, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.15) 35%, transparent 70%),
-                radial-gradient(ellipse 100% 40% at 50% 100%, rgba(124, 58, 237, 0.2), transparent 70%);
-            filter: blur(30px);
-            mix-blend-mode: screen;
-        }
 
 
         /* ===== PARTICLE CANVAS ===== */
@@ -135,7 +119,7 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette):not(.horizon-glow) {
+        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette) {
             position: relative;
             z-index: 1;
         }
@@ -1163,9 +1147,6 @@
     <!-- GRID PATTERN -->
     <div class="grid-pattern"></div>
 
-    <!-- HORIZON GLOW — soft light base for the vortex -->
-    <div class="horizon-glow"></div>
-
     <!-- SPIRALING VORTEX + 2D NEURAL NETWORK -->
     <canvas id="particle-canvas"></canvas>
 
@@ -1590,10 +1571,10 @@
         var networkParticles = [];
         var stars = [];
 
-        var VORTEX_COUNT = isMobile ? 260 : 520;
-        var NETWORK_COUNT = 90;
+        var VORTEX_COUNT = isMobile ? 120 : 320;
+        var NETWORK_COUNT = isMobile ? 45 : 75;
         var NETWORK_CONNECTION_DIST = 150;
-        var STAR_COUNT = isMobile ? 80 : 160;
+        var STAR_COUNT = isMobile ? 50 : 130;
 
         var mouse = { x: null, y: null };
 
@@ -1617,7 +1598,7 @@
 
         window.addEventListener('scroll', function() {
             var delta = window.scrollY - lastScrollY;
-            scrollAngularVelocity += delta * 0.0018;
+            scrollAngularVelocity += delta * 0.00045;
             lastScrollY = window.scrollY;
         }, { passive: true });
 
@@ -1657,8 +1638,8 @@
             p.y = resetBottom
                 ? window.innerHeight + Math.random() * 80
                 : Math.random() * window.innerHeight;
-            p.vy = 0.4 + Math.random() * 1.4; // upward speed
-            p.angleSpeed = 0.0008 + Math.random() * 0.0018; // tiny idle drift — scroll does the real spin
+            p.vy = 0.05 + Math.random() * 0.175; // upward speed
+            p.angleSpeed = 0.0002 + Math.random() * 0.00045; // tiny idle drift — scroll does the real spin
             p.size = 0.6 + Math.random() * 1.6;
             p.color = vortexColors[Math.floor(Math.random() * vortexColors.length)];
             p.pulsePhase = Math.random() * Math.PI * 2;
@@ -1759,16 +1740,19 @@
                 var r = rendered[i];
                 var pulse = 0.7 + Math.sin(time * 2 + r.pulsePhase) * 0.25;
 
-                // soft glow
-                var glowSize = r.size * 4.5;
-                var grd = ctx.createRadialGradient(r.sx, r.sy, 0, r.sx, r.sy, glowSize);
-                grd.addColorStop(0, 'rgba(' + r.color + ', ' + (r.alpha * 0.3) + ')');
-                grd.addColorStop(0.4, 'rgba(' + r.color + ', ' + (r.alpha * 0.07) + ')');
-                grd.addColorStop(1, 'rgba(' + r.color + ', 0)');
-                ctx.fillStyle = grd;
-                ctx.beginPath();
-                ctx.arc(r.sx, r.sy, glowSize, 0, Math.PI * 2);
-                ctx.fill();
+                // soft glow — skipped on mobile (expensive radial gradient per particle)
+                // and skipped entirely for dim back-facing particles on desktop
+                if (!isMobile && r.alpha > 0.4) {
+                    var glowSize = r.size * 4.5;
+                    var grd = ctx.createRadialGradient(r.sx, r.sy, 0, r.sx, r.sy, glowSize);
+                    grd.addColorStop(0, 'rgba(' + r.color + ', ' + (r.alpha * 0.3) + ')');
+                    grd.addColorStop(0.4, 'rgba(' + r.color + ', ' + (r.alpha * 0.07) + ')');
+                    grd.addColorStop(1, 'rgba(' + r.color + ', 0)');
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(r.sx, r.sy, glowSize, 0, Math.PI * 2);
+                    ctx.fill();
+                }
 
                 // core
                 ctx.fillStyle = 'rgba(' + r.color + ', ' + (r.alpha * pulse) + ')';
