@@ -57,21 +57,17 @@
             background-size: 256px 256px;
         }
 
-        /* ===== PREMIUM DOT MATRIX + FINE GRID ===== */
+        /* ===== SUBTLE TEXTURE (barely perceptible) ===== */
         .grid-pattern {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 0;
             pointer-events: none;
-            background-image:
-                radial-gradient(circle at center, rgba(148, 163, 184, 0.18) 1px, transparent 1.2px),
-                linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
-            background-size: 32px 32px, 128px 128px, 128px 128px;
-            background-position: 0 0, 0 0, 0 0;
-            mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, rgba(0,0,0,0.55) 55%, transparent 95%);
-            -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, rgba(0,0,0,0.55) 55%, transparent 95%);
+            background-image: radial-gradient(circle at center, rgba(148, 163, 184, 0.06) 0.8px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
         }
 
         /* ===== CINEMATIC VIGNETTE + TOP SPOTLIGHT ===== */
@@ -86,55 +82,22 @@
                 radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.7) 100%);
         }
 
-        /* ===== AMBIENT LIGHT ORBS ===== */
-        .ambient-orbs {
+
+        /* Soft horizon glow where vortex meets base */
+        .horizon-glow {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            left: 0; right: 0;
+            bottom: 30vh;
+            height: 40vh;
             z-index: 0;
             pointer-events: none;
-            overflow: hidden;
+            background:
+                radial-gradient(ellipse 35% 80% at 50% 50%, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.15) 35%, transparent 70%),
+                radial-gradient(ellipse 100% 40% at 50% 100%, rgba(124, 58, 237, 0.2), transparent 70%);
+            filter: blur(30px);
+            mix-blend-mode: screen;
         }
 
-        .ambient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.22;
-            animation: orbDrift 28s ease-in-out infinite;
-            will-change: transform;
-        }
-
-        .ambient-orb:nth-child(1) {
-            width: 520px; height: 520px;
-            background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.55), rgba(0, 212, 255, 0.15) 45%, transparent 72%);
-            top: -12%; left: -8%;
-            animation-duration: 32s;
-        }
-
-        .ambient-orb:nth-child(2) {
-            width: 460px; height: 460px;
-            background: radial-gradient(circle at 70% 30%, rgba(168, 85, 247, 0.5), rgba(124, 58, 237, 0.15) 45%, transparent 72%);
-            top: 28%; right: -10%;
-            animation-duration: 36s;
-            animation-delay: -6s;
-        }
-
-        .ambient-orb:nth-child(3) {
-            width: 380px; height: 380px;
-            background: radial-gradient(circle at 50% 50%, rgba(233, 69, 96, 0.35), rgba(233, 69, 96, 0.08) 45%, transparent 70%);
-            bottom: 8%; left: 18%;
-            animation-duration: 26s;
-            animation-delay: -12s;
-            opacity: 0.16;
-        }
-
-        @keyframes orbDrift {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -20px) scale(1.05); }
-            50% { transform: translate(-20px, 30px) scale(0.95); }
-            75% { transform: translate(15px, 15px) scale(1.02); }
-        }
 
         /* ===== PARTICLE CANVAS ===== */
         #particle-canvas {
@@ -172,7 +135,7 @@
             100% { transform: translateY(0) rotate(360deg); }
         }
 
-        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette) {
+        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette):not(.horizon-glow) {
             position: relative;
             z-index: 1;
         }
@@ -270,24 +233,24 @@
         .hero-aurora::after {
             content: '';
             position: absolute;
-            width: 110%; height: 55%;
-            top: -8%;
+            width: 80%; height: 40%;
+            top: -5%;
             border-radius: 50%;
-            filter: blur(55px);
-            opacity: 0.28;
+            filter: blur(70px);
+            opacity: 0.12;
         }
 
         .hero-aurora::before {
-            left: -18%;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.7), rgba(124, 58, 237, 0.35) 45%, transparent 75%);
-            animation: auroraWave1 8s ease-in-out infinite;
+            left: -10%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.5), rgba(124, 58, 237, 0.25) 45%, transparent 75%);
+            animation: auroraWave1 10s ease-in-out infinite;
             mix-blend-mode: screen;
         }
 
         .hero-aurora::after {
-            right: -18%;
-            background: linear-gradient(225deg, rgba(168, 85, 247, 0.6), rgba(233, 69, 96, 0.3) 45%, transparent 75%);
-            animation: auroraWave2 10s ease-in-out infinite;
+            right: -10%;
+            background: linear-gradient(225deg, rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.2) 45%, transparent 75%);
+            animation: auroraWave2 12s ease-in-out infinite;
             mix-blend-mode: screen;
         }
 
@@ -301,43 +264,8 @@
             50% { transform: translateX(-3%) scaleY(1.1) rotate(-2deg); }
         }
 
-        /* CONIC SPOTLIGHT — premium converging light */
-        .hero-gradient-bg {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 1400px; height: 1400px;
-            transform: translate(-50%, -65%);
-            z-index: 0;
-            background:
-                conic-gradient(from 210deg at 50% 50%,
-                    transparent 0deg,
-                    rgba(0, 212, 255, 0.18) 40deg,
-                    rgba(124, 58, 237, 0.22) 90deg,
-                    rgba(168, 85, 247, 0.18) 140deg,
-                    transparent 200deg,
-                    transparent 360deg);
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.6;
-            animation: meshFloat 18s linear infinite;
-            mix-blend-mode: screen;
-        }
-
-        .hero-gradient-bg::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 60%; height: 60%;
-            transform: translate(-50%, -50%);
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.25), rgba(168, 85, 247, 0.12) 40%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(30px);
-        }
-
-        @keyframes meshFloat {
-            0% { transform: translate(-50%, -65%) rotate(0deg); }
-            100% { transform: translate(-50%, -65%) rotate(360deg); }
-        }
+        /* Hero gradient removed — vortex canvas provides focal light */
+        .hero-gradient-bg { display: none; }
 
         /* Aurora shimmer line at top of hero */
         .hero::after {
@@ -1063,14 +991,22 @@
         .cta-section {
             text-align: center;
             background:
-                radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 30% 70%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 40% 30% at 70% 30%, rgba(233, 69, 96, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse 55% 60% at 50% 100%, rgba(0, 212, 255, 0.14), rgba(124, 58, 237, 0.08) 45%, transparent 75%),
                 var(--bg-deep);
             color: var(--white);
             padding: 7rem 0;
             position: relative;
             overflow: hidden;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 40% 30% at 50% 50%, rgba(168, 85, 247, 0.12), transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            mix-blend-mode: screen;
         }
 
         .cta-section::before {
@@ -1211,8 +1147,6 @@
             .stats-grid { gap: 2rem; }
             .stat-number { font-size: 2.2rem; }
 
-            .ambient-orb { opacity: 0.08; }
-
             .reveal.from-left,
             .reveal.from-right {
                 transform: translateY(35px);
@@ -1229,14 +1163,10 @@
     <!-- GRID PATTERN -->
     <div class="grid-pattern"></div>
 
-    <!-- AMBIENT LIGHT ORBS -->
-    <div class="ambient-orbs">
-        <div class="ambient-orb"></div>
-        <div class="ambient-orb"></div>
-        <div class="ambient-orb"></div>
-    </div>
+    <!-- HORIZON GLOW — soft light base for the vortex -->
+    <div class="horizon-glow"></div>
 
-    <!-- PARTICLE CANVAS -->
+    <!-- SPIRALING VORTEX + 2D NEURAL NETWORK -->
     <canvas id="particle-canvas"></canvas>
 
     <!-- FLOATING GEOMETRIC SHAPES -->
@@ -1648,20 +1578,35 @@
     </footer>
 
     <script>
-    /* ===== PARTICLE / NEURAL NETWORK BACKGROUND ===== */
+    /* ===== SIDE-VIEW VORTEX + 2D NEURAL NETWORK ===== */
     (function() {
         var canvas = document.getElementById('particle-canvas');
         var ctx = canvas.getContext('2d');
-        var particles = [];
-        var particleCount = 90;
-        var connectionDist = 150;
+        var isMobile = window.innerWidth < 768;
+
+        // Two particle systems: a vertical spiraling vortex (background)
+        // + the classic 2D neural network (foreground, same as before)
+        var vortexParticles = [];
+        var networkParticles = [];
+        var stars = [];
+
+        var VORTEX_COUNT = isMobile ? 260 : 520;
+        var NETWORK_COUNT = 90;
+        var NETWORK_CONNECTION_DIST = 150;
+        var STAR_COUNT = isMobile ? 80 : 160;
+
         var mouse = { x: null, y: null };
+
+        // Scroll-driven vortex rotation — spiral only really turns while scrolling.
+        // Tiny idle drift keeps it alive, scroll gives an angular impulse with momentum decay.
+        var scrollAngleOffset = 0;
+        var scrollAngularVelocity = 0;
+        var lastScrollY = window.scrollY;
 
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
         resize();
         window.addEventListener('resize', resize);
 
@@ -1670,39 +1615,174 @@
             mouse.y = e.clientY;
         });
 
-        var colors = [
+        window.addEventListener('scroll', function() {
+            var delta = window.scrollY - lastScrollY;
+            scrollAngularVelocity += delta * 0.0018;
+            lastScrollY = window.scrollY;
+        }, { passive: true });
+
+        // Color palette for vortex swirls (cyan/teal/purple/magenta)
+        var vortexColors = [
+            '0, 212, 255',    // cyan
+            '0, 255, 213',    // teal
+            '124, 58, 237',   // violet
+            '168, 85, 247',   // purple
+            '180, 90, 230'    // magenta-ish
+        ];
+        var networkColors = [
             '0, 212, 255',
             '168, 85, 247',
             '0, 255, 213',
             '124, 58, 237'
         ];
 
-        function Particle() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
+        // --- STARS: static faint dots scattered across canvas ---
+        for (var i = 0; i < STAR_COUNT; i++) {
+            stars.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                size: Math.random() * 1.2 + 0.3,
+                baseAlpha: 0.3 + Math.random() * 0.5,
+                twinklePhase: Math.random() * Math.PI * 2,
+                twinkleSpeed: 0.5 + Math.random() * 1.5
+            });
+        }
+
+        // --- VORTEX: vertical spiral particles (side-view) ---
+        function spawnVortex(p, resetBottom) {
+            p.angle = Math.random() * Math.PI * 2;
+            // base orbital radius — small variance, most in a tight tube
+            p.baseRadius = 60 + Math.random() * 90;
+            // vertical position — spread across canvas
+            p.y = resetBottom
+                ? window.innerHeight + Math.random() * 80
+                : Math.random() * window.innerHeight;
+            p.vy = 0.4 + Math.random() * 1.4; // upward speed
+            p.angleSpeed = 0.0008 + Math.random() * 0.0018; // tiny idle drift — scroll does the real spin
+            p.size = 0.6 + Math.random() * 1.6;
+            p.color = vortexColors[Math.floor(Math.random() * vortexColors.length)];
+            p.pulsePhase = Math.random() * Math.PI * 2;
+            // slight horizontal drift for organic swirl
+            p.wobbleAmp = Math.random() * 8;
+            p.wobblePhase = Math.random() * Math.PI * 2;
+        }
+
+        for (var i = 0; i < VORTEX_COUNT; i++) {
+            var p = {};
+            spawnVortex(p, false);
+            vortexParticles.push(p);
+        }
+
+        // --- NETWORK: the original 2D drifting neural-net particles ---
+        function Network() {
+            this.x = Math.random() * window.innerWidth;
+            this.y = Math.random() * window.innerHeight;
             this.vx = (Math.random() - 0.5) * 0.35;
             this.vy = (Math.random() - 0.5) * 0.35;
             this.radius = Math.random() * 2 + 0.5;
-            this.color = colors[Math.floor(Math.random() * colors.length)];
-            this.pulseSpeed = 0.005 + Math.random() * 0.01;
+            this.color = networkColors[Math.floor(Math.random() * networkColors.length)];
             this.pulsePhase = Math.random() * Math.PI * 2;
         }
-
-        for (var i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
+        for (var i = 0; i < NETWORK_COUNT; i++) {
+            networkParticles.push(new Network());
         }
 
         var time = 0;
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            time += 0.016;
+        function drawStars() {
+            for (var i = 0; i < stars.length; i++) {
+                var s = stars[i];
+                var twinkle = 0.6 + Math.sin(time * s.twinkleSpeed + s.twinklePhase) * 0.4;
+                var alpha = s.baseAlpha * twinkle;
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + alpha + ')';
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-            for (var i = 0; i < particles.length; i++) {
-                var p = particles[i];
+        function drawVortex() {
+            var cx = canvas.width * 0.5;
+            // Throat sits slightly above vertical center for "rising spiral" feel
+            var throatY = canvas.height * 0.42;
+            var rendered = [];
+
+            // advance scroll-driven rotation with momentum decay
+            scrollAngleOffset += scrollAngularVelocity;
+            scrollAngularVelocity *= 0.9;
+
+            for (var i = 0; i < vortexParticles.length; i++) {
+                var p = vortexParticles[i];
+                p.y -= p.vy;
+                p.angle += p.angleSpeed;
+
+                // recycle when it flies off the top
+                if (p.y < -80) {
+                    spawnVortex(p, true);
+                    continue;
+                }
+
+                // hourglass shape: narrow at throat, flared at top/bottom
+                var distFromThroat = Math.abs(p.y - throatY);
+                var normalized = distFromThroat / (canvas.height * 0.55);
+                var shapeScale = 0.28 + Math.min(1.2, normalized * 1.3);
+                var radius = p.baseRadius * shapeScale;
+
+                // global scroll rotation on top of per-particle drift
+                var totalAngle = p.angle + scrollAngleOffset;
+
+                // 3D position: offsetX = horizontal from center, zDepth = into screen
+                var offsetX = Math.cos(totalAngle) * radius;
+                var zDepth = Math.sin(totalAngle) * radius; // -radius (behind) to +radius (front)
+
+                // small horizontal wobble for organic feel
+                offsetX += Math.sin(time * 1.2 + p.wobblePhase) * p.wobbleAmp;
+
+                var sx = cx + offsetX;
+                var sy = p.y;
+
+                // depth ratio 0 (back) to 1 (front)
+                var depthRatio = (zDepth + radius) / (2 * radius + 0.01);
+                var drawSize = p.size * (0.55 + depthRatio * 0.55);
+                var baseAlpha = 0.25 + depthRatio * 0.75;
+
+                rendered.push({
+                    sx: sx, sy: sy, size: drawSize, alpha: baseAlpha,
+                    z: zDepth, color: p.color, pulsePhase: p.pulsePhase
+                });
+            }
+
+            // z-sort: draw back first
+            rendered.sort(function(a, b) { return a.z - b.z; });
+
+            for (var i = 0; i < rendered.length; i++) {
+                var r = rendered[i];
+                var pulse = 0.7 + Math.sin(time * 2 + r.pulsePhase) * 0.25;
+
+                // soft glow
+                var glowSize = r.size * 4.5;
+                var grd = ctx.createRadialGradient(r.sx, r.sy, 0, r.sx, r.sy, glowSize);
+                grd.addColorStop(0, 'rgba(' + r.color + ', ' + (r.alpha * 0.3) + ')');
+                grd.addColorStop(0.4, 'rgba(' + r.color + ', ' + (r.alpha * 0.07) + ')');
+                grd.addColorStop(1, 'rgba(' + r.color + ', 0)');
+                ctx.fillStyle = grd;
+                ctx.beginPath();
+                ctx.arc(r.sx, r.sy, glowSize, 0, Math.PI * 2);
+                ctx.fill();
+
+                // core
+                ctx.fillStyle = 'rgba(' + r.color + ', ' + (r.alpha * pulse) + ')';
+                ctx.beginPath();
+                ctx.arc(r.sx, r.sy, r.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function drawNetwork() {
+            for (var i = 0; i < networkParticles.length; i++) {
+                var p = networkParticles[i];
                 p.x += p.vx;
                 p.y += p.vy;
-
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
@@ -1710,33 +1790,31 @@
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(' + p.color + ', ' + (0.5 + pulse * 0.3) + ')';
+                ctx.fillStyle = 'rgba(' + p.color + ', ' + (0.55 + pulse * 0.3) + ')';
                 ctx.fill();
 
-                // Subtle glow around larger particles
                 if (p.radius > 1.5) {
+                    var glowGrd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+                    glowGrd.addColorStop(0, 'rgba(' + p.color + ', 0.12)');
+                    glowGrd.addColorStop(1, 'rgba(' + p.color + ', 0)');
+                    ctx.fillStyle = glowGrd;
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
-                    var grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
-                    grd.addColorStop(0, 'rgba(' + p.color + ', 0.1)');
-                    grd.addColorStop(1, 'rgba(' + p.color + ', 0)');
-                    ctx.fillStyle = grd;
                     ctx.fill();
                 }
 
-                for (var j = i + 1; j < particles.length; j++) {
-                    var p2 = particles[j];
+                for (var j = i + 1; j < networkParticles.length; j++) {
+                    var p2 = networkParticles[j];
                     var dx = p.x - p2.x;
                     var dy = p.y - p2.y;
                     var dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < connectionDist) {
-                        var opacity = (1 - dist / connectionDist) * 0.12;
+                    if (dist < NETWORK_CONNECTION_DIST) {
+                        var opacity = (1 - dist / NETWORK_CONNECTION_DIST) * 0.13;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
                         ctx.strokeStyle = 'rgba(0, 212, 255, ' + opacity + ')';
-                        ctx.lineWidth = 0.5;
+                        ctx.lineWidth = 0.55;
                         ctx.stroke();
                     }
                 }
@@ -1746,20 +1824,28 @@
                     var mdy = p.y - mouse.y;
                     var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
                     if (mDist < 200) {
-                        var mOpacity = (1 - mDist / 200) * 0.25;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-
+                        var mOpacity = (1 - mDist / 200) * 0.28;
                         var grad = ctx.createLinearGradient(p.x, p.y, mouse.x, mouse.y);
                         grad.addColorStop(0, 'rgba(' + p.color + ', ' + mOpacity + ')');
                         grad.addColorStop(1, 'rgba(168, 85, 247, ' + (mOpacity * 0.5) + ')');
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
                         ctx.strokeStyle = grad;
-                        ctx.lineWidth = 0.8;
+                        ctx.lineWidth = 0.9;
                         ctx.stroke();
                     }
                 }
             }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            time += 0.016;
+
+            drawStars();     // far back — tiny twinkling stars
+            drawVortex();    // mid — spiraling color vortex
+            drawNetwork();   // front — drifting 2D neural net
 
             requestAnimationFrame(animate);
         }
