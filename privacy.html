@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | AiBusinessCopilot</title>
+    <meta name="description" content="Privacy Policy for AiBusinessCopilot, including third-party AI provider data handling.">
+    <link rel="icon" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #000000;
+            --bg-surface: #0a0a1a;
+            --bg-card: rgba(12, 14, 30, 0.72);
+            --neon-blue: #00d4ff;
+            --neon-purple: #a855f7;
+            --neon-pink: #e94560;
+            --white: #ffffff;
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: rgba(255,255,255,0.58);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.7;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.12), transparent 30%),
+                        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.10), transparent 28%),
+                        var(--bg-deep);
+            min-height: 100vh;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.012;
+            z-index: 9999;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .grid-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle at center, rgba(148, 163, 184, 0.06) 0.8px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+        }
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.42);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        nav .container, main, footer .container { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
+        nav .container { padding-top: 1rem; padding-bottom: 1rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+        .logo { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -0.03em; }
+        .logo span { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .back-link { color: var(--text-muted); text-decoration:none; font-size:.9rem; }
+        .back-link:hover, footer a:hover { color: var(--neon-blue); }
+        main { position: relative; z-index: 1; padding-top: 5rem; padding-bottom: 5rem; }
+        .legal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(1.5rem, 4vw, 3.5rem);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+        .eyebrow { color: var(--neon-blue); text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 800; margin-bottom: .8rem; }
+        h1 { font-family: 'Space Grotesk', 'Inter', sans-serif; color: var(--white); font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.02; letter-spacing: -0.06em; margin-bottom: .75rem; }
+        .updated { color: var(--text-muted); margin-bottom: 2rem; }
+        h2 { color: var(--white); font-size: 1.35rem; margin: 2.1rem 0 .65rem; letter-spacing: -0.02em; }
+        h3 { color: var(--white); font-size: 1.05rem; margin: 1.5rem 0 .45rem; }
+        p { color: var(--text-muted); margin: .7rem 0; }
+        ul, ol { color: var(--text-muted); margin: .7rem 0 1rem 1.35rem; }
+        li { margin: .35rem 0; }
+        strong { color: var(--text-primary); }
+        a { color: var(--neon-blue); }
+        .notice { border-left: 3px solid var(--neon-purple); background: rgba(168,85,247,0.08); padding: 1rem 1.1rem; border-radius: 12px; margin: 1.25rem 0 2rem; }
+        footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem 0; color: var(--text-dim); }
+        footer .links { display:flex; flex-wrap:wrap; gap:.7rem 1rem; margin-top:.45rem; }
+        footer a { color: var(--text-muted); text-decoration:none; }
+        @media (max-width: 640px) { nav .container { align-items:flex-start; flex-direction:column; } main { padding-top: 3rem; } }
+    </style>
+
+</head>
+<body>
+    <div class="grid-pattern"></div>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">AiBusiness<span>Copilot</span></a>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+    <main>
+        <article class="legal-card">
+            <div class="eyebrow">Privacy</div>
+            <h1>Privacy Policy</h1>
+            <p class="updated">Last updated: April 23, 2026</p>
+            <h2>1. Overview</h2>
+            <p>AiBusinessCopilot respects your privacy. This Privacy Policy explains what information we collect, how we use it, and how we protect it when you use our website, submit an assessment form, book a call, or work with us.</p>
+            <h2>2. Information We Collect</h2>
+            <p>We may collect:</p>
+            <ul>
+                <li>Name, email address, phone number, and business name</li>
+                <li>Business details submitted through assessment forms</li>
+                <li>Workflow descriptions, tools used, pain points, and automation goals</li>
+                <li>Communications you send by email, forms, calls, or messages</li>
+                <li>Payment and billing information processed through third-party payment providers</li>
+                <li>Website analytics or basic technical data if analytics tools are enabled</li>
+            </ul>
+            <h2>3. How We Use Information</h2>
+            <p>We use information to:</p>
+            <ul>
+                <li>Review assessment submissions</li>
+                <li>Prepare proposals and recommendations</li>
+                <li>Provide AI setup, automation, and consulting services</li>
+                <li>Communicate with clients and prospects</li>
+                <li>Improve our services, templates, and internal workflows</li>
+                <li>Manage invoices, payments, and support</li>
+                <li>Meet legal or security obligations</li>
+            </ul>
+            <h2>4. Third-Party Tools</h2>
+            <p>We may use third-party platforms to provide services, including AI providers, form tools, email providers, calendar tools, cloud storage, automation platforms, payment processors, and project-management systems.</p>
+            <p>Examples may include OpenAI, Anthropic, Google Workspace, Notion, Stripe, Zapier, Make, or similar services.</p>
+            <p>These third parties have their own privacy policies and security practices. We do not control their systems.</p>
+            <h2>5. AI Processing and Third-Party AI Providers</h2>
+            <p>AiBusinessCopilot builds and configures workflows using third-party AI providers and business software. This may include trusted AI platforms such as OpenAI, Anthropic, Google, and similar providers.</p>
+            <p>When a client uses these AI tools, client information may be transmitted to and processed by those third-party providers according to their own terms, privacy policies, data-processing settings, and account configuration.</p>
+            <p>Information provided by clients may be used with AI tools to draft proposals, organize knowledge bases, design workflows, generate documentation, or support service delivery.</p>
+            <p>We aim to avoid unnecessary exposure of sensitive information and recommend that clients do not submit highly sensitive, regulated, or confidential data unless explicitly discussed and approved for the workflow. Where possible, clients should use appropriate business, team, or enterprise accounts with stronger privacy and data-control settings.</p>
+            <h2>6. Sensitive Information</h2>
+            <p>Please do not submit the following unless we have explicitly agreed on a secure handling process:</p>
+            <ul>
+                <li>Passwords, private keys, seed phrases, or authentication codes</li>
+                <li>Payment card numbers or bank login credentials</li>
+                <li>Protected health information</li>
+                <li>Legal secrets or privileged legal materials</li>
+                <li>Tax, insurance, or financial records requiring regulated handling</li>
+                <li>Sensitive employee or customer records</li>
+            </ul>
+            <h2>7. Data Sharing</h2>
+            <p>We do not sell personal information.</p>
+            <p>We may share information only when needed to:</p>
+            <ul>
+                <li>Provide services through third-party tools</li>
+                <li>Process payments</li>
+                <li>Comply with legal obligations</li>
+                <li>Protect against fraud, abuse, or security threats</li>
+                <li>Work with approved contractors or service providers under appropriate confidentiality expectations</li>
+            </ul>
+            <h2>8. Data Retention</h2>
+            <p>We keep information only as long as reasonably needed for business, service, legal, or recordkeeping purposes.</p>
+            <p>Clients may request deletion of their information, subject to legal, billing, backup, or legitimate business retention requirements.</p>
+            <h2>9. Security</h2>
+            <p>We use reasonable administrative and technical safeguards to protect information. However, no online system, AI tool, email system, or cloud platform can be guaranteed perfectly secure.</p>
+            <p>Clients should avoid sending highly sensitive information through ordinary forms or email unless a secure workflow has been agreed upon.</p>
+            <h2>10. Client Rights</h2>
+            <p>Depending on location, clients may have rights to access, correct, delete, or restrict use of personal information.</p>
+            <p>To make a request, contact us at the email below.</p>
+            <h2>11. Children's Privacy</h2>
+            <p>Our services are intended for adults and businesses. We do not knowingly collect information from children under 13.</p>
+            <h2>12. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. The latest version posted on our website will apply going forward.</p>
+            <h2>13. Contact</h2>
+            <p>Questions or privacy requests can be sent to <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a>.</p>
+        </article>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+            <div class="links">
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="ai-disclosure.html">AI Risk Disclosure</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

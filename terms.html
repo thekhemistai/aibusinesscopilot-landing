@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | AiBusinessCopilot</title>
+    <meta name="description" content="Terms of Service for AiBusinessCopilot AI setup, workflow automation, and consulting services.">
+    <link rel="icon" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #000000;
+            --bg-surface: #0a0a1a;
+            --bg-card: rgba(12, 14, 30, 0.72);
+            --neon-blue: #00d4ff;
+            --neon-purple: #a855f7;
+            --neon-pink: #e94560;
+            --white: #ffffff;
+            --text-primary: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: rgba(255,255,255,0.58);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.7;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.12), transparent 30%),
+                        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.10), transparent 28%),
+                        var(--bg-deep);
+            min-height: 100vh;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.012;
+            z-index: 9999;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .grid-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle at center, rgba(148, 163, 184, 0.06) 0.8px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+            -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+        }
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.42);
+            backdrop-filter: blur(12px) saturate(1.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        nav .container, main, footer .container { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
+        nav .container { padding-top: 1rem; padding-bottom: 1rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+        .logo { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -0.03em; }
+        .logo span { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .back-link { color: var(--text-muted); text-decoration:none; font-size:.9rem; }
+        .back-link:hover, footer a:hover { color: var(--neon-blue); }
+        main { position: relative; z-index: 1; padding-top: 5rem; padding-bottom: 5rem; }
+        .legal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(1.5rem, 4vw, 3.5rem);
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+        .eyebrow { color: var(--neon-blue); text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 800; margin-bottom: .8rem; }
+        h1 { font-family: 'Space Grotesk', 'Inter', sans-serif; color: var(--white); font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.02; letter-spacing: -0.06em; margin-bottom: .75rem; }
+        .updated { color: var(--text-muted); margin-bottom: 2rem; }
+        h2 { color: var(--white); font-size: 1.35rem; margin: 2.1rem 0 .65rem; letter-spacing: -0.02em; }
+        h3 { color: var(--white); font-size: 1.05rem; margin: 1.5rem 0 .45rem; }
+        p { color: var(--text-muted); margin: .7rem 0; }
+        ul, ol { color: var(--text-muted); margin: .7rem 0 1rem 1.35rem; }
+        li { margin: .35rem 0; }
+        strong { color: var(--text-primary); }
+        a { color: var(--neon-blue); }
+        .notice { border-left: 3px solid var(--neon-purple); background: rgba(168,85,247,0.08); padding: 1rem 1.1rem; border-radius: 12px; margin: 1.25rem 0 2rem; }
+        footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem 0; color: var(--text-dim); }
+        footer .links { display:flex; flex-wrap:wrap; gap:.7rem 1rem; margin-top:.45rem; }
+        footer a { color: var(--text-muted); text-decoration:none; }
+        @media (max-width: 640px) { nav .container { align-items:flex-start; flex-direction:column; } main { padding-top: 3rem; } }
+    </style>
+
+</head>
+<body>
+    <div class="grid-pattern"></div>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">AiBusiness<span>Copilot</span></a>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+    <main>
+        <article class="legal-card">
+            <div class="eyebrow">Legal</div>
+            <h1>Terms of Service</h1>
+            <p class="updated">Last updated: April 23, 2026</p>
+            <div class="notice">
+                <p><strong>Plain-English note:</strong> AiBusinessCopilot configures AI systems and workflows using trusted third-party platforms. AI is useful, but it is not perfectly accurate, perfectly secure, or immune from prompt injection.</p>
+            </div>
+            <h2>1. Overview</h2>
+            <p>AiBusinessCopilot provides AI setup, workflow design, automation support, and related consulting services for businesses and individual operators.</p>
+            <p>By using our website, submitting an assessment form, booking a call, or purchasing services, you agree to these Terms.</p>
+            <h2>2. Services</h2>
+            <p>We may provide services including:</p>
+            <ul>
+                <li>AI assistant setup and configuration</li>
+                <li>Knowledge base organization</li>
+                <li>Workflow and automation design</li>
+                <li>AI tool recommendations</li>
+                <li>Documentation, training, and operating playbooks</li>
+                <li>Ongoing support or managed-care services</li>
+            </ul>
+            <p>Specific deliverables, timelines, and fees are defined in the client proposal, invoice, service agreement, or written scope approved by both parties.</p>
+            <h2>3. AI Tool Providers</h2>
+            <p>AiBusinessCopilot may configure or support third-party AI tools and platforms, including but not limited to OpenAI, Anthropic, Google, Notion, Zapier, Make, and related business software.</p>
+            <p>Clients understand that using these tools may transmit client data, prompts, files, messages, documents, or workflow content to third-party providers. These providers are widely trusted in the AI and business-software space, but they are still separate companies with their own systems, terms, privacy policies, retention settings, and security practices.</p>
+            <p>We do not own or control these third-party platforms. Their uptime, pricing, model behavior, security practices, account policies, data handling, and feature changes are governed by their own terms and policies.</p>
+            <h2>4. No Guarantee of Perfect Accuracy or Security</h2>
+            <p>AI systems can produce inaccurate, incomplete, biased, unsafe, or unexpected outputs. AI systems can also be vulnerable to prompt injection, data leakage, malicious instructions in emails, webpages, documents, and other emerging risks.</p>
+            <p>We design practical guardrails and workflows to reduce risk, but we do not guarantee that any AI system is perfectly accurate, secure, compliant, or immune from misuse.</p>
+            <p>Clients remain responsible for reviewing AI outputs before using them for important business, legal, financial, medical, employment, or safety-related decisions.</p>
+            <h2>5. Client Responsibilities</h2>
+            <p>Clients agree to:</p>
+            <ul>
+                <li>Provide accurate information needed to configure services</li>
+                <li>Maintain control of their own accounts, passwords, billing, and permissions</li>
+                <li>Review AI outputs before relying on them</li>
+                <li>Avoid uploading sensitive or regulated data unless explicitly discussed and approved in writing</li>
+                <li>Follow applicable laws, platform terms, and internal company policies</li>
+                <li>Promptly notify us of security concerns, incorrect outputs, or workflow failures</li>
+            </ul>
+            <h2>6. Sensitive Data and Regulated Use</h2>
+            <p>Unless explicitly agreed in writing, AiBusinessCopilot services are not designed for:</p>
+            <ul>
+                <li>Protected health information or HIPAA-regulated workflows</li>
+                <li>Legal advice or legal document final decisions</li>
+                <li>Financial, tax, investment, or insurance advice</li>
+                <li>Employment decisions such as hiring, firing, discipline, or compensation</li>
+                <li>Emergency, safety-critical, or life-critical systems</li>
+                <li>Handling passwords, private keys, seed phrases, payment card data, or other highly sensitive credentials</li>
+            </ul>
+            <p>If a client needs a regulated or high-risk workflow, that must be scoped separately with appropriate professional review.</p>
+            <h2>7. Payment and Refunds</h2>
+            <p>Fees are due according to the approved proposal, invoice, or payment link.</p>
+            <p>Because setup and consulting work involves custom planning, configuration, and labor, payments may be non-refundable once work has begun unless otherwise stated in writing.</p>
+            <p>Ongoing support plans may be canceled according to the terms listed in the specific support agreement or invoice.</p>
+            <h2>8. Intellectual Property</h2>
+            <p>Clients retain ownership of their business data, brand materials, documents, and content they provide.</p>
+            <p>AiBusinessCopilot retains ownership of its general methods, templates, workflows, documentation structures, and reusable implementation patterns, except where explicitly transferred in writing.</p>
+            <p>Custom deliverables prepared specifically for the client may be used by the client for their internal business operations after full payment.</p>
+            <h2>9. Confidentiality</h2>
+            <p>We will take reasonable steps to keep client business information confidential and use it only to provide services.</p>
+            <p>Confidentiality does not apply to information that is public, independently developed, already known, or required to be disclosed by law.</p>
+            <h2>10. Limitation of Liability</h2>
+            <p>To the fullest extent permitted by law, AiBusinessCopilot is not liable for indirect, incidental, consequential, special, punitive, or lost-profit damages arising from use of AI tools, third-party platforms, automations, or services.</p>
+            <p>Our total liability for any claim related to services is limited to the amount paid by the client for the specific service giving rise to the claim.</p>
+            <h2>11. No Professional Advice</h2>
+            <p>AiBusinessCopilot does not provide legal, medical, financial, tax, accounting, insurance, or professional compliance advice. AI outputs and workflow recommendations should be reviewed by qualified professionals where appropriate.</p>
+            <h2>12. Termination</h2>
+            <p>Either party may end a service relationship if the other party materially breaches the agreed scope or terms and does not correct the issue within a reasonable time.</p>
+            <p>We may refuse or terminate services involving illegal activity, abuse, fraud, unsafe use of AI, credential misuse, or violation of third-party platform policies.</p>
+            <h2>13. Changes to Terms</h2>
+            <p>We may update these Terms from time to time. The latest version posted on our website will apply going forward.</p>
+            <h2>14. Contact</h2>
+            <p>Questions about these Terms can be sent to <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a>.</p>
+        </article>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+            <div class="links">
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="ai-disclosure.html">AI Risk Disclosure</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
