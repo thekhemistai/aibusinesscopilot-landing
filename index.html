@@ -1220,19 +1220,19 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="1" data-suffix="">0</span></div>
-                    <div class="stat-label">Workflow to Start</div>
+                    <div class="stat-number"><span class="counter" data-target="1" data-suffix="">1</span></div>
+                    <div class="stat-label">Priority Workflow First</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="24" data-suffix=" hr">0</span></div>
-                    <div class="stat-label">Proposal Turnaround</div>
+                    <div class="stat-number"><span class="counter" data-target="7" data-suffix="–14 days">7–14 days</span></div>
+                    <div class="stat-label">Typical Starter Support</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="5" data-suffix="k+">0</span></div>
-                    <div class="stat-label">Foundation Starts At</div>
+                    <div class="stat-number"><span class="counter" data-target="1" data-suffix="k+">1k+</span></div>
+                    <div class="stat-label">Single Automation Starts At</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="500" data-suffix="/mo">0</span></div>
+                    <div class="stat-number"><span class="counter" data-target="500" data-suffix="/mo">500/mo</span></div>
                     <div class="stat-label">Managed Care Starts At</div>
                 </div>
             </div>
@@ -2006,6 +2006,10 @@
                     var el = entry.target;
                     var target = parseInt(el.dataset.target);
                     var suffix = el.dataset.suffix || '';
+                    if (suffix.indexOf('–') !== -1 || suffix.indexOf('-') !== -1) {
+                        el.textContent = target + suffix;
+                        return;
+                    }
                     var duration = 2000;
                     var startTime = null;
 
