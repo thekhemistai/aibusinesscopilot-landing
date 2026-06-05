@@ -161,6 +161,24 @@
             background-clip: text;
         }
 
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        nav a.start-here {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.25s ease;
+        }
+
+        nav a.start-here:hover {
+            color: var(--neon-blue);
+        }
+
         nav a.cta-sm {
             background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
             color: var(--white);
@@ -1120,6 +1138,11 @@
                 gap: 0.8rem;
             }
 
+            .nav-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .trust-bar .container {
                 flex-direction: column;
                 gap: 1rem;
@@ -1167,7 +1190,10 @@
     <nav>
         <div class="container">
             <a href="#" class="logo"><img src="logo.jpg" alt="AiBizCopilot" style="height:36px;border-radius:8px;margin-right:10px;vertical-align:middle;">AiBusiness<span>Copilot</span></a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="cta-sm">Start Workflow Assessment &rarr;</a>
+            <div class="nav-actions">
+                <a href="ai-assistants.html" class="start-here">New to AI? Start here</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="cta-sm">Start Workflow Assessment &rarr;</a>
+            </div>
         </div>
     </nav>
 
@@ -1176,12 +1202,12 @@
         <div class="hero-aurora"></div>
         <div class="hero-gradient-bg"></div>
         <div class="container">
-            <h1 class="reveal" id="hero-heading">AI that helps run the <span class="glow">front office</span><br>of your business</h1>
-            <p class="reveal">We build a practical AI system around your existing inbox and tools — turning messy messages into clear next steps, organized follow-ups, and ready-to-review draft replies.</p>
+            <h1 class="reveal" id="hero-heading">AI that turns scattered work into <span class="glow">clear next steps</span></h1>
+            <p class="reveal">Most people think AI is just a chat box. We set it up as a practical assistant that can gather information, prepare drafts, organize tasks, compare options, and bring work back for review.</p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start Workflow Assessment</a>
-                <a href="ai-assistants.html" class="btn btn-outline">What AI assistants can do</a>
-                <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);">Free consultation · No commitment · Custom proposal within 24 hours</p>
+                <a href="ai-assistants.html" class="btn btn-outline">New to AI? Start Here</a>
+                <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);">Not sure what AI can do yet? Start with the plain-English guide.</p>
             </div>
         </div>
     </section>
@@ -1257,7 +1283,7 @@
             <div class="container">
                 <div class="section-label reveal">The Challenge</div>
                 <h2 class="reveal">AI should make the work lighter — not give you another tool to babysit</h2>
-                <p class="subtitle reveal">Most service businesses do not need another complicated dashboard. They need AI that works with the tools they already use and helps keep leads, customer requests, billing questions, and follow-ups organized.</p>
+                <p class="subtitle reveal">Most businesses do not need another complicated dashboard. They need an assistant that can help prepare real work: leads, customer requests, quotes, reports, ads, research, billing questions, and follow-ups.</p>
                 <div class="pain-points reveal-stagger">
                     <div class="pain-point glass-card glow-border reveal">
                         <div class="card-icon">
