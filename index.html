@@ -416,7 +416,7 @@
                 <div class="demo-copy reveal">
                     <p class="eyebrow">What having one actually looks like</p>
                     <h2>Tomorrow morning, this is waiting for you</h2>
-                    <p>While you were closing up, driving home, and sleeping, your assistant was reading, sorting, drafting, and checking. It doesn't send anything. It prepares everything — and queues up the handful of decisions only you can make.</p>
+                    <p>While you were closing up, driving home, and sleeping, your assistant was researching, building, fixing, and drafting. If the work happens on a computer — quotes, schedules, research, reviews, reports, websites — it can take the first pass. It doesn't send anything. It prepares everything, and queues up the handful of decisions only you can make.</p>
                     <p class="fine">This example is a home-services company, but the same setup runs for agencies, clinics, contractors, and solo operators — on whatever tools you already use.</p>
                 </div>
                 <div class="briefing-card" id="briefing-card">
@@ -789,17 +789,19 @@
 
         var icons = {
             calendar: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
-            lead: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>',
-            invoice: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+            star: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+            chart: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>',
+            quote: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
             research: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
             inbox: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>'
         };
 
         var items = [
-            ['calendar', "Confirmed Friday's 10–12 install window with Mike", 'reply drafted — needs your OK'],
-            ['lead', 'New lead: Sarah asked about weekly service in Chandler', 'intro reply drafted, no pricing promised'],
-            ['invoice', 'Invoice #2041 is 12 days overdue', 'friendly reminder written, waiting on you'],
-            ['research', "Compared 3 filter suppliers for next month's order", 'one is 14% cheaper — summary attached'],
+            ['calendar', 'Two customers canceled overnight', "rebuilt Thursday's schedule to close the gaps — ready to confirm"],
+            ['quote', "Built the Hendersons' repair quote from your price sheet", 'PDF ready to review and send'],
+            ['research', 'Researched the city permit rule that changed this month', 'what it means for you, in five bullets'],
+            ['star', 'A 3-star review showed up on Google', 'response drafted — plus what likely went wrong'],
+            ['chart', "Updated the job tracker with this week's 9 finished jobs", 'monthly numbers refreshed, one trend flagged'],
             ['inbox', 'Read 47 overnight messages', '4 need a decision, the rest are handled']
         ];
 
