@@ -59,6 +59,16 @@ nav .container {
 }
 .logo:hover { color: var(--ink); }
 .logo img { display: none; }
+.logo.logo-image {
+    line-height: 0;
+}
+.logo.logo-image img {
+    display: block;
+    height: 58px;
+    width: auto;
+    border-radius: 12px;
+    object-fit: contain;
+}
 .logo span { color: var(--blue); }
 .back-link { color: var(--body); font-size: 0.9rem; font-weight: 500; }
 .back-link:hover { color: var(--blue); }
@@ -174,6 +184,7 @@ footer .links { display: flex; flex-wrap: wrap; gap: 0.7rem 1.4rem; margin-top: 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 720px) {
     main { padding-top: 2.5rem; }
+    .logo.logo-image img { height: 50px; }
     .comparison, .examples, .why-grid { grid-template-columns: 1fr; }
 }
 

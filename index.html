@@ -95,6 +95,18 @@
             letter-spacing: -0.02em;
         }
         nav .wordmark span { color: var(--blue); }
+        nav .wordmark.logo-image {
+            display: inline-flex;
+            align-items: center;
+            line-height: 0;
+        }
+        nav .wordmark.logo-image img {
+            height: 58px;
+            width: auto;
+            display: block;
+            border-radius: 12px;
+            object-fit: contain;
+        }
         nav .nav-actions { display: flex; align-items: center; gap: 1.25rem; }
         nav .start-here { font-size: 0.92rem; color: var(--body); font-weight: 500; }
         nav .start-here:hover { color: var(--blue); }
@@ -343,7 +355,7 @@
         footer { background: var(--ink); color: #9BA3AD; padding: 3rem 0; }
         footer .container { display: flex; flex-direction: column; gap: 1.2rem; }
         footer .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
-        footer .footer-brand img { height: 44px; border-radius: 10px; }
+        footer .footer-brand img { height: 64px; width: auto; border-radius: 12px; }
         footer .footer-brand .fb-name { font-weight: 700; color: #fff; font-size: 1.05rem; }
         footer .footer-brand .fb-name span { color: #3D9BFF; }
         footer p { font-size: 0.9rem; }
@@ -366,6 +378,7 @@
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .card-grid, .card-grid-4, .pricing-grid { grid-template-columns: 1fr; }
             .hero { padding: 3.5rem 0 2.5rem; }
+            nav .wordmark.logo-image img { height: 50px; }
             nav .start-here { display: none; }
         }
     </style>
@@ -374,7 +387,7 @@
 
     <nav>
         <div class="container">
-            <a href="#" class="wordmark">AI<span>BusinessCopilot</span></a>
+            <a href="#" class="wordmark logo-image"><img src="logo.jpg" alt="AiBusinessCopilot"></a>
             <div class="nav-actions">
                 <a href="ai-assistants.html" class="start-here">New to AI? Start here</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="cta-sm">Start assessment</a>
@@ -767,7 +780,6 @@
         <div class="container">
             <div class="footer-brand">
                 <img src="logo.jpg" alt="AiBusinessCopilot logo">
-                <span class="fb-name">AI<span>BusinessCopilot</span></span>
             </div>
             <p>&copy; 2026 AiBusinessCopilot &middot; <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
             <p>
