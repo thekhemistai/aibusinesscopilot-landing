@@ -3,1264 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AiBusinessCopilot — AI Operating Layers for Service Businesses</title>
-    <meta name="description" content="We build practical AI systems around your existing inbox and tools — so leads, customer issues, billing questions, and follow-ups stop slipping through the cracks.">
+    <title>AiBusinessCopilot — AI assistants that do real work</title>
+    <meta name="description" content="We set up Claude or Codex inside your business — an AI assistant that reads, researches, drafts, schedules, and follows up. Nothing goes out without your approval.">
+    <meta property="og:title" content="AiBusinessCopilot — AI assistants that do real work">
+    <meta property="og:description" content="Chat bots answer questions. Agents do real work. We install leading AI assistants around the tools you already use.">
     <link rel="icon" href="logo.jpg">
     <link rel="apple-touch-icon" href="logo.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #000000;
-            --bg-surface: #0a0a1a;
-            --bg-card: rgba(12, 14, 30, 0.6);
-            --neon-blue: #00d4ff;
-            --neon-cyan: #00ffd5;
-            --neon-purple: #a855f7;
-            --neon-pink: #e94560;
-            --neon-violet: #7c3aed;
-            --accent: #e94560;
-            --accent-hover: #ff6b81;
-            --white: #ffffff;
-            --text-primary: #e2e8f0;
-            --text-muted: #94a3b8;
-            --text-dim: rgba(255,255,255,0.5);
-            --success: #10b981;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glow-blue: 0 0 30px rgba(0, 212, 255, 0.3);
-            --glow-pink: 0 0 30px rgba(233, 69, 96, 0.3);
-            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.3);
+            --ink: #0B0C0E;
+            --body: #3F4650;
+            --muted: #7A828C;
+            --blue: #0B63E5;
+            --blue-dark: #0A55C4;
+            --blue-tint: #EAF2FD;
+            --bg: #FFFFFF;
+            --bg-alt: #F5F8FC;
+            --border: #E2E7EE;
+            --border-soft: #EDF0F4;
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: var(--text-primary);
-            line-height: 1.6;
-            background: var(--bg-deep);
-            overflow-x: hidden;
+            font-family: var(--sans);
+            color: var(--body);
+            line-height: 1.65;
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== NOISE TEXTURE OVERLAY ===== */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0.012;
-            z-index: 9999;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            background-size: 256px 256px;
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+        h1, h2 { font-family: var(--serif); color: var(--ink); font-weight: 600; letter-spacing: -0.015em; }
+        h3 { color: var(--ink); font-weight: 600; }
+
+        a { color: var(--blue); text-decoration: none; }
+        a:hover { color: var(--blue-dark); }
+
+        .btn {
+            display: inline-block;
+            background: var(--blue);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.8rem 1.6rem;
+            border-radius: 999px;
+            transition: background 0.15s ease, transform 0.15s ease;
         }
+        .btn:hover { background: var(--blue-dark); color: #fff; transform: translateY(-1px); }
 
-        /* ===== SUBTLE TEXTURE (barely perceptible) ===== */
-        .grid-pattern {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background-image: radial-gradient(circle at center, rgba(148, 163, 184, 0.06) 0.8px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
-            -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
+        .btn-dark { background: var(--ink); }
+        .btn-dark:hover { background: #23262B; }
+
+        .btn-ghost {
+            display: inline-block;
+            color: var(--ink);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 0.8rem 1.2rem;
         }
-
-        /* ===== CINEMATIC EDGE VIGNETTE ===== */
-        .backdrop-vignette {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            background: radial-gradient(ellipse 130% 90% at 50% 50%, transparent 45%, rgba(0, 0, 0, 0.5) 90%, rgba(0, 0, 0, 0.7) 100%);
-        }
-
-
-
-
-        /* ===== PARTICLE CANVAS ===== */
-        #particle-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* ===== FLOATING GEOMETRIC SHAPES ===== */
-        .geo-shapes {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .geo-shape {
-            position: absolute;
-            opacity: 0.06;
-            animation: geoFloat linear infinite;
-            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.08));
-        }
-
-        .geo-shape svg {
-            width: 100%; height: 100%;
-        }
-
-        @keyframes geoFloat {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-40px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-
-        body > *:not(#particle-canvas):not(.geo-shapes):not(.grid-pattern):not(.ambient-orbs):not(.backdrop-vignette) {
-            position: relative;
-            z-index: 1;
-        }
+        .btn-ghost:hover { color: var(--blue); }
 
         /* ===== NAV ===== */
         nav {
-            position: fixed;
-            top: 0; width: 100%;
-            background: transparent;
-            backdrop-filter: blur(12px) saturate(1.2);
-            -webkit-backdrop-filter: blur(12px) saturate(1.2);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
             z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
-
         nav .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-top: 0.9rem;
+            padding-bottom: 0.9rem;
         }
-
-        nav .logo {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--white);
-            text-decoration: none;
-            letter-spacing: -0.03em;
+        nav .wordmark {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.02em;
         }
-
-        nav .logo span {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.9rem;
-        }
-
-        nav a.start-here {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
+        nav .wordmark span { color: var(--blue); }
+        nav .nav-actions { display: flex; align-items: center; gap: 1.25rem; }
+        nav .start-here { font-size: 0.92rem; color: var(--body); font-weight: 500; }
+        nav .start-here:hover { color: var(--blue); }
+        nav .cta-sm {
+            font-size: 0.92rem;
             font-weight: 600;
-            transition: color 0.25s ease;
+            color: #fff;
+            background: var(--ink);
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
         }
-
-        nav a.start-here:hover {
-            color: var(--neon-blue);
-        }
-
-        nav a.cta-sm {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
-            padding: 0.55rem 1.3rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15), 0 0 40px rgba(168, 85, 247, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        nav a.cta-sm::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
-        }
-
-        nav a.cta-sm:hover::before { left: 100%; }
-
-        nav a.cta-sm:hover {
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(168, 85, 247, 0.12);
-            transform: translateY(-1px);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        nav .cta-sm:hover { background: #23262B; color: #fff; }
 
         /* ===== HERO ===== */
-        .hero {
-            padding: 10rem 0 5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: transparent;
+        .hero { padding: 5rem 0 4rem; }
+        .hero .eyebrow {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 1.1rem;
         }
-
-        /* Aurora effect behind hero */
-        .hero-aurora {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .hero-aurora::before,
-        .hero-aurora::after {
-            content: '';
-            position: absolute;
-            width: 80%; height: 40%;
-            top: -5%;
-            border-radius: 50%;
-            filter: blur(70px);
-            opacity: 0.05;
-        }
-
-        .hero-aurora::before {
-            left: -10%;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.5), rgba(124, 58, 237, 0.25) 45%, transparent 75%);
-            animation: auroraWave1 10s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-
-        .hero-aurora::after {
-            right: -10%;
-            background: linear-gradient(225deg, rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.2) 45%, transparent 75%);
-            animation: auroraWave2 12s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-
-        @keyframes auroraWave1 {
-            0%, 100% { transform: translateX(0) scaleY(1) rotate(-2deg); }
-            50% { transform: translateX(3%) scaleY(1.15) rotate(2deg); }
-        }
-
-        @keyframes auroraWave2 {
-            0%, 100% { transform: translateX(0) scaleY(1) rotate(2deg); }
-            50% { transform: translateX(-3%) scaleY(1.1) rotate(-2deg); }
-        }
-
-        /* Hero gradient removed — vortex canvas provides focal light */
-        .hero-gradient-bg { display: none; }
-
-        /* Aurora shimmer line at top of hero */
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(0, 212, 255, 0.6) 20%,
-                rgba(168, 85, 247, 0.7) 40%,
-                rgba(233, 69, 96, 0.6) 60%,
-                rgba(0, 255, 213, 0.6) 80%,
-                transparent 100%);
-            background-size: 200% 100%;
-            animation: auroraShimmer 4s linear infinite;
-            z-index: 3;
-        }
-
-        @keyframes auroraShimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .hero > .container {
-            position: relative;
-            z-index: 2;
-        }
-
         .hero h1 {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 3.6rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            color: var(--white);
-            letter-spacing: -0.04em;
+            font-size: clamp(2.3rem, 5.2vw, 3.6rem);
+            line-height: 1.12;
+            max-width: 780px;
+            margin-bottom: 1.25rem;
         }
-
-        .hero h1 .glow {
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-purple));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGradient 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.4));
+        .hero .lede {
+            font-size: 1.18rem;
+            max-width: 620px;
+            margin-bottom: 1.8rem;
         }
+        .hero .hero-ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; margin-bottom: 1rem; }
+        .hero .hero-note { font-size: 0.92rem; color: var(--muted); max-width: 560px; }
 
-        @keyframes textGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        /* ===== BRIEFING DEMO ===== */
+        .demo-band { padding: 1rem 0 4.5rem; }
+        .demo-frame {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
         }
-
-        .typing-cursor {
-            display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: var(--neon-blue);
-            margin-left: 2px;
-            animation: cursorBlink 0.7s step-end infinite;
-            vertical-align: text-bottom;
-            box-shadow: 0 0 12px var(--neon-blue), 0 0 24px rgba(0, 212, 255, 0.3);
+        .demo-copy { padding-top: 1.5rem; }
+        .demo-copy .eyebrow {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.9rem;
         }
+        .demo-copy h2 { font-size: 1.9rem; line-height: 1.2; margin-bottom: 1rem; }
+        .demo-copy p { margin-bottom: 1rem; }
+        .demo-copy .fine { font-size: 0.92rem; color: var(--muted); }
 
-        @keyframes cursorBlink {
-            50% { opacity: 0; }
+        .briefing-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem 1.6rem;
+            box-shadow: 0 1px 2px rgba(11, 12, 14, 0.04), 0 12px 32px rgba(11, 12, 14, 0.06);
         }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 680px;
-            margin: 0 auto 2.5rem;
-            color: var(--text-muted);
-            line-height: 1.7;
+        .briefing-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
         }
-
-        /* ===== PRIMARY CTA BUTTON ===== */
-        .btn {
-            display: inline-block;
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 700;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .briefing-head .greet { font-weight: 600; color: var(--ink); font-size: 1.05rem; }
+        .briefing-head .clock { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+        .briefing-sub { font-size: 0.88rem; color: var(--muted); margin: 0.15rem 0 0.9rem; }
+        .briefing-item {
+            display: flex;
+            gap: 0.85rem;
+            align-items: flex-start;
+            padding: 0.7rem 0;
+            border-top: 1px solid var(--border-soft);
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+        }
+        .briefing-item.show { opacity: 1; transform: translateY(0); }
+        .briefing-item svg { flex-shrink: 0; margin-top: 3px; }
+        .briefing-item .bi-title { font-size: 0.95rem; color: var(--ink); line-height: 1.45; }
+        .briefing-item .bi-sub { font-size: 0.82rem; color: var(--muted); margin-top: 1px; }
+        .briefing-closer {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--blue);
+            margin-top: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .briefing-closer.show { opacity: 1; }
+        .briefing-replay {
+            background: none;
             border: none;
+            font: inherit;
+            font-size: 0.78rem;
+            color: var(--muted);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            box-shadow:
-                0 0 20px rgba(0, 212, 255, 0.25),
-                0 0 60px rgba(0, 212, 255, 0.08),
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255,255,255,0.1);
+            padding: 0;
         }
+        .briefing-replay:hover { color: var(--blue); }
 
-        /* Animated shimmer sweep on CTA */
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
-            animation: btnShimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes btnShimmer {
-            0% { left: -100%; }
-            50%, 100% { left: 100%; }
-        }
-
-        /* Pulse ring behind CTA */
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 100%; height: 100%;
-            border-radius: 12px;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-            transform: translate(-50%, -50%) scale(1);
-            animation: btnPulse 2.5s ease-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes btnPulse {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 0; }
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow:
-                0 0 40px rgba(0, 212, 255, 0.4),
-                0 0 80px rgba(0, 212, 255, 0.15),
-                0 0 120px rgba(168, 85, 247, 0.08),
-                0 16px 48px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255,255,255,0.15);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid rgba(0, 212, 255, 0.3);
-            margin-left: 1rem;
-            box-shadow: 0 0 15px rgba(0, 212, 255, 0.05);
-        }
-
-        .btn-outline::before,
-        .btn-outline::after { display: none; }
-
-        .btn-outline:hover {
-            background: rgba(0, 212, 255, 0.08);
-            border-color: var(--neon-blue);
-            box-shadow: var(--glow-blue), inset 0 0 30px rgba(0, 212, 255, 0.04);
-            color: var(--white);
-        }
+        /* ===== PLAIN-ENGLISH BRIDGE ===== */
+        .bridge { background: var(--bg-alt); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 3.5rem 0; }
+        .bridge .container { max-width: 760px; text-align: center; }
+        .bridge h2 { font-size: 1.7rem; margin-bottom: 0.9rem; }
+        .bridge p { font-size: 1.08rem; margin-bottom: 1rem; }
 
         /* ===== TRUST BAR ===== */
-        .trust-bar {
-            background: transparent;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1.8rem 0;
-            text-align: center;
-            position: relative;
-        }
-
+        .trust-bar { padding: 2.6rem 0; border-bottom: 1px solid var(--border-soft); }
         .trust-bar .container {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
         }
+        .trust-item { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.93rem; color: var(--body); font-weight: 500; line-height: 1.45; }
+        .trust-item svg { flex-shrink: 0; margin-top: 2px; }
 
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+        /* ===== STATS ===== */
+        .stats-bar { padding: 3rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .stat-item { background: var(--bg-alt); border-radius: 12px; padding: 1.3rem 1.4rem; }
+        .stat-number { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; color: var(--ink); }
+        .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
 
-        .trust-item:hover { color: var(--text-primary); }
-
-        .trust-item .trust-icon {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
-        }
-
-        .trust-item:hover .trust-icon {
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
-            border-color: rgba(0, 212, 255, 0.2);
-        }
-
-        .trust-item .trust-icon svg {
-            width: 18px; height: 18px;
-        }
-
-        /* ===== TAB TOGGLE ===== */
-        .tab-toggle-wrapper {
-            text-align: center;
-            padding: 4rem 0 2rem;
-        }
-
+        /* ===== TABS ===== */
+        .tab-toggle-wrapper { padding: 1.5rem 0 0.5rem; }
         .tab-toggle {
             display: inline-flex;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 5px;
-            position: relative;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.03);
+            background: var(--bg-alt);
+            border: 1px solid var(--border-soft);
+            border-radius: 999px;
+            padding: 4px;
         }
-
         .tab-btn {
-            padding: 0.8rem 2.5rem;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-size: 1rem;
+            font: inherit;
+            font-size: 0.95rem;
             font-weight: 600;
+            color: var(--muted);
+            background: none;
+            border: none;
+            border-radius: 999px;
+            padding: 0.55rem 1.4rem;
             cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            z-index: 2;
+            transition: color 0.15s ease, background 0.15s ease;
         }
-
-        .tab-btn.active {
-            color: var(--white);
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .tab-btn:not(.active):hover { color: var(--text-primary); }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
+        .tab-btn.active { background: var(--ink); color: #fff; }
+        .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* ===== SECTIONS ===== */
-        section { padding: 5rem 0; }
-
+        section { padding: 4rem 0; }
         .section-label {
-            text-transform: uppercase;
             font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 3px;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 0.9rem;
         }
+        section h2 { font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.18; max-width: 720px; margin-bottom: 1rem; }
+        .subtitle { font-size: 1.08rem; max-width: 680px; margin-bottom: 2.2rem; }
+        .centered { margin-left: auto; margin-right: auto; text-align: center; }
 
-        h2 {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: var(--white);
-            margin-bottom: 1rem;
-            letter-spacing: -0.03em;
-        }
-
-        h2.centered { text-align: center; }
-
-        .subtitle {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 3rem;
-            line-height: 1.7;
-        }
-
-        .subtitle.centered {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* ===== WAVE DIVIDER ===== */
-        .wave-divider {
-            width: 100%;
-            height: 80px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wave-divider svg {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 80px;
-        }
-
-        /* Fallback glow-divider (kept for any missed references) */
-        .glow-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent 5%, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3), transparent 95%);
-            opacity: 0.4;
-            margin: 0 2rem;
-            position: relative;
-        }
-
-        .glow-divider::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: 20%; right: 20%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), rgba(168, 85, 247, 0.2), transparent);
-            filter: blur(2px);
-        }
-
-        /* ===== ANIMATED GRADIENT BORDERS ===== */
-        @property --angle {
-            syntax: '<angle>';
-            initial-value: 0deg;
-            inherits: false;
-        }
-
-        @keyframes rotateBorder {
-            to { --angle: 360deg; }
-        }
-
-        @keyframes glowPulse {
-            0%, 100% {
-                border-color: rgba(0, 212, 255, 0.08);
-                box-shadow: 0 0 0 rgba(0, 212, 255, 0);
-            }
-            50% {
-                border-color: rgba(0, 212, 255, 0.2);
-                box-shadow: 0 0 30px rgba(0, 212, 255, 0.06), inset 0 0 30px rgba(0, 212, 255, 0.02);
-            }
-        }
-
-        @keyframes glowPulsePurple {
-            0%, 100% {
-                border-color: rgba(168, 85, 247, 0.08);
-                box-shadow: 0 0 0 rgba(168, 85, 247, 0);
-            }
-            50% {
-                border-color: rgba(168, 85, 247, 0.2);
-                box-shadow: 0 0 30px rgba(168, 85, 247, 0.06), inset 0 0 30px rgba(168, 85, 247, 0.02);
-            }
-        }
-
-        @keyframes glowPulsePink {
-            0%, 100% {
-                border-color: rgba(233, 69, 96, 0.08);
-                box-shadow: 0 0 0 rgba(233, 69, 96, 0);
-            }
-            50% {
-                border-color: rgba(233, 69, 96, 0.2);
-                box-shadow: 0 0 30px rgba(233, 69, 96, 0.06), inset 0 0 30px rgba(233, 69, 96, 0.02);
-            }
-        }
-
-        .glow-border { animation: glowPulse 4s ease-in-out infinite; }
-        .glow-border-purple { animation: glowPulsePurple 4s ease-in-out infinite; }
-        .glow-border-pink { animation: glowPulsePink 4s ease-in-out infinite; }
-
-        .glow-border:nth-child(2), .glow-border-purple:nth-child(2) { animation-delay: 1s; }
-        .glow-border:nth-child(3), .glow-border-purple:nth-child(1) { animation-delay: 2s; }
-        .glow-border:nth-child(4) { animation-delay: 3s; }
-
-        /* ===== GLASSMORPHISM CARDS ===== */
-        .glass-card {
-            background: linear-gradient(135deg, rgba(15, 18, 40, 0.7), rgba(10, 12, 30, 0.5));
-            backdrop-filter: blur(20px) saturate(1.3);
-            -webkit-backdrop-filter: blur(20px) saturate(1.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform-style: preserve-3d;
-            will-change: transform;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Top accent line on cards */
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-        }
-
-        /* Shimmer highlight on cards */
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 55%, transparent 60%);
-            transition: left 0.7s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .glass-card:hover::before {
-            left: 100%;
-        }
-
-        .glass-card:hover {
-            background: linear-gradient(135deg, rgba(20, 24, 55, 0.8), rgba(15, 18, 45, 0.6));
-            border-color: rgba(255, 255, 255, 0.14);
-            transform: translateY(-4px);
-        }
-
-        /* ===== PROBLEM SECTION ===== */
-        .problem {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
-            position: relative;
-        }
-
-        .pain-points {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .pain-point {
-            padding: 1.8rem;
-            border-left: 3px solid var(--neon-blue);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .pain-point:hover {
-            border-left-color: var(--neon-purple);
-        }
-
-        .pain-point .card-icon {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.08));
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            transition: all 0.4s;
-        }
-
-        .pain-point:hover .card-icon {
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.12));
-        }
-
-        .pain-point .card-icon svg {
-            width: 22px; height: 22px;
-            stroke: var(--neon-blue);
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.3s;
-        }
-
-        .pain-point:hover .card-icon svg {
-            stroke: var(--neon-cyan);
-        }
-
-        .pain-point h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
-        .pain-point p { font-size: 0.95rem; color: var(--text-muted); }
-
-        /* ===== SOLUTION ===== */
-        .solution h2 { text-align: center; }
-        .solution .subtitle { text-align: center; margin-left: auto; margin-right: auto; }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-        }
-
-        .feature .icon-circle {
-            width: 72px; height: 72px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(168, 85, 247, 0.12));
-            border: 1px solid rgba(0, 212, 255, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.2rem;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.06), inset 0 0 20px rgba(0, 212, 255, 0.03);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-
-        .feature .icon-circle svg {
-            width: 28px; height: 28px;
-            stroke: var(--neon-blue);
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: all 0.3s;
-        }
-
-        .feature:hover .icon-circle {
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.2), 0 0 80px rgba(168, 85, 247, 0.08), inset 0 0 30px rgba(0, 212, 255, 0.05);
-            transform: scale(1.05);
-            border-color: rgba(0, 212, 255, 0.2);
-        }
-
-        .feature:hover .icon-circle svg {
-            stroke: var(--neon-cyan);
-            filter: drop-shadow(0 0 8px rgba(0, 255, 213, 0.4));
-        }
-
-        .feature h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
-        .feature p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* ===== HOW IT WORKS ===== */
-        .how-it-works {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.15));
-            position: relative;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            position: relative;
-        }
-
-        .step {
-            text-align: center;
-            padding: 2rem 1.5rem;
-        }
-
-        .step-number {
-            width: 52px; height: 52px;
+        .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+        .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+        .card {
+            background: #fff;
+            border: 1px solid var(--border);
             border-radius: 14px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.2), 0 0 50px rgba(168, 85, 247, 0.08);
-            position: relative;
+            padding: 1.6rem;
         }
+        .card .card-icon { margin-bottom: 0.9rem; }
+        .card h3 { font-size: 1.08rem; margin-bottom: 0.5rem; }
+        .card p { font-size: 0.95rem; }
 
-        /* Subtle ring around step number */
-        .step-number::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 18px;
-            border: 1px solid rgba(0, 212, 255, 0.15);
+        .alt { background: var(--bg-alt); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
+
+        .step .step-number {
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blue);
+            background: var(--blue-tint);
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 0.9rem;
         }
-
-        .step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--white); font-weight: 700; }
-        .step p { font-size: 0.9rem; color: var(--text-muted); }
 
         /* ===== PRICING ===== */
-        .pricing {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.05));
-            position: relative;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; align-items: stretch; }
+        .pricing-single { max-width: 480px; margin: 0 auto; }
         .pricing-card {
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.8rem 1.6rem;
+            display: flex;
+            flex-direction: column;
         }
-
-        .pricing-card.featured {
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            box-shadow: 0 0 60px rgba(0, 212, 255, 0.06), 0 0 120px rgba(168, 85, 247, 0.03), inset 0 1px 0 rgba(255,255,255,0.06);
-        }
-
+        .pricing-card.featured { border: 2px solid var(--blue); position: relative; }
         .pricing-card.featured::before {
-            content: '';
+            content: 'Most popular starting point';
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
-            background-size: 200% 100%;
-            animation: auroraShimmer 3s linear infinite;
+            top: -12px; left: 1.4rem;
+            background: var(--blue);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 3px 12px;
+            border-radius: 999px;
         }
-
-        .pricing-card.featured::after {
-            content: 'POPULAR';
-            position: absolute;
-            top: 18px; right: -28px;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            color: var(--white);
-            padding: 0.3rem 2rem;
-            font-size: 0.7rem;
-            font-weight: 700;
-            transform: rotate(45deg);
-            letter-spacing: 1px;
-        }
-
-        .pricing-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: 0.5rem; font-weight: 700; }
-
-        .pricing-card .price {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 0.3rem;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
-            letter-spacing: -0.03em;
-        }
-
-        .pricing-card .price-note {
+        .pricing-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+        .pricing-card .price { font-family: var(--serif); font-size: 2rem; font-weight: 600; color: var(--ink); }
+        .pricing-card .price-note { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.9rem; }
+        .pricing-card .scope-note { font-size: 0.9rem; margin-bottom: 1rem; }
+        .pricing-card ul { list-style: none; margin: 0 0 1.4rem; flex-grow: 1; }
+        .pricing-card li {
             font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .pricing-card .scope-note {
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin: -0.4rem 0 1.2rem;
-        }
-
-        .pricing-card ul {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-card ul li {
-            padding: 0.5rem 0;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: flex-start;
-            gap: 0.6rem;
-        }
-
-        .pricing-card ul li::before {
-            content: '';
-            display: inline-block;
-            width: 18px; height: 18px;
-            flex-shrink: 0;
-            margin-top: 2px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ffd5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        /* ===== STATS / COUNTERS ===== */
-        .stats-bar {
-            padding: 3.5rem 0;
-            background: transparent;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 0 0.4rem 1.5rem;
             position: relative;
         }
-
-        .stats-grid {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.2));
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
-            letter-spacing: 0.02em;
-        }
-
-        /* ===== CTA ===== */
-        .cta-section {
-            text-align: center;
-            background: transparent;
-            color: var(--white);
-            padding: 7rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::after {
+        .pricing-card li::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 40% 30% at 50% 50%, rgba(168, 85, 247, 0.05), transparent 70%);
-            filter: blur(40px);
-            pointer-events: none;
-            mix-blend-mode: screen;
+            left: 0; top: 0.72rem;
+            width: 14px; height: 14px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B63E5' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") no-repeat center / contain;
         }
+        .pricing-card .btn { text-align: center; }
 
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 5%, rgba(0, 212, 255, 0.4), rgba(168, 85, 247, 0.4), rgba(233, 69, 96, 0.3), transparent 95%);
-            background-size: 200% 100%;
-            animation: auroraShimmer 5s linear infinite;
-        }
-
-        .cta-section h2 {
-            color: var(--white);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p { font-size: 1.15rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
-        .cta-section .btn { font-size: 1.2rem; padding: 1.2rem 3rem; }
+        /* ===== FINAL CTA ===== */
+        .cta-section { text-align: center; padding: 5rem 0; }
+        .cta-section h2 { margin-left: auto; margin-right: auto; }
+        .cta-section p { max-width: 620px; margin: 0 auto 1.8rem; font-size: 1.08rem; }
+        .cta-fine { margin-top: 1.1rem; font-size: 0.9rem; color: var(--muted); }
 
         /* ===== FOOTER ===== */
-        footer {
-            background: rgba(0, 0, 0, 0.4);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-dim);
-            text-align: center;
-            padding: 2.5rem 2rem;
-            font-size: 0.85rem;
+        footer { background: var(--ink); color: #9BA3AD; padding: 3rem 0; }
+        footer .container { display: flex; flex-direction: column; gap: 1.2rem; }
+        footer .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
+        footer .footer-brand img { height: 44px; border-radius: 10px; }
+        footer .footer-brand .fb-name { font-weight: 700; color: #fff; font-size: 1.05rem; }
+        footer .footer-brand .fb-name span { color: #3D9BFF; }
+        footer p { font-size: 0.9rem; }
+        footer a { color: #C7CDD4; }
+        footer a:hover { color: #fff; }
+
+        /* ===== REVEAL ===== */
+        .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .briefing-item { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .briefing-closer { opacity: 1 !important; }
         }
 
-        footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        footer a:hover { color: var(--neon-blue); }
-
-        /* ===== SCROLL REVEAL ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(35px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.from-left { transform: translateX(-60px); }
-        .reveal.from-right { transform: translateX(60px); }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0s; }
-        .reveal-stagger > .reveal:nth-child(2) { transition-delay: 0.12s; }
-        .reveal-stagger > .reveal:nth-child(3) { transition-delay: 0.24s; }
-        .reveal-stagger > .reveal:nth-child(4) { transition-delay: 0.36s; }
-        .reveal-stagger > .reveal:nth-child(5) { transition-delay: 0.48s; }
-
-        /* Personal tab features */
-        .personal-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .personal-feature {
-            text-align: center;
-            padding: 2rem 1rem;
-        }
-
-        .personal-feature .pf-icon-wrap {
-            width: 56px; height: 56px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
-            border: 1px solid rgba(0, 212, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            transition: all 0.4s;
-        }
-
-        .personal-feature:hover .pf-icon-wrap {
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
-            transform: scale(1.05);
-        }
-
-        .personal-feature .pf-icon-wrap svg {
-            width: 24px; height: 24px;
-            stroke: var(--neon-blue);
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .personal-feature h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.4rem; font-weight: 700; }
-        .personal-feature p { font-size: 0.85rem; color: var(--text-muted); }
-
-        .pricing-single { max-width: 420px; margin: 0 auto; }
-
-        /* ===== MOBILE ===== */
-        @media (max-width: 768px) {
-            .hero { padding: 8rem 0 4rem; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero p { font-size: 1.05rem; }
-            h2 { font-size: 1.7rem; }
-
-            .btn-outline {
-                margin-left: 0;
-                margin-top: 0.8rem;
-            }
-
-            nav .container {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-
-            .nav-actions {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .trust-bar .container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .pricing-grid { grid-template-columns: 1fr; }
-
-            .tab-btn {
-                padding: 0.7rem 1.5rem;
-                font-size: 0.9rem;
-            }
-
-            .personal-features { grid-template-columns: repeat(2, 1fr); }
-            .cta-section h2 { font-size: 1.8rem; }
-
-            .stats-grid { gap: 2rem; }
-            .stat-number { font-size: 2.2rem; }
-
-            .reveal.from-left,
-            .reveal.from-right {
-                transform: translateY(35px);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .personal-features { grid-template-columns: 1fr; }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 920px) {
+            .demo-frame { grid-template-columns: 1fr; gap: 2rem; }
+            .demo-copy { padding-top: 0; }
+            .trust-bar .container { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .card-grid, .card-grid-4, .pricing-grid { grid-template-columns: 1fr; }
+            .hero { padding: 3.5rem 0 2.5rem; }
+            nav .start-here { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- GRID PATTERN -->
-    <div class="grid-pattern"></div>
-
-    <!-- SPIRALING VORTEX + 2D NEURAL NETWORK -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- FLOATING GEOMETRIC SHAPES -->
-    <div class="geo-shapes" id="geo-shapes"></div>
-
-    <!-- CINEMATIC VIGNETTE + TOP SPOTLIGHT (above orbs, below content) -->
-    <div class="backdrop-vignette"></div>
-
-    <!-- NAV -->
     <nav>
         <div class="container">
-            <a href="#" class="logo"><img src="logo.jpg" alt="AiBizCopilot" style="height:36px;border-radius:8px;margin-right:10px;vertical-align:middle;">AiBusiness<span>Copilot</span></a>
+            <a href="#" class="wordmark">AI<span>BusinessCopilot</span></a>
             <div class="nav-actions">
                 <a href="ai-assistants.html" class="start-here">New to AI? Start here</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="cta-sm">Start Workflow Assessment &rarr;</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="cta-sm">Start assessment</a>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-aurora"></div>
-        <div class="hero-gradient-bg"></div>
         <div class="container">
-            <h1 class="reveal" id="hero-heading">AI that turns scattered work into <span class="glow">clear next steps</span></h1>
-            <p class="reveal">Most people think AI is just a chat box. We set it up as a practical assistant that can gather information, prepare drafts, organize tasks, compare options, and bring work back for review.</p>
-            <div class="reveal">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start Workflow Assessment</a>
-                <a href="ai-assistants.html" class="btn btn-outline">New to AI? Start Here</a>
-                <p style="margin-top:1rem;font-size:0.95rem;color:var(--text-muted);">AiBusinessCopilot helps small businesses understand, adopt, and use AI to do real work. Not sure where to start? Use the plain-English guide first.</p>
+            <p class="eyebrow reveal">We set up Claude and Codex for real businesses</p>
+            <h1 class="reveal">Chat bots answer questions.<br>Agents do real work.</h1>
+            <p class="lede reveal">We install a leading AI assistant inside your business. It reads, researches, drafts, schedules, and follows up — then brings everything back to you for the final say.</p>
+            <div class="hero-ctas reveal">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">See what it would do for you</a>
+                <a href="#how-it-works" class="btn-ghost">How it works &rarr;</a>
             </div>
+            <p class="hero-note reveal">Never used AI before? You're exactly who we built this for. <a href="ai-assistants.html">Start with the plain-English guide.</a></p>
         </div>
     </section>
 
-    <!-- TRUST BAR -->
-    <div class="trust-bar">
+    <!-- BRIEFING DEMO -->
+    <div class="demo-band">
         <div class="container">
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+            <div class="demo-frame">
+                <div class="demo-copy reveal">
+                    <p class="eyebrow">What having one actually looks like</p>
+                    <h2>Tomorrow morning, this is waiting for you</h2>
+                    <p>While you were closing up, driving home, and sleeping, your assistant was reading, sorting, drafting, and checking. It doesn't send anything. It prepares everything — and queues up the handful of decisions only you can make.</p>
+                    <p class="fine">This example is a home-services company, but the same setup runs for agencies, clinics, contractors, and solo operators — on whatever tools you already use.</p>
                 </div>
-                Built with best-in-class AI
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <div class="briefing-card" id="briefing-card">
+                    <div class="briefing-head">
+                        <span class="greet" id="briefing-greet">Good morning.</span>
+                        <span class="clock" id="briefing-clock"></span>
+                    </div>
+                    <p class="briefing-sub">While you were out, your assistant:</p>
+                    <div id="briefing-items"></div>
+                    <p class="briefing-closer" id="briefing-closer">Nothing sent without your approval. Ever.</p>
+                    <div style="text-align:right;margin-top:0.6rem;">
+                        <button class="briefing-replay" id="briefing-replay" type="button">Replay &#8635;</button>
+                    </div>
                 </div>
-                Seamless integration
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-                </div>
-                Responsibly deployed
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--neon-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-                </div>
-                Measurable ROI
             </div>
         </div>
     </div>
 
-    <!-- STATS BAR -->
+    <!-- PLAIN-ENGLISH BRIDGE -->
+    <div class="bridge">
+        <div class="container">
+            <h2 class="reveal">A chatbot waits for you to type. An assistant gets to work.</h2>
+            <p class="reveal">If you've tried ChatGPT, you've seen AI answer questions. What most people haven't seen yet: we set up Claude or Codex with safe, limited access to your calendar, inbox, files, and tools — so it can prepare real work, not just talk about it. You review everything before it goes anywhere.</p>
+            <p class="reveal"><a href="ai-assistants.html">New to all of this? Read the five-minute guide &rarr;</a></p>
+        </div>
+    </div>
+
+    <!-- TRUST BAR -->
+    <div class="trust-bar">
+        <div class="container">
+            <div class="trust-item reveal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Set up with Claude and Codex — leading AI systems
+            </div>
+            <div class="trust-item reveal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                Approval-first: it drafts, you decide
+            </div>
+            <div class="trust-item reveal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Built around the tools you already use
+            </div>
+            <div class="trust-item reveal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+                One workflow first — expand when it pays
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
     <div class="stats-bar">
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="1" data-suffix="">1</span></div>
-                    <div class="stat-label">Priority Workflow First</div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Priority workflow first</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="7" data-suffix="–14 days">7–14 days</span></div>
-                    <div class="stat-label">Typical Starter Support</div>
+                    <div class="stat-number">7&ndash;14 days</div>
+                    <div class="stat-label">Typical starter support</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="1" data-suffix="k+">1k+</span></div>
-                    <div class="stat-label">Single Automation Starts At</div>
+                    <div class="stat-number">$1k+</div>
+                    <div class="stat-label">Single automation starts at</div>
                 </div>
                 <div class="stat-item reveal">
-                    <div class="stat-number"><span class="counter" data-target="500" data-suffix="/mo">500/mo</span></div>
-                    <div class="stat-label">Managed Care Starts At</div>
+                    <div class="stat-number">$500/mo</div>
+                    <div class="stat-label">Managed care starts at</div>
                 </div>
             </div>
         </div>
@@ -1270,8 +481,8 @@
     <div class="tab-toggle-wrapper">
         <div class="container">
             <div class="tab-toggle">
-                <button class="tab-btn active" data-tab="business" onclick="switchTab('business')">For Businesses</button>
-                <button class="tab-btn" data-tab="personal" onclick="switchTab('personal')">For Operators</button>
+                <button class="tab-btn active" data-tab="business" onclick="switchTab('business')" type="button">For businesses</button>
+                <button class="tab-btn" data-tab="personal" onclick="switchTab('personal')" type="button">For operators</button>
             </div>
         </div>
     </div>
@@ -1279,139 +490,132 @@
     <!-- ============ BUSINESS TAB ============ -->
     <div id="tab-business" class="tab-content active">
 
-        <section class="problem">
+        <section>
             <div class="container">
-                <div class="section-label reveal">The Challenge</div>
+                <div class="section-label reveal">The challenge</div>
                 <h2 class="reveal">AI should make the work lighter — not give you another tool to babysit</h2>
-                <p class="subtitle reveal">Most businesses do not need another complicated dashboard. They need an assistant that can help prepare real work: leads, customer requests, quotes, reports, ads, research, billing questions, and follow-ups.</p>
-                <div class="pain-points reveal-stagger">
-                    <div class="pain-point glass-card glow-border reveal">
+                <p class="subtitle reveal">Most businesses do not need another complicated dashboard. They need an assistant that can help prepare real work: leads, customer requests, quotes, reports, research, billing questions, and follow-ups.</p>
+                <div class="card-grid">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h4M7 11h2"/><path d="M14 8h3M14 11h3"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h4M7 11h2"/><path d="M14 8h3M14 11h3"/></svg>
                         </div>
-                        <h3>Fragmented Tools</h3>
+                        <h3>The pieces are everywhere</h3>
                         <p>Email, forms, calendar, CRM, invoices, and vendor messages all hold pieces of the business — but nothing turns them into one simple action list.</p>
                     </div>
-                    <div class="pain-point glass-card glow-border-purple reveal">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                         </div>
-                        <h3>Poor Integration</h3>
-                        <p>Generic AI summaries miss what matters: new leads, unhappy customers, billing issues, urgent requests, and follow-ups that need a real response.</p>
+                        <h3>Generic AI misses what matters</h3>
+                        <p>Off-the-shelf summaries skip the important stuff: new leads, unhappy customers, billing issues, urgent requests, and follow-ups that need a real response.</p>
                     </div>
-                    <div class="pain-point glass-card glow-border reveal">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         </div>
-                        <h3>No Clear ROI</h3>
+                        <h3>Setup is the missing step</h3>
                         <p>Without setup around how your business actually works, AI treats everything like a normal email — and the important stuff still gets missed.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="solution">
+        <section class="alt">
             <div class="container">
-                <div class="section-label reveal">Our Approach</div>
+                <div class="section-label reveal">Our approach</div>
                 <h2 class="reveal">AI that fits how your business actually works</h2>
-                <p class="subtitle centered reveal">We learn how your business actually handles leads, customers, billing, scheduling, and follow-up — then configure AI to organize the work, draft replies, and support one priority workflow first.</p>
-                <div class="features reveal-stagger">
-                    <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M20 21v-2a4 4 0 0 0-3-3.87"/><path d="M4 21v-2a4 4 0 0 1 3-3.87"/><circle cx="12" cy="17" r="2"/><path d="M9 17h6"/></svg>
+                <p class="subtitle reveal">We learn how your business handles leads, customers, billing, scheduling, and follow-up — then configure the assistant to organize the work, draft replies, and support one priority workflow first.</p>
+                <div class="card-grid">
+                    <div class="card reveal">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
                         </div>
-                        <h3>AI Assistant Setup</h3>
-                        <p>ChatGPT, Claude, or your chosen AI app configured around your business context, tone, tools, and first workflow.</p>
+                        <h3>AI assistant setup</h3>
+                        <p>Claude, Codex, or your preferred AI assistant configured around your business context, tone, tools, and first workflow.</p>
                     </div>
-                    <div class="feature glass-card glow-border-purple tilt-card reveal">
-                        <div class="icon-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <div class="card reveal">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         </div>
-                        <h3>Workflow Schedules</h3>
-                        <p>Daily summaries, weekly reports, follow-up reminders, draft replies, and recurring task prompts with approval-first boundaries.</p>
+                        <h3>Workflow schedules</h3>
+                        <p>Daily briefings, weekly reports, follow-up reminders, draft replies, and recurring task prompts with approval-first boundaries.</p>
                     </div>
-
-                    <div class="feature glass-card glow-border tilt-card reveal">
-                        <div class="icon-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    <div class="card reveal">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                         </div>
-                        <h3>Systems Integration</h3>
+                        <h3>Systems integration</h3>
                         <p>Connections to the tools you already use — inbox, calendar, CRM, invoices, docs, scheduling, forms, and industry software where feasible.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="how-it-works">
+        <section id="how-it-works">
             <div class="container">
-                <div class="section-label reveal">How It Works</div>
-                <h2 class="centered reveal">Four steps to a useful AI workflow</h2>
-                <p class="subtitle centered reveal">Simple process, done-for-you setup, no technical homework on your side.</p>
-                <div class="steps reveal-stagger">
-                    <div class="step glass-card glow-border reveal">
+                <div class="section-label reveal">How it works</div>
+                <h2 class="reveal">Four steps to a useful AI workflow</h2>
+                <p class="subtitle reveal">Simple process, done-for-you setup, no technical homework on your side.</p>
+                <div class="card-grid-4">
+                    <div class="card step reveal">
                         <div class="step-number">1</div>
                         <h3>Assessment</h3>
                         <p>We learn your workflow, tools, service area, common requests, and where work currently slips through the cracks.</p>
                     </div>
-                    <div class="step glass-card glow-border-purple reveal">
+                    <div class="card step reveal">
                         <div class="step-number">2</div>
-                        <h3>System Design</h3>
+                        <h3>System design</h3>
                         <p>We map the first workflow, choose the cleanest setup path, and define what the AI should organize, draft, track, or bring to your attention.</p>
                     </div>
-                    <div class="step glass-card glow-border-pink reveal">
+                    <div class="card step reveal">
                         <div class="step-number">3</div>
-                        <h3>Build & Install</h3>
-                        <p>We configure your chosen AI app, connect feasible tools, add useful schedules or summaries, and hand off a workflow your team can actually use.</p>
+                        <h3>Build &amp; install</h3>
+                        <p>We configure your assistant, connect feasible tools, add useful schedules and briefings, and hand off a workflow your team can actually use.</p>
                     </div>
-                    <div class="step glass-card glow-border reveal">
+                    <div class="card step reveal">
                         <div class="step-number">4</div>
-                        <h3>Support & Refinement</h3>
+                        <h3>Support &amp; refinement</h3>
                         <p>With Managed Care, we keep it sharp as your workflow changes and new opportunities appear.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="pricing">
+        <section class="alt">
             <div class="container">
-                <div class="section-label reveal">Our Services</div>
-                <h2 class="centered reveal">Start focused. Expand when the value is obvious.</h2>
-                <p class="subtitle centered reveal">Every workflow is different, so these are starting points — not unlimited flat-rate promises. Final pricing depends first on workflow complexity, tool mess, data quality, custom rules, risk, users, and support load.</p>
+                <div class="section-label reveal">Our services</div>
+                <h2 class="reveal">Start focused. Expand when the value is obvious.</h2>
+                <p class="subtitle reveal">Every workflow is different, so these are starting points — not unlimited flat-rate promises. Final pricing depends on workflow complexity, tool mess, data quality, custom rules, risk, users, and support load.</p>
                 <div class="pricing-grid">
-                    <div class="pricing-card glass-card glow-border tilt-card reveal">
-                        <h3>⚡ Single Automation Setup</h3>
+                    <div class="pricing-card reveal">
+                        <h3>Single Automation Setup</h3>
                         <div class="price">$1,000+</div>
                         <div class="price-note">Starting one-time setup</div>
-                        <p class="scope-note">One practical AI workflow installed quickly so you can see real value before building a larger system. Simple micro-automations may quote lower; complex workflows with multiple tools, messy data, or custom requirements quote higher.</p>
+                        <p class="scope-note">One practical AI workflow installed quickly so you can see real value before building a larger system. Simple micro-automations may quote lower; complex workflows quote higher.</p>
                         <ul>
-                            <li>One selected workflow from intake or quick consult — such as lead follow-up, inbox organization, customer reply drafts, or billing/admin review</li>
+                            <li>One selected workflow — such as lead follow-up, inbox organization, customer reply drafts, or billing review</li>
                             <li>One connected tool or data source where feasible</li>
-                            <li>Repeatable prompt/playbook and owner approval rules</li>
-                            <li>Short handoff guide and 7-14 days setup support</li>
+                            <li>Repeatable playbook and owner approval rules</li>
+                            <li>Short handoff guide and 7&ndash;14 days setup support</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn" style="width:100%;display:block;">Start Workflow Assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start workflow assessment</a>
                     </div>
-                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
-                        <h3>🤖 AI Business Foundation</h3>
+                    <div class="pricing-card featured reveal">
+                        <h3>AI Business Foundation</h3>
                         <div class="price">$5,000+</div>
                         <div class="price-note">Starting deposit</div>
                         <p class="scope-note">The practical starting layer: business context, tool review, AI assistant setup, and the first serious workflow.</p>
                         <ul>
                             <li>Tool review, business context setup, common request handling, and workflow setup</li>
-                            <li>ChatGPT, Claude, or your preferred AI app configured around your business</li>
-                            <li>First core workflow configured or scoped with organized next steps, draft replies, and handoff notes</li>
-                            <li>Operating playbook, handoff/training, and 30 days setup support</li>
+                            <li>Claude, Codex, or your preferred AI assistant configured around your business</li>
+                            <li>First core workflow configured with organized next steps, draft replies, and handoff notes</li>
+                            <li>Operating playbook, handoff training, and 30 days setup support</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn" style="width:100%;display:block;">Start Workflow Assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start workflow assessment</a>
                     </div>
-                    <div class="pricing-card glass-card glow-border-pink tilt-card reveal">
-                        <h3>⚙️ Custom AI Workflow Package</h3>
+                    <div class="pricing-card reveal">
+                        <h3>Custom AI Workflow Package</h3>
                         <div class="price">$7,500+</div>
                         <div class="price-note">Starting deposit</div>
                         <p class="scope-note">The expansion layer for multiple workflows, deeper integrations, or more complex business logic.</p>
@@ -1421,11 +625,10 @@
                             <li>Multiple automation modules or one complex workflow</li>
                             <li>Schedules, approval chains, training, and optimization</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn" style="width:100%;display:block;">Start Workflow Assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start workflow assessment</a>
                     </div>
-
                 </div>
-                <p class="subtitle centered reveal" style="margin-top:2rem;">Managed Care starts at $500/mo for one simple managed workflow. Additional integrations, seats, or critical workflows are quoted separately. Private AI hardware is custom quote only and currently paused until suitable hardware supply is reliable.</p>
+                <p class="subtitle centered reveal" style="margin-top:2.2rem;margin-bottom:0;">Managed Care starts at $500/mo for one simple managed workflow. Additional integrations, seats, or critical workflows are quoted separately. Private AI hardware is custom quote only and currently paused until suitable hardware supply is reliable.</p>
             </div>
         </section>
 
@@ -1434,102 +637,85 @@
     <!-- ============ PERSONAL TAB ============ -->
     <div id="tab-personal" class="tab-content">
 
-        <section class="problem">
+        <section>
             <div class="container">
-                <div class="section-label reveal">The Challenge</div>
+                <div class="section-label reveal">The challenge</div>
                 <h2 class="reveal">AI should fit the way you work — not turn into another project</h2>
                 <p class="subtitle reveal">For professionals and operators, the challenge is not interest. It is getting AI set up in a way that feels useful, reliable, and natural in your daily workflow.</p>
-                <div class="pain-points reveal-stagger">
-                    <div class="pain-point glass-card glow-border reveal">
+                <div class="card-grid">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
                         </div>
-                        <h3>Disconnected Systems</h3>
+                        <h3>Disconnected systems</h3>
                         <p>Multiple AI tools that don't communicate, creating silos instead of a connected workflow.</p>
                     </div>
-                    <div class="pain-point glass-card glow-border-purple reveal">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
                         </div>
-                        <h3>Unstructured Workflows</h3>
+                        <h3>Unstructured workflows</h3>
                         <p>Notes, docs, tasks, and examples scattered across platforms, making AI less helpful than it should be.</p>
                     </div>
-                    <!-- removed privacy concerns card per positioning update -->
-                    <div class="pain-point glass-card glow-border reveal">
+                    <div class="card reveal">
                         <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                         </div>
-                        <h3>Implementation Drag</h3>
+                        <h3>Implementation drag</h3>
                         <p>Time spent fiddling with AI setup is time not spent on the work that matters.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="solution">
+        <section class="alt">
             <div class="container">
-                <div class="section-label reveal">Our Approach</div>
+                <div class="section-label reveal">Our approach</div>
                 <h2 class="reveal">AI support built around the way you work</h2>
-                <p class="subtitle centered reveal">From a focused AI assistant to a deeper custom workflow, we set up practical systems that fit how you already work.</p>
-                <div class="personal-features reveal-stagger">
-                    <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <div class="pf-icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        </div>
-                        <h3>Private AI Assistant</h3>
-                        <p>AI configured with your knowledge base and workflows</p>
+                <p class="subtitle reveal">From a focused AI assistant to a deeper custom workflow, we set up practical systems that fit how you already work.</p>
+                <div class="card-grid-4">
+                    <div class="card reveal">
+                        <h3>Private AI assistant</h3>
+                        <p>AI configured with your knowledge base and workflows.</p>
                     </div>
-                    <div class="personal-feature glass-card glow-border-purple tilt-card reveal">
-                        <div class="pf-icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                        </div>
-                        <h3>Process Automation</h3>
-                        <p>Recurring tasks, reminders, drafts, and summaries set up with clear rules</p>
+                    <div class="card reveal">
+                        <h3>Process automation</h3>
+                        <p>Recurring tasks, reminders, drafts, and summaries set up with clear rules.</p>
                     </div>
-                    <div class="personal-feature glass-card glow-border-pink tilt-card reveal">
-                        <div class="pf-icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                        </div>
-                        <h3>Custom Workflow Design</h3>
-                        <p>Practical systems that can grow as your needs become clearer</p>
+                    <div class="card reveal">
+                        <h3>Custom workflow design</h3>
+                        <p>Practical systems that can grow as your needs become clearer.</p>
                     </div>
-                    <div class="personal-feature glass-card glow-border tilt-card reveal">
-                        <div class="pf-icon-wrap">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                        </div>
-                        <h3>Managed Optimization</h3>
-                        <p>Ongoing tuning and monitoring so the setup keeps helping</p>
+                    <div class="card reveal">
+                        <h3>Managed optimization</h3>
+                        <p>Ongoing tuning and monitoring so the setup keeps helping.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="how-it-works">
+        <section>
             <div class="container">
-                <div class="section-label reveal">How It Works</div>
-                <h2 class="centered reveal">Four steps to your personal AI workflow</h2>
-                <p class="subtitle centered reveal">Clear intake, sharp setup, and a system that feels built for you.</p>
-                <div class="steps reveal-stagger">
-                    <div class="step glass-card glow-border reveal">
+                <div class="section-label reveal">How it works</div>
+                <h2 class="reveal">Four steps to your personal AI workflow</h2>
+                <p class="subtitle reveal">Clear intake, sharp setup, and a system that feels built for you.</p>
+                <div class="card-grid-4">
+                    <div class="card step reveal">
                         <div class="step-number">1</div>
                         <h3>Intake</h3>
                         <p>We learn how you work, where the friction is, and what kind of leverage matters most.</p>
                     </div>
-                    <div class="step glass-card glow-border-purple reveal">
+                    <div class="card step reveal">
                         <div class="step-number">2</div>
-                        <h3>System Design</h3>
-                        <p>We choose the right level of setup, from a focused ChatGPT setup to a custom workflow around how you work.</p>
+                        <h3>System design</h3>
+                        <p>We choose the right level of setup, from a focused assistant to a custom workflow around how you work.</p>
                     </div>
-                    <div class="step glass-card glow-border-pink reveal">
+                    <div class="card step reveal">
                         <div class="step-number">3</div>
                         <h3>Configuration</h3>
                         <p>We set it up, connect the right pieces, and tune it around your actual workflow.</p>
                     </div>
-                    <div class="step glass-card glow-border reveal">
+                    <div class="card step reveal">
                         <div class="step-number">4</div>
                         <h3>Support</h3>
                         <p>Managed Care is available if you want refinement, maintenance, and upgrades over time.</p>
@@ -1538,29 +724,27 @@
             </div>
         </section>
 
-        <div class="glow-divider"></div>
-
-        <section class="pricing">
+        <section class="alt">
             <div class="container">
-                <div class="section-label reveal">Our Services</div>
-                <h2 class="centered reveal">The right setup for how you work</h2>
-                <p class="subtitle centered reveal">For solo operators and professionals, we use the same practical workflow-first approach: start with one useful AI-assisted workflow, prove the value, then expand only when it makes sense.</p>
+                <div class="section-label reveal">Our services</div>
+                <h2 class="reveal">The right setup for how you work</h2>
+                <p class="subtitle reveal">For solo operators and professionals, we use the same workflow-first approach: start with one useful AI-assisted workflow, prove the value, then expand only when it makes sense.</p>
                 <div class="pricing-single">
-                    <div class="pricing-card featured glass-card glow-border-purple tilt-card reveal">
-                        <h3>⚡ Personal / Operator Automation Setup</h3>
+                    <div class="pricing-card featured reveal">
+                        <h3>Personal / Operator Automation Setup</h3>
                         <div class="price">$1,000+</div>
                         <div class="price-note">Starting workflow setup</div>
-                        <p class="scope-note">A focused assistant/workflow setup tailored to how you personally work — not a full business ingestion project.</p>
+                        <p class="scope-note">A focused assistant and workflow setup tailored to how you personally work — not a full business ingestion project.</p>
                         <ul>
                             <li>Private AI assistant or workflow tailored to your daily process</li>
-                            <li>Knowledge/context organization for the first use case</li>
+                            <li>Knowledge and context organization for the first use case</li>
                             <li>Operating playbook and hands-on onboarding</li>
                             <li>Clear upgrade path to Foundation or Custom Workflow when ready</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5zlmVeTf7-GWYofd82E4z3oaC8qD0PX8IwBO43KRn2ziobw/viewform" class="btn" style="width:100%;display:block;">Start Personal Assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5zlmVeTf7-GWYofd82E4z3oaC8qD0PX8IwBO43KRn2ziobw/viewform" class="btn">Start personal assessment</a>
                     </div>
                 </div>
-                <p class="subtitle centered reveal" style="margin-top:2rem;">Private AI hardware is custom quote only and currently paused until suitable hardware supply is reliable.</p>
+                <p class="subtitle centered reveal" style="margin-top:2.2rem;margin-bottom:0;">Private AI hardware is custom quote only and currently paused until suitable hardware supply is reliable.</p>
             </div>
         </section>
 
@@ -1569,533 +753,118 @@
     <!-- FINAL CTA -->
     <section class="cta-section">
         <div class="container">
-            <h2 class="reveal">Ready to make AI useful in your business?</h2>
-            <p class="reveal">Tell us where leads, customer issues, billing questions, or follow-ups are getting missed. We’ll recommend a clear first workflow and send the right next step.</p>
+            <h2 class="reveal">Ready to find out what yours would say tomorrow morning?</h2>
+            <p class="reveal">Tell us where leads, customer issues, billing questions, or follow-ups are getting missed. We'll recommend a clear first workflow and send the right next step.</p>
             <div class="reveal">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start Workflow Assessment</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOXRTRAdn9Jzt5xsMOCYKoGHlm610ubMBFDvLxO1jmJoJVIQ/viewform" class="btn">Start workflow assessment</a>
             </div>
-            <p class="reveal" style="margin-top:1rem;font-size:0.95rem;color:var(--text-dim);">Free consultation · No commitment · Custom proposal within 24 hours</p>
+            <p class="cta-fine reveal">Free consultation &middot; No commitment &middot; Custom proposal within 24 hours</p>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 AiBusinessCopilot · <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
-        <p style="margin-top:0.75rem;font-size:0.9rem;">
-            <a href="ai-assistants.html">From Chatbots to AI Assistants</a> ·
-            <a href="terms.html">Terms of Service</a> ·
-            <a href="privacy.html">Privacy Policy</a> ·
-            <a href="ai-disclosure.html">AI Risk Disclosure</a>
-        </p>
+        <div class="container">
+            <div class="footer-brand">
+                <img src="logo.jpg" alt="AiBusinessCopilot logo">
+                <span class="fb-name">AI<span>BusinessCopilot</span></span>
+            </div>
+            <p>&copy; 2026 AiBusinessCopilot &middot; <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+            <p>
+                <a href="ai-assistants.html">From Chatbots to AI Assistants</a> &middot;
+                <a href="terms.html">Terms of Service</a> &middot;
+                <a href="privacy.html">Privacy Policy</a> &middot;
+                <a href="ai-disclosure.html">AI Risk Disclosure</a>
+            </p>
+        </div>
     </footer>
 
     <script>
-    /* ===== SIDE-VIEW VORTEX + 2D NEURAL NETWORK ===== */
-    (function() {
-        var canvas = document.getElementById('particle-canvas');
-        var ctx = canvas.getContext('2d');
-        var isMobile = window.innerWidth < 768;
-
-        // Two particle systems: a vertical spiraling vortex (background)
-        // + the classic 2D neural network (foreground, same as before)
-        var vortexParticles = [];
-        var networkParticles = [];
-        var stars = [];
-
-        var VORTEX_COUNT = isMobile ? 120 : 320;
-        var NETWORK_COUNT = isMobile ? 45 : 75;
-        var NETWORK_CONNECTION_DIST = 150;
-        var STAR_COUNT = isMobile ? 50 : 130;
-
-        var mouse = { x: null, y: null };
-
-        // Scroll-driven vortex rotation — spiral only really turns while scrolling.
-        // Tiny idle drift keeps it alive, scroll gives an angular impulse with momentum decay.
-        var scrollAngleOffset = 0;
-        var scrollAngularVelocity = 0;
-        var lastScrollY = window.scrollY;
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        document.addEventListener('mousemove', function(e) {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+    function switchTab(name) {
+        document.querySelectorAll('.tab-btn').forEach(function(b) {
+            b.classList.toggle('active', b.dataset.tab === name);
         });
+        document.querySelectorAll('.tab-content').forEach(function(c) {
+            c.classList.toggle('active', c.id === 'tab-' + name);
+        });
+        document.querySelectorAll('.tab-content.active .reveal').forEach(function(el) {
+            el.classList.add('in');
+        });
+    }
 
-        window.addEventListener('scroll', function() {
-            var delta = window.scrollY - lastScrollY;
-            scrollAngularVelocity += delta * 0.00045;
-            lastScrollY = window.scrollY;
-        }, { passive: true });
+    (function() {
+        var greet = document.getElementById('briefing-greet');
+        var clock = document.getElementById('briefing-clock');
+        var h = new Date().getHours();
+        greet.textContent = h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.';
+        clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
-        // Color palette for vortex swirls (cyan/teal/purple/magenta)
-        var vortexColors = [
-            '0, 212, 255',    // cyan
-            '0, 255, 213',    // teal
-            '124, 58, 237',   // violet
-            '168, 85, 247',   // purple
-            '180, 90, 230'    // magenta-ish
+        var icons = {
+            calendar: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+            lead: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>',
+            invoice: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+            research: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+            inbox: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>'
+        };
+
+        var items = [
+            ['calendar', "Confirmed Friday's 10–12 install window with Mike", 'reply drafted — needs your OK'],
+            ['lead', 'New lead: Sarah asked about weekly service in Chandler', 'intro reply drafted, no pricing promised'],
+            ['invoice', 'Invoice #2041 is 12 days overdue', 'friendly reminder written, waiting on you'],
+            ['research', "Compared 3 filter suppliers for next month's order", 'one is 14% cheaper — summary attached'],
+            ['inbox', 'Read 47 overnight messages', '4 need a decision, the rest are handled']
         ];
-        var networkColors = [
-            '0, 212, 255',
-            '168, 85, 247',
-            '0, 255, 213',
-            '124, 58, 237'
-        ];
 
-        // --- STARS: static faint dots scattered across canvas ---
-        for (var i = 0; i < STAR_COUNT; i++) {
-            stars.push({
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                size: Math.random() * 1.2 + 0.3,
-                baseAlpha: 0.3 + Math.random() * 0.5,
-                twinklePhase: Math.random() * Math.PI * 2,
-                twinkleSpeed: 0.5 + Math.random() * 1.5
+        var wrap = document.getElementById('briefing-items');
+        var closer = document.getElementById('briefing-closer');
+        var timers = [];
+        var played = false;
+
+        function play() {
+            timers.forEach(clearTimeout);
+            timers = [];
+            wrap.innerHTML = '';
+            closer.classList.remove('show');
+            items.forEach(function(it, i) {
+                timers.push(setTimeout(function() {
+                    var row = document.createElement('div');
+                    row.className = 'briefing-item';
+                    row.innerHTML = icons[it[0]] + '<div><div class="bi-title">' + it[1] + '</div><div class="bi-sub">' + it[2] + '</div></div>';
+                    wrap.appendChild(row);
+                    requestAnimationFrame(function() {
+                        requestAnimationFrame(function() { row.classList.add('show'); });
+                    });
+                    if (i === items.length - 1) {
+                        timers.push(setTimeout(function() { closer.classList.add('show'); }, 700));
+                    }
+                }, 500 + i * 850));
             });
         }
 
-        // --- VORTEX: vertical spiral particles (side-view) ---
-        function spawnVortex(p, resetBottom) {
-            p.angle = Math.random() * Math.PI * 2;
-            // base orbital radius — small variance, most in a tight tube
-            p.baseRadius = 60 + Math.random() * 90;
-            // vertical position — spread across canvas
-            p.y = resetBottom
-                ? window.innerHeight + Math.random() * 80
-                : Math.random() * window.innerHeight;
-            p.vy = 0.05 + Math.random() * 0.175; // upward speed
-            p.angleSpeed = 0.0002 + Math.random() * 0.00045; // tiny idle drift — scroll does the real spin
-            p.size = 0.6 + Math.random() * 1.6;
-            p.color = vortexColors[Math.floor(Math.random() * vortexColors.length)];
-            p.pulsePhase = Math.random() * Math.PI * 2;
-            // slight horizontal drift for organic swirl
-            p.wobbleAmp = Math.random() * 8;
-            p.wobblePhase = Math.random() * Math.PI * 2;
-        }
+        document.getElementById('briefing-replay').addEventListener('click', play);
 
-        for (var i = 0; i < VORTEX_COUNT; i++) {
-            var p = {};
-            spawnVortex(p, false);
-            vortexParticles.push(p);
-        }
-
-        // --- NETWORK: the original 2D drifting neural-net particles ---
-        function Network() {
-            this.x = Math.random() * window.innerWidth;
-            this.y = Math.random() * window.innerHeight;
-            this.vx = (Math.random() - 0.5) * 0.35;
-            this.vy = (Math.random() - 0.5) * 0.35;
-            this.radius = Math.random() * 2 + 0.5;
-            this.color = networkColors[Math.floor(Math.random() * networkColors.length)];
-            this.pulsePhase = Math.random() * Math.PI * 2;
-        }
-        for (var i = 0; i < NETWORK_COUNT; i++) {
-            networkParticles.push(new Network());
-        }
-
-        var time = 0;
-
-        function drawStars() {
-            for (var i = 0; i < stars.length; i++) {
-                var s = stars[i];
-                var twinkle = 0.6 + Math.sin(time * s.twinkleSpeed + s.twinklePhase) * 0.4;
-                var alpha = s.baseAlpha * twinkle;
-                ctx.fillStyle = 'rgba(255, 255, 255, ' + alpha + ')';
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function drawVortex() {
-            var cx = canvas.width * 0.5;
-            // Throat sits slightly above vertical center for "rising spiral" feel
-            var throatY = canvas.height * 0.42;
-            var rendered = [];
-
-            // advance scroll-driven rotation with momentum decay
-            scrollAngleOffset += scrollAngularVelocity;
-            scrollAngularVelocity *= 0.9;
-
-            for (var i = 0; i < vortexParticles.length; i++) {
-                var p = vortexParticles[i];
-                p.y -= p.vy;
-                p.angle += p.angleSpeed;
-
-                // recycle when it flies off the top
-                if (p.y < -80) {
-                    spawnVortex(p, true);
-                    continue;
+        var card = document.getElementById('briefing-card');
+        var cardObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !played) {
+                    played = true;
+                    play();
+                    cardObserver.disconnect();
                 }
+            });
+        }, { threshold: 0.35 });
+        cardObserver.observe(card);
 
-                // hourglass shape: narrow at throat, flared at top/bottom
-                var distFromThroat = Math.abs(p.y - throatY);
-                var normalized = distFromThroat / (canvas.height * 0.55);
-                var shapeScale = 0.28 + Math.min(1.2, normalized * 1.3);
-                var radius = p.baseRadius * shapeScale;
-
-                // global scroll rotation on top of per-particle drift
-                var totalAngle = p.angle + scrollAngleOffset;
-
-                // 3D position: offsetX = horizontal from center, zDepth = into screen
-                var offsetX = Math.cos(totalAngle) * radius;
-                var zDepth = Math.sin(totalAngle) * radius; // -radius (behind) to +radius (front)
-
-                // small horizontal wobble for organic feel
-                offsetX += Math.sin(time * 1.2 + p.wobblePhase) * p.wobbleAmp;
-
-                var sx = cx + offsetX;
-                var sy = p.y;
-
-                // depth ratio 0 (back) to 1 (front)
-                var depthRatio = (zDepth + radius) / (2 * radius + 0.01);
-                var drawSize = p.size * (0.55 + depthRatio * 0.55);
-                var baseAlpha = 0.25 + depthRatio * 0.75;
-
-                rendered.push({
-                    sx: sx, sy: sy, size: drawSize, alpha: baseAlpha,
-                    z: zDepth, color: p.color, pulsePhase: p.pulsePhase
-                });
-            }
-
-            // z-sort: draw back first
-            rendered.sort(function(a, b) { return a.z - b.z; });
-
-            for (var i = 0; i < rendered.length; i++) {
-                var r = rendered[i];
-                var pulse = 0.7 + Math.sin(time * 2 + r.pulsePhase) * 0.25;
-
-                // soft glow — skipped on mobile (expensive radial gradient per particle)
-                // and skipped entirely for dim back-facing particles on desktop
-                if (!isMobile && r.alpha > 0.4) {
-                    var glowSize = r.size * 4.5;
-                    var grd = ctx.createRadialGradient(r.sx, r.sy, 0, r.sx, r.sy, glowSize);
-                    grd.addColorStop(0, 'rgba(' + r.color + ', ' + (r.alpha * 0.3) + ')');
-                    grd.addColorStop(0.4, 'rgba(' + r.color + ', ' + (r.alpha * 0.07) + ')');
-                    grd.addColorStop(1, 'rgba(' + r.color + ', 0)');
-                    ctx.fillStyle = grd;
-                    ctx.beginPath();
-                    ctx.arc(r.sx, r.sy, glowSize, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // core
-                ctx.fillStyle = 'rgba(' + r.color + ', ' + (r.alpha * pulse) + ')';
-                ctx.beginPath();
-                ctx.arc(r.sx, r.sy, r.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function drawNetwork() {
-            for (var i = 0; i < networkParticles.length; i++) {
-                var p = networkParticles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                var pulse = 0.4 + Math.sin(time * 2 + p.pulsePhase) * 0.2;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(' + p.color + ', ' + (0.55 + pulse * 0.3) + ')';
-                ctx.fill();
-
-                if (p.radius > 1.5) {
-                    var glowGrd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
-                    glowGrd.addColorStop(0, 'rgba(' + p.color + ', 0.12)');
-                    glowGrd.addColorStop(1, 'rgba(' + p.color + ', 0)');
-                    ctx.fillStyle = glowGrd;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                for (var j = i + 1; j < networkParticles.length; j++) {
-                    var p2 = networkParticles[j];
-                    var dx = p.x - p2.x;
-                    var dy = p.y - p2.y;
-                    var dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < NETWORK_CONNECTION_DIST) {
-                        var opacity = (1 - dist / NETWORK_CONNECTION_DIST) * 0.13;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = 'rgba(0, 212, 255, ' + opacity + ')';
-                        ctx.lineWidth = 0.55;
-                        ctx.stroke();
-                    }
-                }
-
-                if (mouse.x !== null) {
-                    var mdx = p.x - mouse.x;
-                    var mdy = p.y - mouse.y;
-                    var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-                    if (mDist < 200) {
-                        var mOpacity = (1 - mDist / 200) * 0.28;
-                        var grad = ctx.createLinearGradient(p.x, p.y, mouse.x, mouse.y);
-                        grad.addColorStop(0, 'rgba(' + p.color + ', ' + mOpacity + ')');
-                        grad.addColorStop(1, 'rgba(168, 85, 247, ' + (mOpacity * 0.5) + ')');
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = grad;
-                        ctx.lineWidth = 0.9;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            time += 0.016;
-
-            drawStars();     // far back — tiny twinkling stars
-            drawVortex();    // mid — spiraling color vortex
-            drawNetwork();   // front — drifting 2D neural net
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    })();
-
-    /* ===== FLOATING GEOMETRIC SHAPES ===== */
-    (function() {
-        var container = document.getElementById('geo-shapes');
-        var shapes = [
-            '<svg viewBox="0 0 100 100"><polygon points="50,5 95,97.5 5,97.5" fill="none" stroke="rgba(0,212,255,0.5)" stroke-width="0.8"/></svg>',
-            '<svg viewBox="0 0 100 100"><polygon points="50,3 93.3,25 93.3,75 50,97 6.7,75 6.7,25" fill="none" stroke="rgba(168,85,247,0.5)" stroke-width="0.8"/></svg>',
-            '<svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="none" stroke="rgba(233,69,96,0.5)" stroke-width="0.8" transform="rotate(45 50 50)"/></svg>',
-            '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,212,255,0.4)" stroke-width="0.8"/></svg>',
-            '<svg viewBox="0 0 100 100"><polygon points="50,5 61,35 95,35 68,57 79,90 50,70 21,90 32,57 5,35 39,35" fill="none" stroke="rgba(0,255,213,0.3)" stroke-width="0.6"/></svg>'
-        ];
-
-        for (var i = 0; i < 14; i++) {
-            var el = document.createElement('div');
-            el.className = 'geo-shape';
-            var size = 25 + Math.random() * 70;
-            el.style.width = size + 'px';
-            el.style.height = size + 'px';
-            el.style.left = Math.random() * 100 + '%';
-            el.style.top = Math.random() * 100 + '%';
-            el.style.animationDuration = (15 + Math.random() * 25) + 's';
-            el.style.animationDelay = -(Math.random() * 20) + 's';
-            el.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
-            container.appendChild(el);
-        }
-    })();
-
-    /* ===== SCROLL-TRIGGERED REVEAL ===== */
-    (function() {
         var revealObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('in');
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        function observeReveals(root) {
-            var els = (root || document).querySelectorAll('.reveal');
-            els.forEach(function(el) {
-                var tabParent = el.closest('.tab-content');
-                if (!tabParent || tabParent.classList.contains('active')) {
-                    revealObserver.observe(el);
-                }
-            });
-        }
-
-        observeReveals();
-
-        window._observeReveals = observeReveals;
-        window._revealObserver = revealObserver;
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
     })();
-
-    /* ===== TYPING EFFECT ON HERO ===== */
-    (function() {
-        var heading = document.getElementById('hero-heading');
-        var fullHTML = heading.innerHTML;
-        var cursor = document.createElement('span');
-        cursor.className = 'typing-cursor';
-
-        var tempDiv = document.createElement('div');
-        tempDiv.innerHTML = fullHTML;
-
-        var origTextNodes = [];
-        function collectOrigTextNodes(node) {
-            if (node.nodeType === 3) origTextNodes.push(node);
-            else { for (var c = 0; c < node.childNodes.length; c++) collectOrigTextNodes(node.childNodes[c]); }
-        }
-        collectOrigTextNodes(tempDiv);
-
-        var clone = tempDiv.cloneNode(true);
-        function emptyTextNodes(node) {
-            if (node.nodeType === 3) { node.textContent = ''; }
-            else { for (var c = 0; c < node.childNodes.length; c++) emptyTextNodes(node.childNodes[c]); }
-        }
-        emptyTextNodes(clone);
-
-        heading.innerHTML = '';
-        while (clone.firstChild) heading.appendChild(clone.firstChild);
-        heading.appendChild(cursor);
-
-        var liveTextNodes = [];
-        function collectTextNodes(node) {
-            if (node.nodeType === 3) liveTextNodes.push(node);
-            else {
-                for (var c = 0; c < node.childNodes.length; c++) {
-                    if (node.childNodes[c] !== cursor) collectTextNodes(node.childNodes[c]);
-                }
-            }
-        }
-        collectTextNodes(heading);
-
-        var nodeChars = [];
-        var totalChars = 0;
-        for (var n = 0; n < origTextNodes.length; n++) {
-            var len = origTextNodes[n].textContent.length;
-            nodeChars.push(len);
-            totalChars += len;
-        }
-
-        var origTexts = origTextNodes.map(function(n) { return n.textContent; });
-        var typed = 0;
-        var nodeIdx = 0;
-        var charIdx = 0;
-
-        function typeNext() {
-            if (typed >= totalChars) {
-                setTimeout(function() { if (cursor.parentNode) cursor.parentNode.removeChild(cursor); }, 2000);
-                return;
-            }
-
-            while (nodeIdx < nodeChars.length && charIdx >= nodeChars[nodeIdx]) {
-                charIdx = 0;
-                nodeIdx++;
-            }
-
-            if (nodeIdx < liveTextNodes.length) {
-                liveTextNodes[nodeIdx].textContent = origTexts[nodeIdx].substring(0, charIdx + 1);
-            }
-
-            charIdx++;
-            typed++;
-
-            var delay = 35;
-            if (typed > 0 && origTexts[nodeIdx] && origTexts[nodeIdx][charIdx - 1] === ' ') delay = 15;
-
-            setTimeout(typeNext, delay);
-        }
-
-        setTimeout(typeNext, 500);
-    })();
-
-    /* ===== 3D TILT EFFECT ===== */
-    (function() {
-        var tiltCards = document.querySelectorAll('.tilt-card');
-
-        tiltCards.forEach(function(card) {
-            card.addEventListener('mousemove', function(e) {
-                var rect = card.getBoundingClientRect();
-                var x = e.clientX - rect.left;
-                var y = e.clientY - rect.top;
-                var centerX = rect.width / 2;
-                var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -6;
-                var rotateY = ((x - centerX) / centerX) * 6;
-
-                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            });
-        });
-    })();
-
-    /* ===== ANIMATED COUNTERS ===== */
-    (function() {
-        var counters = document.querySelectorAll('.counter');
-        var counted = new Set();
-
-        var counterObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting && !counted.has(entry.target)) {
-                    counted.add(entry.target);
-                    var el = entry.target;
-                    var target = parseInt(el.dataset.target);
-                    var suffix = el.dataset.suffix || '';
-                    if (suffix.indexOf('–') !== -1 || suffix.indexOf('-') !== -1) {
-                        el.textContent = target + suffix;
-                        return;
-                    }
-                    var duration = 2000;
-                    var startTime = null;
-
-                    function step(timestamp) {
-                        if (!startTime) startTime = timestamp;
-                        var progress = Math.min((timestamp - startTime) / duration, 1);
-                        var eased = 1 - Math.pow(1 - progress, 3);
-                        var current = Math.floor(eased * target);
-                        el.textContent = current + suffix;
-                        if (progress < 1) {
-                            requestAnimationFrame(step);
-                        } else {
-                            el.textContent = target + suffix;
-                        }
-                    }
-
-                    requestAnimationFrame(step);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(function(c) { counterObserver.observe(c); });
-    })();
-
-    /* ===== TAB SWITCHING ===== */
-    function switchTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(function(btn) {
-            btn.classList.toggle('active', btn.dataset.tab === tab);
-        });
-        document.querySelectorAll('.tab-content').forEach(function(content) {
-            content.classList.remove('active');
-        });
-        var target = document.getElementById('tab-' + tab);
-        target.classList.add('active');
-
-        target.querySelectorAll('.reveal').forEach(function(el) {
-            el.classList.remove('visible');
-            void el.offsetWidth;
-            window._revealObserver.observe(el);
-        });
-
-        target.querySelectorAll('.tilt-card').forEach(function(card) {
-            card.addEventListener('mousemove', function(e) {
-                var rect = card.getBoundingClientRect();
-                var x = e.clientX - rect.left;
-                var y = e.clientY - rect.top;
-                var centerX = rect.width / 2;
-                var centerY = rect.height / 2;
-                var rotateX = ((y - centerY) / centerY) * -6;
-                var rotateY = ((x - centerX) / centerX) * 6;
-                card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.02, 1.02, 1.02)';
-            });
-            card.addEventListener('mouseleave', function() {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            });
-        });
-    }
     </script>
-
 </body>
 </html>

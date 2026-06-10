@@ -8,144 +8,14 @@
     <link rel="icon" href="logo.jpg">
     <link rel="apple-touch-icon" href="logo.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
 
-    <style>
-        :root {
-            --bg-deep: #000000;
-            --bg-card: rgba(12, 14, 30, 0.72);
-            --neon-blue: #00d4ff;
-            --neon-cyan: #00ffd5;
-            --neon-purple: #a855f7;
-            --white: #ffffff;
-            --text-primary: #e2e8f0;
-            --text-muted: #94a3b8;
-            --text-dim: rgba(255,255,255,0.58);
-            --glass-border: rgba(255, 255, 255, 0.08);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            color: var(--text-primary);
-            line-height: 1.7;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.13), transparent 30%),
-                        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.10), transparent 28%),
-                        var(--bg-deep);
-            min-height: 100vh;
-        }
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            opacity: 0.012;
-            z-index: 9999;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-        .grid-pattern {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background-image: radial-gradient(circle at center, rgba(148, 163, 184, 0.06) 0.8px, transparent 1px);
-            background-size: 40px 40px;
-            mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
-            -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 20%, black 0%, rgba(0,0,0,0.3) 40%, transparent 75%);
-        }
-        nav {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: rgba(0,0,0,0.42);
-            backdrop-filter: blur(12px) saturate(1.2);
-            -webkit-backdrop-filter: blur(12px) saturate(1.2);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        nav .container, main, footer .container { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
-        nav .container { padding-top: 1rem; padding-bottom: 1rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; }
-        .logo { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 1.35rem; font-weight: 800; color: var(--white); text-decoration: none; letter-spacing: -0.03em; display: inline-flex; align-items: center; gap: .65rem; }
-        .logo img { width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }
-        .logo span { background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .back-link { color: var(--text-muted); text-decoration:none; font-size:.9rem; }
-        .back-link:hover, footer a:hover { color: var(--neon-blue); }
-        main { position: relative; z-index: 1; padding-top: 5rem; padding-bottom: 5rem; }
-        .hero-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: clamp(1.5rem, 4vw, 3.5rem);
-            box-shadow: 0 0 60px rgba(0, 212, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.04);
-            margin-bottom: 1.5rem;
-        }
-        .eyebrow { color: var(--neon-blue); text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 800; margin-bottom: .8rem; }
-        h1 { font-family: 'Space Grotesk', 'Inter', sans-serif; color: var(--white); font-size: clamp(2.35rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: -0.06em; margin-bottom: .9rem; max-width: 780px; }
-        h1 span { background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .lead { color: var(--text-muted); font-size: 1.15rem; max-width: 720px; margin-bottom: 2rem; }
-        .quick-line { border-left: 3px solid var(--neon-purple); background: rgba(168,85,247,0.08); padding: 1rem 1.1rem; border-radius: 12px; color: var(--text-primary); margin-top: 1.25rem; }
-        .section { background: rgba(12, 14, 30, 0.52); border: 1px solid var(--glass-border); border-radius: 18px; padding: clamp(1.25rem, 3vw, 2rem); margin: 1rem 0; }
-        h2 { color: var(--white); font-size: 1.45rem; margin-bottom: .7rem; letter-spacing: -0.02em; }
-        p { color: var(--text-muted); margin: .6rem 0; }
-        strong { color: var(--text-primary); }
-        .comparison {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .compare-card {
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.2rem;
-            background: rgba(255,255,255,0.03);
-        }
-        .compare-card h3 { color: var(--white); font-size: 1rem; margin-bottom: .45rem; }
-        ul { color: var(--text-muted); margin: .7rem 0 0 1.15rem; }
-        li { margin: .4rem 0; }
-        .examples {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .example {
-            border: 1px solid rgba(0, 212, 255, 0.12);
-            border-radius: 14px;
-            padding: 1rem;
-            background: rgba(0, 212, 255, 0.04);
-        }
-        .example strong { display: block; margin-bottom: .35rem; }
-        .cta {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        .btn {
-            display: inline-block;
-            color: var(--white);
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-            padding: .9rem 1.7rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            box-shadow: 0 0 26px rgba(0, 212, 255, 0.18);
-        }
-        .btn:hover { transform: translateY(-1px); box-shadow: 0 0 35px rgba(0, 212, 255, 0.3); }
-        footer { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.06); padding: 2rem 0; color: var(--text-dim); }
-        footer .links { display:flex; flex-wrap:wrap; gap:.7rem 1rem; margin-top:.45rem; }
-        footer a { color: var(--text-muted); text-decoration:none; }
-        @media (max-width: 720px) {
-            nav .container { align-items:flex-start; flex-direction:column; }
-            main { padding-top: 3rem; }
-            .comparison, .examples { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="site.css">
 </head>
 <body>
-    <div class="grid-pattern"></div>
     <nav>
         <div class="container">
-            <a href="index.html" class="logo"><img src="logo.jpg" alt="AiBusinessCopilot">AiBusiness<span>Copilot</span></a>
+            <a href="index.html" class="logo">AI<span>BusinessCopilot</span></a>
             <a href="index.html" class="back-link">Back to Home</a>
         </div>
     </nav>
