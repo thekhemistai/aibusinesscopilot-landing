@@ -214,6 +214,42 @@
         }
         .briefing-replay:hover { color: var(--blue); }
 
+        .demo-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+        .demo-tab {
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.32rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--body);
+            cursor: pointer;
+            transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+        }
+        .demo-tab:hover { border-color: var(--blue); color: var(--blue); }
+        .demo-tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+        .briefing-item { cursor: pointer; }
+        .briefing-item:hover .bi-title { color: var(--blue); }
+        .briefing-item:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 8px; }
+        .briefing-item .bi-go { margin-left: auto; color: var(--muted); font-size: 1.15rem; line-height: 1; align-self: center; }
+        .briefing-item.done .bi-sub { color: var(--blue); font-weight: 600; }
+
+        .briefing-detail { padding-top: 0.4rem; }
+        .bd-back { background: none; border: none; font: inherit; font-size: 0.78rem; color: var(--muted); cursor: pointer; padding: 0 0 0.7rem; }
+        .bd-back:hover { color: var(--blue); }
+        .bd-title { display: flex; gap: 0.7rem; align-items: flex-start; font-weight: 600; color: var(--ink); font-size: 0.95rem; line-height: 1.45; margin-bottom: 0.8rem; }
+        .bd-title svg { flex-shrink: 0; margin-top: 3px; }
+        .draft-box { background: var(--bg-alt); border: 1px solid var(--border-soft); border-radius: 10px; padding: 0.85rem 1rem; }
+        .draft-tag { display: inline-block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.07em; color: var(--blue); background: var(--blue-tint); padding: 2px 9px; border-radius: 999px; margin-bottom: 0.5rem; }
+        .draft-box p { margin: 0.3rem 0; font-size: 0.88rem; color: var(--body); line-height: 1.55; }
+        .bd-actions { display: flex; gap: 0.6rem; margin-top: 0.95rem; flex-wrap: wrap; }
+        .btn-approve { background: var(--blue); color: #fff; border: none; border-radius: 999px; padding: 0.5rem 1.25rem; font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: background 0.15s ease; }
+        .btn-approve:hover { background: var(--blue-dark); }
+        .btn-hold { background: #fff; color: var(--body); border: 1px solid var(--border); border-radius: 999px; padding: 0.5rem 1.1rem; font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease; }
+        .btn-hold:hover { border-color: var(--blue); color: var(--blue); }
+
         /* ===== PLAIN-ENGLISH BRIDGE ===== */
         .bridge { background: var(--bg-alt); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 3.5rem 0; }
         .bridge .container { max-width: 760px; text-align: center; }
@@ -417,7 +453,15 @@
                     <p class="eyebrow">What having one actually looks like</p>
                     <h2>Tomorrow morning, this is waiting for you</h2>
                     <p>While you were closing up, driving home, and sleeping, your assistant was researching, building, fixing, and drafting. If the work happens on a computer — quotes, schedules, research, reviews, reports, websites — it can take the first pass. It doesn't send anything. It prepares everything, and queues up the handful of decisions only you can make.</p>
-                    <p class="fine">This example is a home-services company, but the same setup runs for agencies, clinics, contractors, and solo operators — on whatever tools you already use.</p>
+                    <p class="fine">Pick your world above the card, then tap any item to see exactly what it prepared — and approve it yourself. Same assistant, same rules, different work.</p>
+                </div>
+                <div class="demo-stage">
+                <div class="demo-tabs" id="demo-tabs" aria-label="Pick an industry">
+                    <button class="demo-tab active" data-ind="home" type="button">Home services</button>
+                    <button class="demo-tab" data-ind="clinic" type="button">Clinic</button>
+                    <button class="demo-tab" data-ind="agency" type="button">Agency</button>
+                    <button class="demo-tab" data-ind="restaurant" type="button">Restaurant</button>
+                    <button class="demo-tab" data-ind="solo" type="button">Solo consultant</button>
                 </div>
                 <div class="briefing-card" id="briefing-card">
                     <div class="briefing-head">
@@ -426,10 +470,11 @@
                     </div>
                     <p class="briefing-sub">While you were out, your assistant:</p>
                     <div id="briefing-items"></div>
-                    <p class="briefing-closer" id="briefing-closer">Nothing sent without your approval. Ever.</p>
+                    <p class="briefing-closer" id="briefing-closer">Tap any item to see what it prepared. Nothing sent without your approval.</p>
                     <div style="text-align:right;margin-top:0.6rem;">
                         <button class="briefing-replay" id="briefing-replay" type="button">Replay &#8635;</button>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -796,44 +841,157 @@
             inbox: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>'
         };
 
-        var items = [
-            ['calendar', 'Two customers canceled overnight', "rebuilt Thursday's schedule to close the gaps — ready to confirm"],
-            ['quote', "Built the Hendersons' repair quote from your price sheet", 'PDF ready to review and send'],
-            ['research', 'Researched the city permit rule that changed this month', 'what it means for you, in five bullets'],
-            ['star', 'A 3-star review showed up on Google', 'response drafted — plus what likely went wrong'],
-            ['chart', "Updated the job tracker with this week's 9 finished jobs", 'monthly numbers refreshed, one trend flagged'],
-            ['inbox', 'Read 47 overnight messages', '4 need a decision, the rest are handled']
-        ];
+        icons.check = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+
+        var INDUSTRIES = {
+            home: { items: [
+                { i: 'calendar', t: 'Two customers canceled overnight', s: "rebuilt Thursday's schedule to close the gaps — ready to confirm", tag: 'Draft schedule', d: ['Thu 8:00 — Lakeside Ct repair moves up from Friday.', 'Thu 10:30 — Yardley filter install slides into the open slot.', 'Confirmation texts drafted for both customers.'] },
+                { i: 'quote', t: "Built the Hendersons' repair quote from your price sheet", s: 'PDF ready to review and send', tag: 'Draft quote', d: ['Pump seal replacement — $180.', 'Labor, 2 hrs — $190.', 'Total $370, from your April price sheet.'] },
+                { i: 'research', t: 'Researched the city permit rule that changed this month', s: 'what it means for you, in five bullets', tag: 'Research notes', d: ['The new rule only applies to heaters over 400k BTU.', 'Your standard installs are unaffected.', 'One supplier already updated their spec sheets.'] },
+                { i: 'star', t: 'A 3-star review showed up on Google', s: 'response drafted — plus what likely went wrong', tag: 'Draft response', d: ['"Thanks for the honest feedback, Dana — the crew ran late and that\'s on us. Here\'s what we\'re changing&hellip;"', "Likely cause: Thursday's double-booking. The schedule fix above closes it."] },
+                { i: 'chart', t: "Updated the job tracker with this week's 9 finished jobs", s: 'monthly numbers refreshed, one trend flagged', tag: 'Report update', d: ['9 jobs closed, $11,240 invoiced this week.', 'Repeat service is up three weeks straight.', 'Invoice #2041 still unpaid — reminder drafted.'] },
+                { i: 'inbox', t: 'Read 47 overnight messages', s: '4 need a decision, the rest are handled', tag: 'Inbox summary', d: ['4 need you: two quote requests, a refund ask, a supplier delay.', '43 filed: receipts, confirmations, newsletters.'] }
+            ]},
+            clinic: { items: [
+                { i: 'calendar', t: 'Three patients asked to reschedule', s: "tomorrow's schedule rebalanced — ready to confirm", tag: 'Draft schedule', d: ['All three offered the next open slots that fit their visit type.', 'No gaps left in the morning block.', 'Confirmation messages drafted for each.'] },
+                { i: 'quote', t: "Prepared Monday's new-patient paperwork", s: 'four arrivals, everything organized and ready', tag: 'Prep notes', d: ['Welcome packets assembled for all four.', 'Two intake forms came back incomplete — reminders drafted.', 'Insurance details flagged for front-desk review.'] },
+                { i: 'research', t: 'Compared two suppliers on gloves and composite', s: 'switching saves about 9% — summary attached', tag: 'Research notes', d: ['Same brands at both suppliers — the difference is volume pricing.', '9% saving at your current monthly order size.', 'No contract lock-in on the cheaper option.'] },
+                { i: 'star', t: 'A new review mentions long wait times', s: 'response drafted — Tuesday bottleneck found', tag: 'Draft response', d: ['"Thank you for telling us — we\'ve changed how we schedule afternoon visits&hellip;"', 'Cause: Tuesday double-bookings between 1 and 3pm.'] },
+                { i: 'chart', t: 'Updated the recall list', s: '17 patients due or overdue for six-month visits', tag: 'Report update', d: ['12 due this month, 5 overdue from last month.', 'Reminder messages drafted for all 17.', 'None go out until you approve the list.'] },
+                { i: 'inbox', t: 'Read 31 overnight messages', s: '3 need you, the rest are filed', tag: 'Inbox summary', d: ['3 need a decision: a referral question, a billing dispute, a supply delay.', '28 filed: confirmations, statements, vendor mail.'] }
+            ]},
+            agency: { items: [
+                { i: 'calendar', t: 'The client moved the kickoff to Thursday', s: 'calendar updated, agenda redrafted', tag: 'Draft plan', d: ['Team invites updated — no conflicts found.', 'Agenda trimmed to 45 minutes, brief attached.', 'Confirmation reply to the client drafted.'] },
+                { i: 'quote', t: 'Built the Riverside proposal from your rate card', s: 'ready for your pass before it goes out', tag: 'Draft proposal', d: ['Scope: 3-month retainer, two campaigns.', '$8,400/mo from your current rate card.', 'Two closest case studies pulled in.'] },
+                { i: 'research', t: 'Pulled competitor ad activity for the pitch', s: "three angles they're missing", tag: 'Research notes', d: ["They've gone dark on video since March.", 'Search spend doubled — but their landing pages never changed.', 'Three openings, one slide each, added to the deck.'] },
+                { i: 'star', t: 'Mentions of your client spiked overnight', s: "what's driving it, plus response options", tag: 'Summary', d: ["A reseller's post took off — sentiment is positive.", 'Two response options drafted: amplify it, or stay quiet.', 'Nothing negative attached so far.'] },
+                { i: 'chart', t: 'Updated the campaign report', s: 'CTR up 18% — one anomaly flagged', tag: 'Report update', d: ['CTR 2.4%, up 18% week over week. Spend on pace.', 'Anomaly: Tuesday conversions doubled — likely the email drop.', 'Client-ready PDF refreshed.'] },
+                { i: 'inbox', t: 'Read 64 overnight messages', s: '5 need a decision, the rest are handled', tag: 'Inbox summary', d: ['5 for you: two scope asks, a budget approval, an intro, a complaint.', '59 filed, with notes where useful.'] }
+            ]},
+            restaurant: { items: [
+                { i: 'calendar', t: 'Saturday is overbooked by two tables at 7pm', s: 'three fixes drafted — pick one', tag: 'Draft fixes', d: ['Offer 6:30 or 8:15 to the two latest bookings — texts drafted.', 'Or open patio table 12; the forecast is clear.', 'Or move the six-top to the private room.'] },
+                { i: 'quote', t: "Built next week's produce order from this week's sales", s: 'order sheet ready to send', tag: 'Draft order', d: ["Quantities based on the last two weeks' plate counts.", 'Romaine cut 20% — waste was logged Tuesday and Wednesday.', 'Total $1,840 — about 6% under last week.'] },
+                { i: 'research', t: 'Checked three suppliers on chicken prices', s: 'one is 11% cheaper this month', tag: 'Research notes', d: ['Same spec, and their delivery days match yours.', '11% cheaper through the end of the month.', 'Switching is reversible — no contract.'] },
+                { i: 'star', t: 'A 2-star review came in about Friday night', s: 'response drafted, plus the likely cause', tag: 'Draft response', d: ['"We\'re sorry about the wait — you\'re right, and here\'s what we\'re fixing&hellip;"', 'Cause: two large parties seated at once at 7:40 — the kitchen stacked up.'] },
+                { i: 'chart', t: 'Updated the weekly sales tracker', s: 'food cost crept to 34% — cause flagged', tag: 'Report update', d: ['Sales steady; food cost up two points.', 'Drivers: protein prices and Friday waste.', 'Two fixes suggested, including one small menu tweak.'] },
+                { i: 'inbox', t: 'Read 23 overnight messages', s: '2 need you — a catering ask and a vendor', tag: 'Inbox summary', d: ['Catering inquiry for the 28th — quote drafted from your menu.', 'Vendor needs a delivery-window change approved.'] }
+            ]},
+            solo: { items: [
+                { i: 'calendar', t: 'Two discovery calls requested this week', s: 'slotted around your deep-work blocks', tag: 'Draft schedule', d: ['Tuesday 11:00 and Thursday 2:00 proposed.', 'Your Wednesday writing block stays untouched.', 'Invites drafted — not sent.'] },
+                { i: 'quote', t: 'Drafted the Patterson statement of work', s: 'scope, timeline, and price from your templates', tag: 'Draft SOW', d: ['Six-week engagement, two deliverables.', '$12,500 fixed fee — your standard rate.', 'Payment terms: 50/50, net 15.'] },
+                { i: 'research', t: "Researched the client before Thursday's call", s: 'one-page brief ready', tag: 'Research notes', d: ["Their market shrank 8% — they're chasing efficiency.", 'Two of their competitors just raised prices.', 'Three likely pain points, each with a question to ask.'] },
+                { i: 'star', t: 'Your LinkedIn post got 40 comments', s: 'replies drafted for the 6 worth answering', tag: 'Draft replies', d: ['Six substantive comments get real replies.', 'Two commenters look like potential leads — flagged.', 'The rest get a like; no reply needed.'] },
+                { i: 'chart', t: 'Updated your pipeline tracker', s: 'two proposals idle 10+ days', tag: 'Report update', d: ['Pipeline: $46k across five open proposals.', 'Two idle 10+ days — nudge emails drafted.', 'One looks dead — suggest closing it out.'] },
+                { i: 'inbox', t: 'Read 28 overnight messages', s: '3 need a decision, the rest are handled', tag: 'Inbox summary', d: ['3 for you: a scope question, an event invite, a payment confirmation.', '25 filed and labeled.'] }
+            ]}
+        };
+
+        var cur = 'home';
+        var status = {};
 
         var wrap = document.getElementById('briefing-items');
         var closer = document.getElementById('briefing-closer');
+        var card = document.getElementById('briefing-card');
         var timers = [];
         var played = false;
+        var detail = null;
 
-        function play() {
+        function rowEl(it, idx) {
+            var st = status[cur][idx];
+            var row = document.createElement('div');
+            row.className = 'briefing-item' + (st ? ' done' : '');
+            row.setAttribute('role', 'button');
+            row.setAttribute('tabindex', '0');
+            var icon = st === 'ok' ? icons.check : icons[it.i];
+            var sub = st === 'ok' ? 'Approved — handled' : (st === 'hold' ? "Held — it'll wait for you" : it.s);
+            row.innerHTML = icon + '<div><div class="bi-title">' + it.t + '</div><div class="bi-sub">' + sub + '</div></div><span class="bi-go" aria-hidden="true">&rsaquo;</span>';
+            function open(e) { e.preventDefault(); openDetail(idx); }
+            row.addEventListener('click', open);
+            row.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') open(e); });
+            return row;
+        }
+
+        function closerText() {
+            var n = status[cur].filter(function(s) { return s === 'ok'; }).length;
+            if (n === 0) return 'Tap any item to see what it prepared. Nothing sent without your approval.';
+            return n + ' of ' + status[cur].length + ' approved — and nothing moved until you said so.';
+        }
+
+        function closeDetail() {
+            if (detail) { detail.remove(); detail = null; }
+            wrap.style.display = '';
+            closer.style.display = '';
+        }
+
+        function renderList() {
+            closeDetail();
+            wrap.innerHTML = '';
+            INDUSTRIES[cur].items.forEach(function(it, i) {
+                var row = rowEl(it, i);
+                row.classList.add('show');
+                wrap.appendChild(row);
+            });
+            closer.textContent = closerText();
+            closer.classList.add('show');
+        }
+
+        function openDetail(idx) {
             timers.forEach(clearTimeout);
             timers = [];
+            closeDetail();
+            var it = INDUSTRIES[cur].items[idx];
+            wrap.style.display = 'none';
+            closer.style.display = 'none';
+            detail = document.createElement('div');
+            detail.className = 'briefing-detail';
+            detail.innerHTML = '<button class="bd-back" type="button">&larr; Back to briefing</button>'
+                + '<div class="bd-title">' + icons[it.i] + '<span>' + it.t + '</span></div>'
+                + '<div class="draft-box"><span class="draft-tag">' + it.tag + '</span>'
+                + it.d.map(function(l) { return '<p>' + l + '</p>'; }).join('')
+                + '</div>'
+                + '<div class="bd-actions"><button class="btn-approve" type="button">Approve</button>'
+                + '<button class="btn-hold" type="button">Hold for later</button></div>';
+            card.insertBefore(detail, closer);
+            detail.querySelector('.bd-back').addEventListener('click', function() { renderList(); });
+            detail.querySelector('.btn-approve').addEventListener('click', function() { status[cur][idx] = 'ok'; renderList(); });
+            detail.querySelector('.btn-hold').addEventListener('click', function() { status[cur][idx] = 'hold'; renderList(); });
+        }
+
+        function play() {
+            closeDetail();
+            timers.forEach(clearTimeout);
+            timers = [];
+            status[cur] = INDUSTRIES[cur].items.map(function() { return ''; });
             wrap.innerHTML = '';
             closer.classList.remove('show');
-            items.forEach(function(it, i) {
+            closer.textContent = closerText();
+            var list = INDUSTRIES[cur].items;
+            list.forEach(function(it, i) {
                 timers.push(setTimeout(function() {
-                    var row = document.createElement('div');
-                    row.className = 'briefing-item';
-                    row.innerHTML = icons[it[0]] + '<div><div class="bi-title">' + it[1] + '</div><div class="bi-sub">' + it[2] + '</div></div>';
+                    var row = rowEl(it, i);
                     wrap.appendChild(row);
                     requestAnimationFrame(function() {
                         requestAnimationFrame(function() { row.classList.add('show'); });
                     });
-                    if (i === items.length - 1) {
+                    if (i === list.length - 1) {
                         timers.push(setTimeout(function() { closer.classList.add('show'); }, 700));
                     }
-                }, 500 + i * 850));
+                }, 400 + i * 750));
             });
         }
 
         document.getElementById('briefing-replay').addEventListener('click', play);
 
-        var card = document.getElementById('briefing-card');
+        document.querySelectorAll('.demo-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (btn.dataset.ind === cur) return;
+                document.querySelectorAll('.demo-tab').forEach(function(b) { b.classList.toggle('active', b === btn); });
+                cur = btn.dataset.ind;
+                played = true;
+                play();
+            });
+        });
+
         var cardObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting && !played) {
