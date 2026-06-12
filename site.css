@@ -180,6 +180,14 @@ footer {
 footer a { color: #C7CDD4; }
 footer a:hover { color: #fff; }
 footer .links { display: flex; flex-wrap: wrap; gap: 0.7rem 1.4rem; margin-top: 0.5rem; }
+footer .agent-badge {
+    margin-top: 1.2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    font-size: 0.82rem;
+    color: #7A828C;
+    max-width: 620px;
+}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 720px) {
