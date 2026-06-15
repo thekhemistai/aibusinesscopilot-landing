@@ -399,6 +399,26 @@
 
         .alt { background: var(--bg-alt); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); }
 
+        .about-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 3rem;
+            align-items: start;
+        }
+        .about-copy p { margin-bottom: 1rem; max-width: 680px; }
+        .about-principles {
+            display: grid;
+            gap: 0.9rem;
+        }
+        .principle {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.15rem 1.2rem;
+        }
+        .principle h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+        .principle p { font-size: 0.92rem; }
+
         .step .step-number {
             font-family: var(--serif);
             font-size: 1rem;
@@ -485,6 +505,7 @@
             .demo-copy { padding-top: 0; }
             .trust-bar .container { grid-template-columns: repeat(2, 1fr); }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-layout { grid-template-columns: 1fr; gap: 1.8rem; }
             .card-grid, .card-grid-4, .pricing-grid { grid-template-columns: 1fr; }
             .hero { padding: 3.5rem 0 2.5rem; }
             nav .wordmark.logo-image img { height: 50px; }
@@ -498,6 +519,7 @@
         <div class="container">
             <a href="#" class="wordmark logo-image"><img src="logo.jpg" alt="AiBusinessCopilot"></a>
             <div class="nav-actions">
+                <a href="#about" class="start-here">About us</a>
                 <a href="ai-assistants.html" class="start-here">New to AI? Start here</a>
                 <a href="chatgpt-for-small-business.html" class="start-here">What AI can do now</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="cta-sm">Start assessment</a>
@@ -882,6 +904,34 @@
 
     </div>
 
+    <section class="alt" id="about">
+        <div class="container">
+            <div class="about-layout">
+                <div class="about-copy">
+                    <div class="section-label reveal">About AiBusinessCopilot</div>
+                    <h2 class="reveal">We are building the bridge between AI tools and everyday work</h2>
+                    <p class="reveal">AiBusinessCopilot started from a simple belief: the next leap in productivity will not come from everyone memorizing every new AI feature. It will come from useful assistants, careful agents, and practical infrastructure that help people use AI inside the work they already do.</p>
+                    <p class="reveal">We are hands-on builders and operators. We test AI workflows, phone-to-computer access, human approval gates, knowledge organization, and assistant setup patterns so small businesses and solo operators do not have to sort through the whole industry alone.</p>
+                    <p class="reveal">The goal is not to replace judgment. The goal is to reduce the scattered work around it: finding context, preparing drafts, organizing next steps, checking tools, and bringing the right decision back to the human who owns it.</p>
+                </div>
+                <div class="about-principles">
+                    <div class="principle reveal">
+                        <h3>Practical adoption</h3>
+                        <p>AI should help with real requests, real files, real customers, and real follow-up, not just impressive demos.</p>
+                    </div>
+                    <div class="principle reveal">
+                        <h3>Human-controlled agents</h3>
+                        <p>Important actions stay reviewable. We build around owner accounts, clear permission boundaries, and final human approval.</p>
+                    </div>
+                    <div class="principle reveal">
+                        <h3>Infrastructure mindset</h3>
+                        <p>The value grows when AI can work with the browser, inbox, calendar, documents, and tools people already rely on.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ -->
     <section class="faq-section" id="faq">
         <div class="container">
@@ -940,6 +990,7 @@
             </div>
             <p>&copy; 2026 AiBusinessCopilot &middot; <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
             <p>
+                <a href="#about">About</a> &middot;
                 <a href="ai-assistants.html">From Chatbots to AI Assistants</a> &middot;
                 <a href="chatgpt-for-small-business.html">ChatGPT for Small Business</a> &middot;
                 <a href="personal-ai-assistant.html">Personal AI Assistant Setup</a> &middot;
