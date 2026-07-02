@@ -191,9 +191,12 @@ footer .agent-badge {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 720px) {
+    html, body { max-width: 100%; overflow-x: hidden; }
     main { padding-top: 2.5rem; }
     .logo.logo-image img { height: 50px; }
     .comparison, .examples, .why-grid { grid-template-columns: 1fr; }
+    h1, h2, h3, p, li, a { overflow-wrap: anywhere; }
+    .price-tag { white-space: normal; }
 }
 
 /* ===== PRINT ===== */

@@ -29,7 +29,7 @@
         { "@type": "Question", "name": "Whose AI account is it? Do I own the setup?", "acceptedAnswer": { "@type": "Answer", "text": "Yours. The AI account is in your name, on your billing, with your data. The playbooks and configuration we build are yours to keep." } },
         { "@type": "Question", "name": "What about my customer data?", "acceptedAnswer": { "@type": "Answer", "text": "It stays in your accounts and your tools. We connect the assistant narrowly — only the systems the job actually needs — and we work with established providers." } },
         { "@type": "Question", "name": "How long does setup take?", "acceptedAnswer": { "@type": "Answer", "text": "A single fix is typically up and running within one to two weeks, with a playbook and setup support included. Bigger foundations are scoped before you commit." } },
-        { "@type": "Question", "name": "What does it cost?", "acceptedAnswer": { "@type": "Answer", "text": "Fixing your first thing starts at $1,000, and the full business foundation starts at $5,000. Every engagement starts with a free assessment." } }
+        { "@type": "Question", "name": "What does it cost?", "acceptedAnswer": { "@type": "Answer", "text": "The public starting point is the $999 AI Business Audit. We review where AI can save time, recover missed revenue, or reduce bottlenecks, then quote any buildout after the audit. The audit fee can be credited toward implementation if we build the recommended systems." } }
       ]
     }
     </script>
@@ -46,7 +46,7 @@
         { "@type": "City", "name": "Phoenix", "containedInPlace": { "@type": "State", "name": "Arizona" } },
         "Remote"
       ],
-      "priceRange": "$1,000 - $5,000+"
+      "priceRange": "$999+"
     }
     </script>
     <link rel="icon" href="logo.jpg">
@@ -515,6 +515,20 @@
             nav .wordmark.logo-image img { height: 50px; }
             nav .start-here { display: none; }
         }
+
+        @media (max-width: 520px) {
+            html, body { max-width: 100%; overflow-x: hidden; }
+            .container { padding-left: 20px; padding-right: 20px; }
+            nav .container { gap: 1rem; }
+            nav .nav-actions { min-width: 0; }
+            nav .wordmark.logo-image img { height: 46px; border-radius: 10px; }
+            nav .cta-sm { font-size: 0.86rem; padding: 0.48rem 0.9rem; }
+            .hero h1 { font-size: 2.05rem; line-height: 1.16; }
+            h1, h2, h3, p, li, a { overflow-wrap: anywhere; }
+            .hero .lede { font-size: 1.05rem; }
+            .hero .hero-ctas { flex-direction: column; align-items: flex-start; }
+            .hero .hero-ctas .btn-ghost { padding-left: 0; }
+        }
     </style>
 </head>
 <body>
@@ -712,28 +726,28 @@
         <section id="how-it-works">
             <div class="container">
                 <div class="section-label reveal">How it works</div>
-                <h2 class="reveal">Four steps to <span class="text-outcome">getting your time back</span></h2>
-                <p class="subtitle reveal">Simple process, done-for-you setup, no technical homework on your side.</p>
+                <h2 class="reveal">Four steps to knowing what is worth building</h2>
+                <p class="subtitle reveal">Simple process, clear findings, no technical homework on your side.</p>
                 <div class="card-grid-4">
                     <div class="card step reveal">
                         <div class="step-number">1</div>
-                        <h3>Assessment</h3>
-                        <p>We learn how your business runs — tools, service area, common requests, and where work currently slips through the cracks.</p>
+                        <h3>Free assessment</h3>
+                        <p>You tell us where leads, customer questions, admin, follow-up, or money tasks are getting stuck.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">2</div>
-                        <h3>System design</h3>
-                        <p>We map the first practical fix, choose the cleanest setup path, and define what the AI should organize, draft, track, or bring to your attention.</p>
+                        <h3>$999 AI Business Audit</h3>
+                        <p>We review your tools, messages, follow-up, handoffs, and bottlenecks to find the 3&ndash;7 best places AI could help.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">3</div>
-                        <h3>Build &amp; set up</h3>
-                        <p>We configure your assistant, connect feasible tools, add useful schedules and briefings, and hand off a setup your team can actually use.</p>
+                        <h3>Buildout quote</h3>
+                        <p>You get a ranked plan, plain-English recommendations, and exact next-step pricing for anything worth building.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">4</div>
-                        <h3>Support &amp; refinement</h3>
-                        <p>With Managed Care, we keep it sharp as your business changes and new opportunities appear.</p>
+                        <h3>Build &amp; support</h3>
+                        <p>If you hire us to build, the audit can credit toward setup and we keep the work approval-first.</p>
                     </div>
                 </div>
             </div>
@@ -741,51 +755,26 @@
 
         <section class="alt">
             <div class="container">
-                <div class="section-label reveal">Our services</div>
-                <h2 class="reveal"><span class="text-outcome">Start focused.</span> Expand when <span class="text-outcome">the value is obvious.</span></h2>
-                <p class="subtitle reveal">Every business is different, so these are starting points — not unlimited flat-rate promises. Final pricing depends on the size of the job, tool mess, data quality, custom rules, risk, users, and support load.</p>
-                <div class="pricing-grid">
-                    <div class="pricing-card reveal">
-                        <h3>Fix One Thing First</h3>
-                        <div class="price">$1,000+</div>
-                        <div class="price-note">Starting one-time setup</div>
-                        <p class="scope-note">We take one job that keeps costing you time and set the assistant up to handle it — so you see real value before building anything bigger. Simple fixes may quote lower; complex ones quote higher.</p>
-                        <ul>
-                            <li>One job handled — such as lead follow-up, inbox organization, customer reply drafts, or billing review</li>
-                            <li>One connected tool or data source where it makes sense</li>
-                            <li>Repeatable playbook and owner approval rules</li>
-                            <li>Short handoff guide and 7&ndash;14 days setup support</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start business assessment</a>
-                    </div>
+                <div class="section-label reveal">Public offer</div>
+                <h2 class="reveal">Start with the audit. Build only what is worth building.</h2>
+                <p class="subtitle reveal">Most businesses do not need a menu of AI packages before anyone understands the leak. The audit finds the leverage first, then the buildout gets priced from evidence.</p>
+                <div class="pricing-single">
                     <div class="pricing-card featured reveal">
-                        <h3>AI Business Foundation</h3>
-                        <div class="price">$5,000+</div>
-                        <div class="price-note">Starting deposit</div>
-                        <p class="scope-note">The practical starting layer: business context, tool review, AI assistant setup, and the first big job handled.</p>
+                        <h3>AI Business Audit</h3>
+                        <div class="price">$999</div>
+                        <div class="price-note">One-time audit</div>
+                        <p class="scope-note">We review the places AI could save time, recover missed revenue, or reduce bottlenecks, then give you a ranked plan for what to build first.</p>
                         <ul>
-                            <li>Tool review, business context setup, and common request handling</li>
-                            <li>ChatGPT, Claude, or your preferred AI tool configured around your business</li>
-                            <li>The first big job set up — organized next steps, draft replies, and handoff notes</li>
-                            <li>Operating playbook, handoff training, and 30 days setup support</li>
+                            <li>Review of intake, customer messages, follow-up, admin, reporting, and handoffs</li>
+                            <li>3&ndash;7 ranked AI opportunities with expected value and difficulty</li>
+                            <li>Clear recommendation for the first system to build</li>
+                            <li>Buildout quote based on the audit findings</li>
+                            <li>Audit fee credited toward implementation if we build the recommended system</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start business assessment</a>
-                    </div>
-                    <div class="pricing-card reveal">
-                        <h3>Custom Build</h3>
-                        <div class="price">$7,500+</div>
-                        <div class="price-note">Starting deposit</div>
-                        <p class="scope-note">The expansion layer — more jobs handled, more tools connected, more of your week back.</p>
-                        <ul>
-                            <li>Everything in Foundation, expanded across more of the business</li>
-                            <li>More tools connected and working together</li>
-                            <li>Several jobs handled — or one big complicated one</li>
-                            <li>Schedules, approval steps, training, and fine-tuning</li>
-                        </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start business assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start free assessment</a>
                     </div>
                 </div>
-                <p class="subtitle centered reveal" style="margin-top:2.2rem;margin-bottom:0;">Managed Care starts at $500/mo to keep one simple setup running well. Extra connections, seats, or business-critical work quoted separately. Private AI hardware is custom quote only and currently paused until suitable hardware supply is reliable.</p>
+                <p class="subtitle centered reveal" style="margin-top:2.2rem;margin-bottom:0;">Implementation is quoted after the audit, because the right build depends on what is actually slowing the business down.</p>
             </div>
         </section>
 
@@ -889,15 +878,15 @@
                 <div class="pricing-single">
                     <div class="pricing-card featured reveal">
                         <h3>Personal / Operator Setup</h3>
-                        <div class="price">$1,000+</div>
-                        <div class="price-note">Starting setup</div>
+                        <div class="price">Custom</div>
+                        <div class="price-note">Quoted after assessment</div>
                         <p class="scope-note">A focused assistant set up around how you personally work, including a phone-to-computer access path — not a full business overhaul project.</p>
                         <ul>
                             <li>A private AI assistant tailored to your daily routine</li>
                             <li>Phone access to a full computer workspace</li>
                             <li>Knowledge and context organization for the first use case</li>
                             <li>Operating playbook and hands-on onboarding</li>
-                            <li>Clear upgrade path to Foundation or a Custom Build when ready</li>
+                            <li>Clear upgrade path to a business buildout when ready</li>
                         </ul>
                         <a href="personal-ai-assistant.html" class="btn">View personal setup</a>
                     </div>
@@ -968,7 +957,7 @@
                 </details>
                 <details>
                     <summary>What does it cost?<span class="fq-x" aria-hidden="true">+</span></summary>
-                    <p>Fixing your first thing starts at $1,000, and the full business foundation starts at $5,000 — full breakdown on the <a href="services.html">services page</a>. Every engagement starts with a free assessment, so you know the price before you decide anything.</p>
+                    <p>The public starting point is the <a href="services.html">$999 AI Business Audit</a>. We review where AI can save time, recover missed revenue, or reduce bottlenecks, then quote the actual buildout after the audit. If you hire us to build, the audit fee can credit toward implementation.</p>
                 </details>
             </div>
         </div>
@@ -978,11 +967,11 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="reveal">Ready to find out what yours would say tomorrow morning?</h2>
-            <p class="reveal">Tell us where leads, customer issues, billing questions, or follow-ups are getting missed. We'll recommend a practical first fix and send the right next step.</p>
+            <p class="reveal">Tell us where leads, customer issues, billing questions, or follow-ups are getting missed. We'll use the free assessment to confirm fit, then recommend whether the $999 audit makes sense.</p>
             <div class="reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start business assessment</a>
             </div>
-            <p class="cta-fine reveal">Free consultation &middot; No commitment &middot; Custom proposal within 24 hours</p>
+            <p class="cta-fine reveal">Free fit check &middot; $999 audit if there is real opportunity &middot; Buildout quoted after findings</p>
         </div>
     </section>
 
