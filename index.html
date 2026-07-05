@@ -198,7 +198,7 @@
             gap: 3rem;
             align-items: start;
         }
-        .demo-copy { padding-top: 1.5rem; }
+        .demo-copy { padding-top: 1.5rem; position: sticky; top: 96px; }
         .demo-copy .eyebrow {
             font-size: 0.8rem;
             font-weight: 600;
@@ -210,6 +210,7 @@
         .demo-copy h2 { font-size: 1.9rem; line-height: 1.2; margin-bottom: 1rem; }
         .demo-copy p { margin-bottom: 1rem; }
         .demo-copy .fine { font-size: 0.92rem; color: var(--muted); }
+        .demo-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.9rem; text-align: center; }
 
         .briefing-card {
             background: #fff;
@@ -249,6 +250,8 @@
             transition: opacity 0.8s ease;
         }
         .briefing-closer.show { opacity: 1; }
+        .briefing-closer.summary { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+        .briefing-closer.summary em { font-style: normal; color: var(--blue); }
         .briefing-replay {
             background: none;
             border: none;
@@ -259,6 +262,39 @@
             padding: 0;
         }
         .briefing-replay:hover { color: var(--blue); }
+
+        .demo-personalize { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; }
+        .demo-personalize label { font-size: 0.78rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+        .demo-personalize input {
+            font: inherit;
+            font-size: 0.88rem;
+            color: var(--ink);
+            padding: 0.42rem 0.95rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: #fff;
+            width: 100%;
+            max-width: 280px;
+        }
+        .demo-personalize input::placeholder { color: var(--muted); }
+        .demo-personalize input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-tint); }
+
+        .phone-moment { margin-bottom: 0.85rem; }
+        .pm-when { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+        .pm-bubble {
+            max-width: 85%;
+            width: fit-content;
+            padding: 0.5rem 0.95rem;
+            border-radius: 16px;
+            font-size: 0.88rem;
+            line-height: 1.45;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .pm-bubble.show { opacity: 1; transform: none; }
+        .pm-you { margin-left: auto; background: var(--blue); color: #fff; border-bottom-right-radius: 5px; }
+        .pm-reply { margin-top: 0.4rem; background: var(--bg-alt); border: 1px solid var(--border-soft); color: var(--body); border-bottom-left-radius: 5px; }
 
         .demo-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
         .demo-tab {
@@ -389,6 +425,18 @@
         .subtitle { font-size: 1.08rem; max-width: 680px; margin-bottom: 2.2rem; }
         .centered { margin-left: auto; margin-right: auto; text-align: center; }
 
+        .challenge-list { max-width: 780px; }
+        .challenge-row {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 2rem;
+            padding: 1.4rem 0;
+            border-top: 1px solid var(--border-soft);
+        }
+        .challenge-row:last-child { border-bottom: 1px solid var(--border-soft); }
+        .challenge-row h3 { font-size: 1.02rem; line-height: 1.4; }
+        .challenge-row p { font-size: 0.97rem; margin: 0; }
+
         .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
         .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
         .card {
@@ -397,7 +445,6 @@
             border-radius: 14px;
             padding: 1.6rem;
         }
-        .card .card-icon { margin-bottom: 0.9rem; }
         .card h3 { font-size: 1.08rem; margin-bottom: 0.5rem; }
         .card p { font-size: 0.95rem; }
 
@@ -499,17 +546,18 @@
         .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
         .reveal.in { opacity: 1; transform: translateY(0); }
         @media (prefers-reduced-motion: reduce) {
-            .reveal, .briefing-item { opacity: 1 !important; transform: none !important; transition: none !important; }
+            .reveal, .briefing-item, .pm-bubble { opacity: 1 !important; transform: none !important; transition: none !important; }
             .briefing-closer { opacity: 1 !important; }
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 920px) {
             .demo-frame { grid-template-columns: 1fr; gap: 2rem; }
-            .demo-copy { padding-top: 0; }
+            .demo-copy { padding-top: 0; position: static; }
             .trust-bar .container { grid-template-columns: repeat(2, 1fr); }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .about-layout { grid-template-columns: 1fr; gap: 1.8rem; }
+            .challenge-row { grid-template-columns: 1fr; gap: 0.35rem; }
             .card-grid, .card-grid-4, .pricing-grid { grid-template-columns: 1fr; }
             .hero { padding: 3.5rem 0 2.5rem; }
             nav .wordmark.logo-image img { height: 50px; }
@@ -535,12 +583,12 @@
 
     <nav>
         <div class="container">
-            <a href="#" class="wordmark logo-image"><img src="logo.jpg" alt="AiBusinessCopilot"></a>
+            <a href="#" class="wordmark">AiBusiness<span>Copilot</span></a>
             <div class="nav-actions">
                 <a href="about.html" class="start-here">About us</a>
                 <a href="ai-assistants.html" class="start-here">New to AI? Start here</a>
                 <a href="chatgpt-for-small-business.html" class="start-here">What AI can do now</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="cta-sm">Start assessment</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="cta-sm">Get started</a>
             </div>
         </div>
     </nav>
@@ -550,7 +598,7 @@
         <div class="container">
             <p class="eyebrow reveal">Put AI to work in your business</p>
             <h1 class="reveal">ChatGPT answers questions.<br><span class="text-signal">An AI assistant helps get work done.</span></h1>
-            <p class="lede reveal">We help businesses reduce repetitive work, organize information, and stay on top of customer requests using modern AI tools like ChatGPT and Claude. You message from your phone in your own words, and the assistant prepares work on a full computer with your browser, files, inbox, calendar, and tools — then brings everything back to you for the final say.</p>
+            <p class="lede reveal">We set up AI assistants for businesses using tools like ChatGPT and Claude. You message from your phone in your own words. The assistant prepares the work on a full computer, with your browser, files, inbox, and calendar, and brings everything back to you for the final say.</p>
             <div class="hero-ctas reveal">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">See what it would do for you</a>
                 <a href="#how-it-works" class="btn-ghost">How it works &rarr;</a>
@@ -566,16 +614,25 @@
                 <div class="demo-copy reveal">
                     <p class="eyebrow">What having one actually looks like</p>
                     <h2>Tomorrow morning, this is <span class="text-outcome">waiting for you.</span></h2>
-                    <p>While you were working, driving home, and sleeping, your assistant was preparing tomorrow. You can ask from your phone, but the work happens on a real computer — quotes, schedules, research, reviews, reports, websites — where the files, browser, and business tools already live. It doesn't send anything. It prepares everything, and queues up the handful of decisions only you can make.</p>
-                    <p class="fine">Pick your world above the card, then tap any item to see exactly what it prepared — and approve it yourself. Same assistant, same rules, different work.</p>
+                    <p>While you slept, your assistant was preparing tomorrow. You ask from your phone, but the work happens on a real computer, where your files, browser, and business tools already live. It doesn't send anything. It prepares the quotes, the schedule fixes, the research, then queues up the handful of decisions only you can make.</p>
+                    <p class="fine">Type your business name, pick your world, then tap any item to see exactly what it prepared and approve it yourself. Same assistant, same rules, different work.</p>
                 </div>
                 <div class="demo-stage">
+                <div class="demo-personalize">
+                    <label for="biz-name">Make it yours:</label>
+                    <input id="biz-name" type="text" maxlength="40" placeholder="Type your business name" autocomplete="organization">
+                </div>
                 <div class="demo-tabs" id="demo-tabs" aria-label="Pick an industry">
                     <button class="demo-tab active" data-ind="home" type="button">Home services</button>
-                    <button class="demo-tab" data-ind="clinic" type="button">Clinic</button>
+                    <button class="demo-tab" data-ind="auto" type="button">Auto shop</button>
                     <button class="demo-tab" data-ind="agency" type="button">Agency</button>
                     <button class="demo-tab" data-ind="restaurant" type="button">Restaurant</button>
                     <button class="demo-tab" data-ind="solo" type="button">Solo consultant</button>
+                </div>
+                <div class="phone-moment">
+                    <p class="pm-when">Last night &middot; from your phone</p>
+                    <div class="pm-bubble pm-you" id="pm-you"></div>
+                    <div class="pm-bubble pm-reply" id="pm-reply">On it &mdash; it&rsquo;ll be in your morning briefing.</div>
                 </div>
                 <div class="briefing-card" id="briefing-card">
                     <div class="briefing-head">
@@ -589,6 +646,7 @@
                         <button class="briefing-replay" id="briefing-replay" type="button">Replay &#8635;</button>
                     </div>
                 </div>
+                <p class="demo-note">This demo is an illustration. The real thing arrives in the AI app we set up for you (Claude, ChatGPT, or even text messages) and works the same way: it prepares, you approve.</p>
                 </div>
             </div>
         </div>
@@ -621,7 +679,7 @@
             </div>
             <div class="trust-item reveal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
-                One fix first — expand when it pays
+                One fix first, expand when it pays
             </div>
         </div>
     </div>
@@ -642,29 +700,20 @@
         <section>
             <div class="container">
                 <div class="section-label reveal">The challenge</div>
-                <h2 class="reveal">AI should make <span class="text-outcome">the work lighter</span> — not give you another tool to babysit.</h2>
-                <p class="subtitle reveal">Most businesses do not need another complicated dashboard. They need an assistant that can help prepare real work: leads, customer requests, quotes, reports, research, billing questions, and follow-ups.</p>
-                <div class="card-grid">
-                    <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h4M7 11h2"/><path d="M14 8h3M14 11h3"/></svg>
-                        </div>
+                <h2 class="reveal">AI should make <span class="text-outcome">the work lighter</span>, not give you another tool to babysit.</h2>
+                <p class="subtitle reveal">Most businesses do not need another complicated dashboard. They need an assistant that helps with the work itself: the leads, the quotes, the follow-ups that keep a business running.</p>
+                <div class="challenge-list">
+                    <div class="challenge-row reveal">
                         <h3>The pieces are everywhere</h3>
-                        <p>Email, forms, calendar, CRM, invoices, and vendor messages all hold pieces of the business — but nothing turns them into one simple action list.</p>
+                        <p>Email, forms, calendar, invoices, and vendor messages all hold pieces of the business. Nothing turns them into one simple action list.</p>
                     </div>
-                    <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        </div>
+                    <div class="challenge-row reveal">
                         <h3>Generic AI misses what matters</h3>
-                        <p>Off-the-shelf summaries skip the important stuff: new leads, unhappy customers, billing issues, urgent requests, and follow-ups that need a real response.</p>
+                        <p>Off-the-shelf summaries skip the important stuff: a new lead, an unhappy customer, a follow-up that needs a real response.</p>
                     </div>
-                    <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
+                    <div class="challenge-row reveal">
                         <h3>Setup is the missing step</h3>
-                        <p>Without setup around how your business actually works, AI treats everything like a normal email — and the important stuff still gets missed.</p>
+                        <p>Without setup around how your business actually works, AI treats everything like a normal email. The important stuff still gets missed.</p>
                     </div>
                 </div>
             </div>
@@ -673,20 +722,20 @@
         <section class="alt">
             <div class="container">
                 <div class="section-label reveal">Who this is for</div>
-                <h2 class="reveal">Best for businesses that know AI could help — but do not have time to figure it all out</h2>
+                <h2 class="reveal">Best for businesses that know AI could help but do not have time to figure it all out</h2>
                 <p class="subtitle reveal">You do not need to become an AI expert. You need a practical first setup around the work that keeps costing you time.</p>
                 <div class="card-grid">
                     <div class="card reveal">
                         <h3>Email and admin take hours</h3>
-                        <p>You spend too much time sorting messages, checking details, finding files, and keeping basic work moving.</p>
+                        <p>Sorting messages, chasing details, finding files. It adds up to hours every week.</p>
                     </div>
                     <div class="card reveal">
                         <h3>Follow-ups slip</h3>
-                        <p>Leads, customer requests, estimates, scheduling changes, or billing questions get scattered across too many places.</p>
+                        <p>A lead comes in, a customer asks for an estimate, and somehow it slips. The pieces live in too many places.</p>
                     </div>
                     <div class="card reveal">
                         <h3>You want AI without replacing your tools</h3>
-                        <p>You already have email, forms, calendars, docs, spreadsheets, or business software. The assistant should fit that world.</p>
+                        <p>You already have email, a calendar, and the software you run the business on. The assistant should fit that world.</p>
                     </div>
                 </div>
             </div>
@@ -699,25 +748,16 @@
                 <p class="subtitle reveal">We learn where your business is losing time, then build an AI assistant around fixing that first.</p>
                 <div class="card-grid">
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-                        </div>
                         <h3>AI assistant setup</h3>
-                        <p>ChatGPT, Claude, or your preferred AI tool configured around your business context, tone, computer, tools, and first problem to fix.</p>
+                        <p>ChatGPT or Claude, set up around your business, your tone, and the first problem worth fixing.</p>
                     </div>
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                        </div>
                         <h3>Work on a schedule</h3>
-                        <p>Daily briefings, weekly reports, follow-up reminders, and draft replies — prepared on schedule, waiting for your OK.</p>
+                        <p>Daily briefings, weekly reports, and draft replies, prepared on schedule and waiting for your OK.</p>
                     </div>
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                        </div>
                         <h3>Connected to your tools</h3>
-                        <p>Connections to the tools you already use — inbox, calendar, browser, files, CRM, invoices, docs, scheduling, forms, and industry software where it makes sense.</p>
+                        <p>It works inside what you already use: your inbox, your calendar, your files, and the software you run the business on.</p>
                     </div>
                 </div>
             </div>
@@ -731,18 +771,18 @@
                 <div class="card-grid-4">
                     <div class="card step reveal">
                         <div class="step-number">1</div>
-                        <h3>Free assessment</h3>
-                        <p>You tell us where leads, customer questions, admin, follow-up, or money tasks are getting stuck.</p>
+                        <h3>Send us the basics</h3>
+                        <p>A short intro form. You tell us where the business is losing time, and we get back to you with next steps for your audit.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">2</div>
                         <h3>$999 AI Business Audit</h3>
-                        <p>We review your tools, messages, follow-up, handoffs, and bottlenecks to find the 3&ndash;7 best places AI could help.</p>
+                        <p>We look at how work actually moves through your business and find the 3&ndash;7 best places AI could help.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">3</div>
                         <h3>Buildout quote</h3>
-                        <p>You get a ranked plan, plain-English recommendations, and exact next-step pricing for anything worth building.</p>
+                        <p>You get a ranked plan in plain terms, with exact pricing for anything worth building.</p>
                     </div>
                     <div class="card step reveal">
                         <div class="step-number">4</div>
@@ -771,7 +811,7 @@
                             <li>Buildout quote based on the audit findings</li>
                             <li>Audit fee credited toward implementation if we build the recommended system</li>
                         </ul>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start free assessment</a>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Send us the basics</a>
                     </div>
                 </div>
                 <p class="subtitle centered reveal" style="margin-top:2.2rem;margin-bottom:0;">Implementation is quoted after the audit, because the right build depends on what is actually slowing the business down.</p>
@@ -790,23 +830,14 @@
                 <p class="subtitle reveal">For professionals and operators, the challenge is not interest. It is getting AI set up in a way that feels useful, reliable, and natural in your day.</p>
                 <div class="card-grid">
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
-                        </div>
                         <h3>Disconnected systems</h3>
-                        <p>Multiple AI tools that don't talk to each other — each holding pieces of your work.</p>
+                        <p>Multiple AI tools that don't talk to each other, each holding pieces of your work.</p>
                     </div>
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
-                        </div>
                         <h3>Everything is scattered</h3>
-                        <p>Notes, docs, tasks, and examples scattered across platforms, making AI less helpful than it should be.</p>
+                        <p>Notes here, docs there, tasks somewhere else. The scatter makes AI less helpful than it should be.</p>
                     </div>
                     <div class="card reveal">
-                        <div class="card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
                         <h3>Implementation drag</h3>
                         <p>Time spent fiddling with AI setup is time not spent on the work that matters.</p>
                     </div>
@@ -879,8 +910,8 @@
                     <div class="pricing-card featured reveal">
                         <h3>Personal / Operator Setup</h3>
                         <div class="price">Custom</div>
-                        <div class="price-note">Quoted after assessment</div>
-                        <p class="scope-note">A focused assistant set up around how you personally work, including a phone-to-computer access path — not a full business overhaul project.</p>
+                        <div class="price-note">Quoted after a short intro</div>
+                        <p class="scope-note">A focused assistant set up around how you personally work, including a phone-to-computer access path. Not a full business overhaul project.</p>
                         <ul>
                             <li>A private AI assistant tailored to your daily routine</li>
                             <li>Phone access to a full computer workspace</li>
@@ -904,8 +935,8 @@
                     <div class="section-label reveal">About AiBusinessCopilot</div>
                     <h2 class="reveal">We are building the bridge between AI tools and everyday work.</h2>
                     <p class="reveal">AiBusinessCopilot started from a simple belief: the next leap in productivity will not come from everyone memorizing every new AI feature. It will come from useful assistants, careful agents, and practical infrastructure that help people use AI inside the work they already do.</p>
-                    <p class="reveal">We are hands-on builders and operators. We test AI workflows, phone-to-computer access, human approval gates, knowledge organization, and assistant setup patterns so small businesses and solo operators do not have to sort through the whole industry alone.</p>
-                    <p class="reveal">The goal is not to replace judgment. The goal is to reduce the scattered work around it: finding context, preparing drafts, organizing next steps, checking tools, and bringing the right decision back to the human who owns it.</p>
+                    <p class="reveal">We are hands-on builders and operators. We test everything ourselves first: phone access, approval rules, assistant setups. Small businesses and solo operators should not have to sort through the whole industry alone.</p>
+                    <p class="reveal">The goal is not to replace judgment. The goal is to reduce the scattered work around it: finding context, preparing drafts, and bringing the right decision back to the human who owns it.</p>
                 </div>
                 <div class="about-principles">
                     <div class="principle reveal">
@@ -967,11 +998,11 @@
     <section class="cta-section">
         <div class="container">
             <h2 class="reveal">Ready to find out what yours would say tomorrow morning?</h2>
-            <p class="reveal">Tell us where leads, customer issues, billing questions, or follow-ups are getting missed. We'll use the free assessment to confirm fit, then recommend whether the $999 audit makes sense.</p>
+            <p class="reveal">Tell us where work is slipping through the cracks. We'll get back to you with next steps for your audit, and if it doesn't make sense for you yet, we'll say so.</p>
             <div class="reveal">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Start business assessment</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="btn">Send us the basics</a>
             </div>
-            <p class="cta-fine reveal">Free fit check &middot; $999 audit if there is real opportunity &middot; Buildout quoted after findings</p>
+            <p class="cta-fine reveal">A few basic questions &middot; $999 audit if there is real opportunity &middot; Buildout quoted after findings</p>
         </div>
     </section>
 
@@ -981,7 +1012,7 @@
             <div class="footer-brand">
                 <img src="logo.jpg" alt="AiBusinessCopilot logo">
             </div>
-            <p>&copy; 2026 AiBusinessCopilot &middot; <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
+            <p>&copy; 2026 AiBusinessCopilot &middot; Phoenix, Arizona &middot; <a href="mailto:ty@aibusinesscopilot.io">ty@aibusinesscopilot.io</a></p>
             <p>
                 <a href="about.html">About</a> &middot;
                 <a href="ai-assistants.html">From Chatbots to AI Assistants</a> &middot;
@@ -1012,7 +1043,11 @@
         var greet = document.getElementById('briefing-greet');
         var clock = document.getElementById('briefing-clock');
         var h = new Date().getHours();
-        greet.textContent = h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.';
+        var greetBase = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+        var biz = '';
+        function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+        function updateGreet() { greet.textContent = biz ? greetBase + ', ' + biz + '.' : greetBase + '.'; }
+        updateGreet();
         clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 
         var icons = {
@@ -1027,23 +1062,23 @@
         icons.check = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B63E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
 
         var INDUSTRIES = {
-            home: { items: [
+            home: { ask: "Can you have the Hendersons' quote ready by morning?", items: [
                 { i: 'calendar', t: 'Two customers canceled overnight', s: "rebuilt Thursday's schedule to close the gaps — ready to confirm", tag: 'Draft schedule', d: ['Thu 8:00 — Lakeside Ct repair moves up from Friday.', 'Thu 10:30 — Yardley filter install slides into the open slot.', 'Confirmation texts drafted for both customers.'] },
                 { i: 'quote', t: "Built the Hendersons' repair quote from your price sheet", s: 'PDF ready to review and send', tag: 'Draft quote', d: ['Pump seal replacement — $180.', 'Labor, 2 hrs — $190.', 'Total $370, from your April price sheet.'] },
                 { i: 'research', t: 'Researched the city permit rule that changed this month', s: 'what it means for you, in five bullets', tag: 'Research notes', d: ['The new rule only applies to heaters over 400k BTU.', 'Your standard installs are unaffected.', 'One supplier already updated their spec sheets.'] },
-                { i: 'star', t: 'A 3-star review showed up on Google', s: 'response drafted — plus what likely went wrong', tag: 'Draft response', d: ['"Thanks for the honest feedback, Dana — the crew ran late and that\'s on us. Here\'s what we\'re changing&hellip;"', "Likely cause: Thursday's double-booking. The schedule fix above closes it."] },
+                { i: 'star', t: 'A 3-star review showed up on Google', s: 'response drafted — plus what likely went wrong', tag: 'Draft response', sign: true, d: ['"Thanks for the honest feedback, Dana — the crew ran late and that\'s on us. Here\'s what we\'re changing&hellip;"', "Likely cause: Thursday's double-booking. The schedule fix above closes it."] },
                 { i: 'chart', t: "Updated the job tracker with this week's 9 finished jobs", s: 'monthly numbers refreshed, one trend flagged', tag: 'Report update', d: ['9 jobs closed, $11,240 invoiced this week.', 'Repeat service is up three weeks straight.', 'Invoice #2041 still unpaid — reminder drafted.'] },
                 { i: 'inbox', t: 'Read 47 overnight messages', s: '4 need a decision, the rest are handled', tag: 'Inbox summary', d: ['4 need you: two quote requests, a refund ask, a supplier delay.', '43 filed: receipts, confirmations, newsletters.'] }
             ]},
-            clinic: { items: [
-                { i: 'calendar', t: 'Three patients asked to reschedule', s: "tomorrow's schedule rebalanced — ready to confirm", tag: 'Draft schedule', d: ['All three offered the next open slots that fit their visit type.', 'No gaps left in the morning block.', 'Confirmation messages drafted for each.'] },
-                { i: 'quote', t: "Prepared Monday's new-patient paperwork", s: 'four arrivals, everything organized and ready', tag: 'Prep notes', d: ['Welcome packets assembled for all four.', 'Two intake forms came back incomplete — reminders drafted.', 'Insurance details flagged for front-desk review.'] },
-                { i: 'research', t: 'Compared two suppliers on gloves and composite', s: 'switching saves about 9% — summary attached', tag: 'Research notes', d: ['Same brands at both suppliers — the difference is volume pricing.', '9% saving at your current monthly order size.', 'No contract lock-in on the cheaper option.'] },
-                { i: 'star', t: 'A new review mentions long wait times', s: 'response drafted — Tuesday bottleneck found', tag: 'Draft response', d: ['"Thank you for telling us — we\'ve changed how we schedule afternoon visits&hellip;"', 'Cause: Tuesday double-bookings between 1 and 3pm.'] },
-                { i: 'chart', t: 'Updated the recall list', s: '17 patients due or overdue for six-month visits', tag: 'Report update', d: ['12 due this month, 5 overdue from last month.', 'Reminder messages drafted for all 17.', 'None go out until you approve the list.'] },
-                { i: 'inbox', t: 'Read 31 overnight messages', s: '3 need you, the rest are filed', tag: 'Inbox summary', d: ['3 need a decision: a referral question, a billing dispute, a supply delay.', '28 filed: confirmations, statements, vendor mail.'] }
+            auto: { ask: 'Can you get the Ramirez estimate ready by morning?', items: [
+                { i: 'calendar', t: 'A parts delay pushed two jobs back', s: "tomorrow's bays rebuilt around it — ready to confirm", tag: 'Draft schedule', d: ['The Camry brake job moves to first bay at 8:00.', 'The transmission diag slides to Thursday — the part lands Wednesday.', 'Heads-up texts drafted for both customers.'] },
+                { i: 'quote', t: 'Built the Ramirez brake estimate from your labor guide', s: 'ready to review and send', tag: 'Draft estimate', d: ['Front pads and rotors — $284 parts.', 'Labor, 2.5 hrs at your posted rate — $363.', 'Total $647, itemized the way you like.'] },
+                { i: 'research', t: 'Checked three suppliers on the tires you quote most', s: 'one is 9% cheaper with free next-day delivery', tag: 'Research notes', d: ['Same brands, same spec — the difference is volume pricing.', '9% cheaper on your four best-selling sizes.', 'No minimum order, and delivery days match yours.'] },
+                { i: 'star', t: 'A 3-star review mentions a missed pickup call', s: 'response drafted — plus where it slipped', tag: 'Draft response', sign: true, d: ['"You\'re right, Marcus — the car was ready Tuesday and the call never went out. Here\'s what we\'re changing&hellip;"', 'Likely cause: pickup calls live on a sticky note. A simple checklist fix is drafted too.'] },
+                { i: 'chart', t: "Updated the shop tracker with this week's 21 finished cars", s: 'car count and parts margin refreshed', tag: 'Report update', d: ['21 cars out the door, $18,600 invoiced this week.', 'Parts margin steady at 42%.', 'Two approved estimates never got scheduled — follow-ups drafted.'] },
+                { i: 'inbox', t: 'Read 38 overnight messages', s: '3 need a decision, the rest are handled', tag: 'Inbox summary', d: ['3 need you: two estimate approvals and a warranty question.', '35 filed: parts confirmations, statements, spam.'] }
             ]},
-            agency: { items: [
+            agency: { ask: 'Can you pull the Riverside proposal together tonight?', items: [
                 { i: 'calendar', t: 'The client moved the kickoff to Thursday', s: 'calendar updated, agenda redrafted', tag: 'Draft plan', d: ['Team invites updated — no conflicts found.', 'Agenda trimmed to 45 minutes, brief attached.', 'Confirmation reply to the client drafted.'] },
                 { i: 'quote', t: 'Built the Riverside proposal from your rate card', s: 'ready for your pass before it goes out', tag: 'Draft proposal', d: ['Scope: 3-month retainer, two campaigns.', '$8,400/mo from your current rate card.', 'Two closest case studies pulled in.'] },
                 { i: 'research', t: 'Pulled competitor ad activity for the pitch', s: "three angles they're missing", tag: 'Research notes', d: ["They've gone dark on video since March.", 'Search spend doubled — but their landing pages never changed.', 'Three openings, one slide each, added to the deck.'] },
@@ -1051,15 +1086,15 @@
                 { i: 'chart', t: 'Updated the campaign report', s: 'CTR up 18% — one anomaly flagged', tag: 'Report update', d: ['CTR 2.4%, up 18% week over week. Spend on pace.', 'Anomaly: Tuesday conversions doubled — likely the email drop.', 'Client-ready PDF refreshed.'] },
                 { i: 'inbox', t: 'Read 64 overnight messages', s: '5 need a decision, the rest are handled', tag: 'Inbox summary', d: ['5 for you: two scope asks, a budget approval, an intro, a complaint.', '59 filed, with notes where useful.'] }
             ]},
-            restaurant: { items: [
+            restaurant: { ask: 'Saturday at 7 looks slammed — can you sort it out?', items: [
                 { i: 'calendar', t: 'Saturday is overbooked by two tables at 7pm', s: 'three fixes drafted — pick one', tag: 'Draft fixes', d: ['Offer 6:30 or 8:15 to the two latest bookings — texts drafted.', 'Or open patio table 12; the forecast is clear.', 'Or move the six-top to the private room.'] },
                 { i: 'quote', t: "Built next week's produce order from this week's sales", s: 'order sheet ready to send', tag: 'Draft order', d: ["Quantities based on the last two weeks' plate counts.", 'Romaine cut 20% — waste was logged Tuesday and Wednesday.', 'Total $1,840 — about 6% under last week.'] },
                 { i: 'research', t: 'Checked three suppliers on chicken prices', s: 'one is 11% cheaper this month', tag: 'Research notes', d: ['Same spec, and their delivery days match yours.', '11% cheaper through the end of the month.', 'Switching is reversible — no contract.'] },
-                { i: 'star', t: 'A 2-star review came in about Friday night', s: 'response drafted, plus the likely cause', tag: 'Draft response', d: ['"We\'re sorry about the wait — you\'re right, and here\'s what we\'re fixing&hellip;"', 'Cause: two large parties seated at once at 7:40 — the kitchen stacked up.'] },
+                { i: 'star', t: 'A 2-star review came in about Friday night', s: 'response drafted, plus the likely cause', tag: 'Draft response', sign: true, d: ['"We\'re sorry about the wait — you\'re right, and here\'s what we\'re fixing&hellip;"', 'Cause: two large parties seated at once at 7:40 — the kitchen stacked up.'] },
                 { i: 'chart', t: 'Updated the weekly sales tracker', s: 'food cost crept to 34% — cause flagged', tag: 'Report update', d: ['Sales steady; food cost up two points.', 'Drivers: protein prices and Friday waste.', 'Two fixes suggested, including one small menu tweak.'] },
                 { i: 'inbox', t: 'Read 23 overnight messages', s: '2 need you — a catering ask and a vendor', tag: 'Inbox summary', d: ['Catering inquiry for the 28th — quote drafted from your menu.', 'Vendor needs a delivery-window change approved.'] }
             ]},
-            solo: { items: [
+            solo: { ask: "Can you prep me for Thursday's call?", items: [
                 { i: 'calendar', t: 'Two discovery calls requested this week', s: 'slotted around your deep-work blocks', tag: 'Draft schedule', d: ['Tuesday 11:00 and Thursday 2:00 proposed.', 'Your Wednesday writing block stays untouched.', 'Invites drafted — not sent.'] },
                 { i: 'quote', t: 'Drafted the Patterson statement of work', s: 'scope, timeline, and price from your templates', tag: 'Draft SOW', d: ['Six-week engagement, two deliverables.', '$12,500 fixed fee — your standard rate.', 'Payment terms: 50/50, net 15.'] },
                 { i: 'research', t: "Researched the client before Thursday's call", s: 'one-page brief ready', tag: 'Research notes', d: ["Their market shrank 8% — they're chasing efficiency.", 'Two of their competitors just raised prices.', 'Three likely pain points, each with a question to ask.'] },
@@ -1075,9 +1110,12 @@
         var wrap = document.getElementById('briefing-items');
         var closer = document.getElementById('briefing-closer');
         var card = document.getElementById('briefing-card');
+        var pmYou = document.getElementById('pm-you');
+        var pmReply = document.getElementById('pm-reply');
         var timers = [];
         var played = false;
         var detail = null;
+        var startTime = null;
 
         function rowEl(it, idx) {
             var st = status[cur][idx];
@@ -1094,10 +1132,20 @@
             return row;
         }
 
-        function closerText() {
-            var n = status[cur].filter(function(s) { return s === 'ok'; }).length;
-            if (n === 0) return 'Tap any item to see what it prepared. Nothing sent without your approval.';
-            return n + ' of ' + status[cur].length + ' approved — and nothing moved until you said so.';
+        function renderCloser() {
+            var st = status[cur];
+            var n = st.filter(function(s) { return s === 'ok'; }).length;
+            var decided = st.length && st.every(function(s) { return s; });
+            if (decided && startTime) {
+                var secs = Math.max(1, Math.round((Date.now() - startTime) / 1000));
+                closer.classList.add('summary');
+                closer.innerHTML = 'All ' + st.length + ' decisions made in <em>' + secs + ' seconds</em>. That was your morning admin, done.';
+                return;
+            }
+            closer.classList.remove('summary');
+            closer.textContent = n === 0
+                ? 'Tap any item to see what it prepared. Nothing sent without your approval.'
+                : n + ' of ' + st.length + ' approved — and nothing moved until you said so.';
         }
 
         function closeDetail() {
@@ -1114,7 +1162,7 @@
                 row.classList.add('show');
                 wrap.appendChild(row);
             });
-            closer.textContent = closerText();
+            renderCloser();
             closer.classList.add('show');
         }
 
@@ -1122,6 +1170,7 @@
             timers.forEach(clearTimeout);
             timers = [];
             closeDetail();
+            if (!startTime) startTime = Date.now();
             var it = INDUSTRIES[cur].items[idx];
             wrap.style.display = 'none';
             closer.style.display = 'none';
@@ -1131,6 +1180,7 @@
                 + '<div class="bd-title">' + icons[it.i] + '<span>' + it.t + '</span></div>'
                 + '<div class="draft-box"><span class="draft-tag">' + it.tag + '</span>'
                 + it.d.map(function(l) { return '<p>' + l + '</p>'; }).join('')
+                + (biz && it.sign ? '<p>&mdash; The ' + esc(biz) + ' team</p>' : '')
                 + '</div>'
                 + '<div class="bd-actions"><button class="btn-approve" type="button">Approve</button>'
                 + '<button class="btn-hold" type="button">Hold for later</button></div>';
@@ -1144,10 +1194,16 @@
             closeDetail();
             timers.forEach(clearTimeout);
             timers = [];
+            startTime = null;
             status[cur] = INDUSTRIES[cur].items.map(function() { return ''; });
             wrap.innerHTML = '';
             closer.classList.remove('show');
-            closer.textContent = closerText();
+            renderCloser();
+            pmYou.classList.remove('show');
+            pmReply.classList.remove('show');
+            pmYou.textContent = INDUSTRIES[cur].ask;
+            timers.push(setTimeout(function() { pmYou.classList.add('show'); }, 250));
+            timers.push(setTimeout(function() { pmReply.classList.add('show'); }, 1050));
             var list = INDUSTRIES[cur].items;
             list.forEach(function(it, i) {
                 timers.push(setTimeout(function() {
@@ -1159,11 +1215,16 @@
                     if (i === list.length - 1) {
                         timers.push(setTimeout(function() { closer.classList.add('show'); }, 700));
                     }
-                }, 400 + i * 750));
+                }, 1700 + i * 750));
             });
         }
 
         document.getElementById('briefing-replay').addEventListener('click', play);
+
+        document.getElementById('biz-name').addEventListener('input', function(e) {
+            biz = e.target.value.trim().slice(0, 40);
+            updateGreet();
+        });
 
         document.querySelectorAll('.demo-tab').forEach(function(btn) {
             btn.addEventListener('click', function() {
