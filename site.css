@@ -50,12 +50,20 @@ nav .container {
     gap: 1rem;
 }
 .logo {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--ink);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     display: inline-flex;
     align-items: center;
+    white-space: nowrap;
+}
+.logo .logo-mark {
+    width: 30px;
+    height: 30px;
+    margin-right: 0.55rem;
+    flex: 0 0 auto;
 }
 .logo:hover { color: var(--ink); }
 .logo img { display: none; }
@@ -197,6 +205,9 @@ footer .agent-badge {
     .comparison, .examples, .why-grid { grid-template-columns: 1fr; }
     h1, h2, h3, p, li, a { overflow-wrap: anywhere; }
     .price-tag { white-space: normal; }
+    .logo { overflow-wrap: normal; font-size: 1.1rem; }
+    .logo .logo-mark { width: 26px; height: 26px; margin-right: 0.45rem; }
+    .back-link { white-space: nowrap; }
 }
 
 /* ===== PRINT ===== */
