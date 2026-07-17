@@ -64,6 +64,8 @@
             --blue: #0B63E5;
             --blue-dark: #0A55C4;
             --blue-tint: #EAF2FD;
+            --inverse-body: #C7CDD4;
+            --inverse-link: #8AB8FF;
             --bg: #FFFFFF;
             --bg-alt: #F5F8FC;
             --border: #E2E7EE;
@@ -561,6 +563,64 @@
             .briefing-closer { opacity: 1 !important; }
         }
 
+        /* ===== CURRENT-LIVE TASTE PASS ===== */
+        .hero { padding-bottom: 5.5rem; }
+        .demo-band {
+            padding: 0 0 4.5rem;
+            background: var(--bg-alt);
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .demo-band > .container {
+            position: relative;
+            margin-top: -2.75rem;
+        }
+        .demo-frame {
+            padding: 2.4rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 1px 2px rgba(11, 12, 14, 0.04), 0 18px 42px -30px rgba(11, 12, 14, 0.22);
+        }
+
+        .bridge {
+            background: var(--ink);
+            color: var(--inverse-body);
+            border-color: var(--ink);
+        }
+        .bridge h2 { color: #fff; }
+        .bridge .text-signal { color: var(--blue-tint); }
+        .bridge a {
+            color: var(--inverse-link);
+            text-decoration: underline;
+            text-decoration-color: rgba(138, 184, 255, 0.55);
+            text-underline-offset: 0.18em;
+        }
+        .bridge a:hover { color: #fff; }
+
+        .tab-content > section :is(.card-grid, .card-grid-4) {
+            gap: 0;
+            border-top: 1px solid var(--ink);
+        }
+        .tab-content > section :is(.card-grid, .card-grid-4) > .card {
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid var(--border);
+            border-radius: 0;
+            padding: 1.5rem 1.25rem;
+        }
+        .tab-content > section :is(.card-grid, .card-grid-4) > .card + .card {
+            border-left: 1px solid var(--border);
+        }
+
+        .about-layout .principle {
+            background: transparent;
+            border: 0;
+            border-left: 2px solid var(--border);
+            border-radius: 0;
+            padding: 0.35rem 0 0.35rem 1.35rem;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 920px) {
             .demo-frame { grid-template-columns: 1fr; gap: 2rem; }
@@ -573,6 +633,17 @@
             .hero { padding: 3.5rem 0 2.5rem; }
             nav .wordmark.logo-image img { height: 50px; }
             nav .start-here { display: none; }
+
+            .hero { padding-bottom: 4rem; }
+            .demo-band > .container { margin-top: -1.75rem; }
+            .demo-frame { padding: 1.3rem; border-radius: 14px; }
+            .tab-content > section :is(.card-grid, .card-grid-4) > .card {
+                padding: 1.25rem 0.35rem;
+            }
+            .tab-content > section :is(.card-grid, .card-grid-4) > .card + .card {
+                border-left: 0;
+            }
+            .about-layout .principle { padding-left: 1rem; }
         }
 
         @media (max-width: 520px) {
@@ -733,7 +804,7 @@
         <section class="alt">
             <div class="container">
                 <div class="section-label reveal">Who this is for</div>
-                <h2 class="reveal">Best for businesses that know AI could help but do not have time to figure it all out</h2>
+                <h2 class="reveal">Best for businesses that know AI could help but do not have time to figure it all out.</h2>
                 <p class="subtitle reveal">You do not need to become an AI expert. You need a practical first setup around the work that keeps costing you time.</p>
                 <div class="card-grid">
                     <div class="card reveal">
@@ -755,7 +826,7 @@
         <section>
             <div class="container">
                 <div class="section-label reveal">Our approach</div>
-                <h2 class="reveal">AI that fits how your <span class="text-outcome">business actually works</span></h2>
+                <h2 class="reveal">AI that fits how your <span class="text-outcome">business actually works.</span></h2>
                 <p class="subtitle reveal">We learn where your business is losing time, then build an AI assistant around fixing that first.</p>
                 <div class="card-grid">
                     <div class="card reveal">
@@ -777,7 +848,7 @@
         <section id="how-it-works">
             <div class="container">
                 <div class="section-label reveal">How it works</div>
-                <h2 class="reveal">Four steps to knowing what is worth building</h2>
+                <h2 class="reveal">Four steps to knowing what is worth building.</h2>
                 <p class="subtitle reveal">Simple process, clear findings, no technical homework on your side.</p>
                 <div class="card-grid-4">
                     <div class="card step reveal">
@@ -859,7 +930,7 @@
         <section class="alt">
             <div class="container">
                 <div class="section-label reveal">Our approach</div>
-                <h2 class="reveal">AI support built around the way you work</h2>
+                <h2 class="reveal">AI support built around the way you work.</h2>
                 <p class="subtitle reveal">From a focused AI assistant to a deeper custom build, we set up practical help that fits how you already work.</p>
                 <div class="card-grid-4">
                     <div class="card reveal">
@@ -885,7 +956,7 @@
         <section>
             <div class="container">
                 <div class="section-label reveal">How it works</div>
-                <h2 class="reveal">Four steps to an assistant that fits you</h2>
+                <h2 class="reveal">Four steps to an assistant that fits you.</h2>
                 <p class="subtitle reveal">Clear intake, sharp setup, and a system that feels built for you.</p>
                 <div class="card-grid-4">
                     <div class="card step reveal">
@@ -915,7 +986,7 @@
         <section class="alt">
             <div class="container">
                 <div class="section-label reveal">Our services</div>
-                <h2 class="reveal">The right setup for how you work</h2>
+                <h2 class="reveal">The right setup for how you work.</h2>
                 <p class="subtitle reveal">For solo operators and professionals, we use the same approach: start with one fix that saves you real time, prove the value, then expand only when it makes sense.</p>
                 <div class="pricing-single">
                     <div class="pricing-card featured reveal">
@@ -971,7 +1042,7 @@
     <section class="faq-section" id="faq">
         <div class="container">
             <div class="section-label reveal">Common questions</div>
-            <h2 class="reveal">The questions everyone asks first</h2>
+            <h2 class="reveal">The questions everyone asks first.</h2>
             <div class="faq reveal">
                 <details>
                     <summary>Will it send emails or do anything without my OK?<span class="fq-x" aria-hidden="true">+</span></summary>
