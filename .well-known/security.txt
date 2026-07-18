@@ -1,0 +1,4 @@
+Contact: mailto:ty@aibusinesscopilot.io
+Expires: 2027-07-16T23:59:59Z
+Preferred-Languages: en
+Canonical: https://aibusinesscopilot.io/.well-known/security.txt
