@@ -53,6 +53,12 @@
             white-space: nowrap;
         }
         .service-card ul { margin-bottom: 0.2rem; }
+        .service-card .scope-note {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin: 0.65rem 0 1rem;
+            max-width: 760px;
+        }
         .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 1.2rem; border-top: 1px solid var(--ink); }
         .step { border-bottom: 1px solid var(--border); padding: 1.25rem 1.1rem; }
         .step + .step { border-left: 1px solid var(--border); }
@@ -88,7 +94,7 @@
     <main>
         <div class="eyebrow">Services &amp; pricing</div>
         <h1>Start with a <span>$999 AI Business Audit</span></h1>
-        <p class="lead">Before we quote a buildout, we find the leaks. The audit reviews where AI could save time, recover missed revenue, or reduce bottlenecks, then gives you a ranked plan for what to build first.</p>
+        <p class="lead">Before we quote a buildout, we identify the best opportunities. The audit reviews where AI could save time, recover missed revenue, or reduce bottlenecks, then gives you a ranked plan for what to build first.</p>
 
         <h2>The public offer</h2>
 
@@ -97,6 +103,7 @@
                 <h3><span class="num">1</span>AI Business Audit</h3>
                 <span class="price-tag">$999</span>
             </div>
+            <p class="scope-note">Designed for owner-led businesses with a focused set of workflows. Larger teams, multiple locations, or complex systems start with a custom-scoped assessment.</p>
             <ul>
                 <li>Review of intake, customer messages, follow-up, admin, reporting, and handoffs</li>
                 <li>3&ndash;7 ranked AI opportunities with clear reasoning behind each one</li>
@@ -122,7 +129,7 @@
 
         <div class="service-card">
             <div class="service-card-header">
-                <h3><span class="num">3</span>Revenue leak</h3>
+                <h3><span class="num">3</span>Revenue opportunity</h3>
                 <span class="price-tag">Missed money</span>
             </div>
             <ul>
@@ -179,7 +186,7 @@
             <div class="why-item">
                 <div>
                     <h4>Practical recommendation</h4>
-                    <p>We recommend the strongest setup for the job — ChatGPT, Claude, or another platform when it is the better fit</p>
+                    <p>We recommend the strongest setup for the job—usually ChatGPT and Codex, or another platform when it is clearly the better fit.</p>
                 </div>
             </div>
         </div>
@@ -213,7 +220,7 @@
         </div>
 
         <div class="cta">
-            <h2>Ready to find the leaks?</h2>
+            <h2>Ready to see where AI could help most?</h2>
             <p>Send us the basics. No commitment. We review your answers and get back to you with next steps, including whether the $999 audit makes sense.</p>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFFl5u6WnTNpVYOfVQvCAf3JeHsFbnt8GaftJ_0jQG6UOvNA/viewform" class="cta-btn">Send us the basics &rarr;</a>
         </div>
