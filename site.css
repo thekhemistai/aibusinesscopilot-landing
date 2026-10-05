@@ -353,6 +353,7 @@ footer .container { display: flex; flex-direction: column; gap: 1.1rem; }
 footer p { margin: 0; }
 footer a { color: var(--inverse-body); }
 footer a:hover { color: #fff; }
+footer a[href^="mailto:"] { text-decoration: underline; text-underline-offset: 0.18em; }
 footer .footer-brand { display: flex; align-items: center; gap: 0.8rem; }
 footer a.footer-brand { align-self: flex-start; }
 footer .fb-mark { width: 36px; height: 36px; flex: 0 0 auto; }
